@@ -9,7 +9,10 @@ on:
 
 jobs:
   detect-version:
-    uses: milaboratory/github-ci/.github/workflows/autodetect-version.yaml@v1.x
+    runs-on: ubuntu-latest
+    steps:
+      - id: foo
+        uses: milaboratory/github-ci/actions/autodetect-version@v1.x
 
   check:
     runs-on: ubuntu-latest

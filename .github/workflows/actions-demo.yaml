@@ -9,8 +9,6 @@ on:
 
 jobs:
   detect-version:
-    runs-on: ubuntu-latest
-
     uses: milaboratory/github-ci/.github/workflows/autodetect-version.yaml@v1.x
 
   check:
@@ -20,5 +18,6 @@ jobs:
 
     steps:
       - name: Test output
-        run: echo The detected version is: ${{ needs.detect-version.outputs.version }}
+        run: |
+          echo The detected version is: ${{ needs.detect-version.outputs.version }}
 

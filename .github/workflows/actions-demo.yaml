@@ -26,5 +26,5 @@ jobs:
     steps:
       - name: Test output
         run: |
-          echo "The detected version is: ${{ toJSON(needs) }}"
+          echo "The detected version is: ${{ needs.detect-version.outputs.version }}"
 

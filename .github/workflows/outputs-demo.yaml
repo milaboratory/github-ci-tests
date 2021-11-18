@@ -14,3 +14,13 @@ jobs:
 
       - run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
+
+  hello-world-2-job:
+    runs-on: ubuntu-latest
+    name: A job to say hello again
+    needs:
+      - hello_world_job
+
+    steps:
+      - run: |
+          echo "The same random number, once again with the surroundings: ${{ toJSON(needs.hello_world_job) }}"

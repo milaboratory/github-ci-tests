@@ -10,8 +10,13 @@ on:
 jobs:
   detect-version:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: milaboratory/github-ci/actions/autodetect-version@v1.x
+      - id: version-detector
+        uses: milaboratory/github-ci/actions/autodetect-version@v1.x
+
+    outputs:
+      version: ${{ steps.version-detector.outputs.version }}
 
   check:
     runs-on: ubuntu-latest

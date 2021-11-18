@@ -11,8 +11,7 @@ jobs:
   detect-version:
     runs-on: ubuntu-latest
     steps:
-      - id: foo
-        uses: milaboratory/github-ci/actions/autodetect-version@v1.x
+      - uses: milaboratory/github-ci/actions/autodetect-version@v1.x
 
   check:
     runs-on: ubuntu-latest
@@ -22,5 +21,5 @@ jobs:
     steps:
       - name: Test output
         run: |
-          echo The detected version is: ${{ needs.detect-version.outputs.version }}
+          echo "The detected version is: ${{ toJSON(needs) }}"
 

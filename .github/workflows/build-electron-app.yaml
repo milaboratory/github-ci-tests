@@ -10,15 +10,15 @@ jobs:
   build-linux:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
     with:
-      node_version: '14.x'
+      node-version: '14.x'
       os: 'ubuntu-latest'
-      app_name_slug: 'some-test-app'
-      npm_build_script: 'build'
+      app-name-slug: 'some-test-app'
+      npm-build-script: 'build'
 
   build-macos:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
     with:
-      node_version: '14.x'
+      node-version: '14.x'
       os: 'macos-latest'
-      app_name_slug: 'some-test-app'
-      npm_build_script: 'build'
+      app-name-slug: 'some-test-app'
+      npm-build-script: 'build'

@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - id: version-detector
-        uses: milaboratory/github-ci/actions/autodetect-version@v1.x
+        uses: milaboratory/github-ci/actions/autodetect-version@v1.x-ts
 
     outputs:
       version: ${{ steps.version-detector.outputs.version }}

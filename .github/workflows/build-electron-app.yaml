@@ -12,11 +12,13 @@ jobs:
     with:
       node_version: '14.x'
       os: 'ubuntu-latest'
-      app_name_slug: 'mixcr-pro-client'
+      app_name_slug: 'some-test-app'
+      npm_build_script: 'build'
 
   build-macos:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1
     with:
       node_version: '14.x'
       os: 'macos-latest'
-      app_name_slug: 'mixcr-pro-client'
+      app_name_slug: 'some-test-app'
+      npm_build_script: 'build'

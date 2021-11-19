@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - id: version-detector
         uses: milaboratory/github-ci/actions/autodetect-version@v1.x-ts
 

@@ -14,10 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: version-detector
-        uses: milaboratory/github-ci/actions/autodetect-version@v1
+        uses: milaboratory/github-ci/actions/detect-version@v1-beta
 
     outputs:
       version: ${{ steps.version-detector.outputs.version }}
+      tag: ${{ steps.version-detector.outputs.tag }}
+      sha: ${{ steps.version-detector.outputs.sha }}
+      prev-version: ${{ steps.version-detector.outputs.prev-version }}
+      prev-tag: ${{ steps.version-detector.outputs.prev-tag }}
+      prev-sha: ${{ steps.version-detector.outputs.prev-sha }}
 
   check:
     runs-on: ubuntu-latest
@@ -27,5 +32,10 @@ jobs:
     steps:
       - name: Test output
         run: |
-          echo "The detected version is: ${{ needs.detect-version.outputs.version }}"
+          echo "Version: ${{ needs.detect-version.outputs.version }}"
+          echo "Tag: ${{ needs.detect-version.outputs.tag }}"
+          echo "Sha: ${{ needs.detect-version.outputs.sha }}"
+          echo "Prev Version: ${{ needs.detect-version.outputs.prev-version }}"
+          echo "Prev Tag: ${{ needs.detect-version.outputs.prev-tag }}"
+          echo "Prev Sha: ${{ needs.detect-version.outputs.prev-sha }}"
 

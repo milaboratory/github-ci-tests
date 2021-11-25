@@ -13,6 +13,6 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
-          release-name: 'Awesome release'
-          release-tag: 'v1.0.0'
-          release-version: '1.0.0'
+          release-name: 'Stoned Penguin'
+          release-tag: 'v0.11.1'
+          release-version: '0.11.1'

@@ -8,17 +8,8 @@ jobs:
     name: Send Telegram message
 
     steps:
-      - name: Send message to telegram
-        uses: appleboy/telegram-action@master
+      - uses: milaboratory/github-ci/actions/notify/templates/dev-build-ready@v1
         with:
-          to: 95899978
-          token: ${{ secrets.TG_CI_BOT_TOKEN }}
-          format: markdown
-          message: |
-            Test message
-
-            ${{ github.actor }} triggered workflow:
-            Commit: ${{ github.sha }}
-            Repository: ${{ github.repository }}
-
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+          build-version: 'my-awesome-build'

@@ -16,6 +16,7 @@ jobs:
       os: 'ubuntu-latest'
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
+      notify-telegram-target: 95899978
 
   build-macos:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
@@ -24,3 +25,4 @@ jobs:
       os: 'macos-latest'
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
+      notify-telegram-target: 95899978

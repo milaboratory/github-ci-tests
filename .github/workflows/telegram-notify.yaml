@@ -1,0 +1,23 @@
+name: Send test notification
+
+on: [workflow_dispatch]
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+    name: Send Telegram message
+
+    steps:
+      - name: Send message to telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: 95899978
+          format: markdown
+          message: |
+            Test message
+
+            ${{ github.actor }} triggered workflow:
+            Commit: ${{ github.sha }}
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}

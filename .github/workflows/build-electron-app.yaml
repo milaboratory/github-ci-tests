@@ -17,6 +17,6 @@ jobs:
         ['ubuntu-latest', 'macos-latest']
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
-      notify-telegram-target: 95899978
+#      notify-telegram-target: 95899978
     secrets:
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

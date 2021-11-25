@@ -4,7 +4,6 @@
 name: Autodetect-version action check
 
 on:
-  create:
   workflow_dispatch:
 
 jobs:

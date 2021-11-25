@@ -12,7 +12,7 @@ jobs:
           - windows-latest
 
     runs-on: ${{ matrix.os }}
-    name: Dump env variables of current action run
+    name: Dump env vars
     steps:
       - run: env
         shell: bash

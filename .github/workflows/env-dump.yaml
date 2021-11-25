@@ -1,0 +1,11 @@
+name: Dump Action env
+
+on: [workflow_dispatch]
+
+jobs:
+  dump-env:
+    runs-on: ubuntu-latest
+    name: Dump env variables of current action run
+    steps:
+      - run: env
+        shell: bash

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'Build was triggered' && mkdir dist && touch dist/fake-app.js",
-    "electron:build": "echo 'Electron build was triggered' && mkdir dist_electron && touch dist_electron/fake-app.dmg"
+    "build": "scripts/fake-app.sh 'dist' 'JavaScript'",
+    "electron:build": "scripts/fake-app.sh 'dist_electron'"
   },
   "repository": {
     "type": "git",

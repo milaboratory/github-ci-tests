@@ -27,4 +27,4 @@ case "${target_platform}" in
 esac
 
 version="$(jq --raw-output --compact-output '.version' ./package.json)"
-:> "${dst_dir}/fake-app-${version}${ext}"
+echo $'\0' > "${dst_dir}/fake-app-${version}${ext}"

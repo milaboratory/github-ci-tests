@@ -26,4 +26,5 @@ case "${target_platform}" in
     ext=".js"
 esac
 
-:> "${dst_dir}/fake-app${ext}"
+version="$(jq --raw-output --compact-output '.version' ./package.json)"
+:> "${dst_dir}/fake-app-${version}${ext}"

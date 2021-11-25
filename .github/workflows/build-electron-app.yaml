@@ -9,20 +9,12 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  build-linux:
+  run:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
     with:
       node-version: '14.x'
-      os: 'ubuntu-latest'
-      app-name-slug: 'some-test-app'
-      build-script-name: 'electron:build'
-      notify-telegram-target: 95899978
-
-  build-macos:
-    uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
-    with:
-      node-version: '14.x'
-      os: 'macos-latest'
+      os: |
+        ['ubuntu-latest', 'macos-latest']
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
       notify-telegram-target: 95899978

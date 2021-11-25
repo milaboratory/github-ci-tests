@@ -19,4 +19,4 @@ jobs:
       build-script-name: 'electron:build'
       notify-telegram-target: 95899978
     secrets:
-      TG_CI_BOT_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}
+      TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

@@ -4,7 +4,14 @@ on: [workflow_dispatch]
 
 jobs:
   dump-env:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
     name: Dump env variables of current action run
     steps:
       - run: env

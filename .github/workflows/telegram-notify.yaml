@@ -3,7 +3,7 @@ name: Send test notification
 on: [workflow_dispatch]
 
 jobs:
-  send-notification:
+  send-release-ready:
     runs-on: ubuntu-latest
     name: Send Telegram message
 
@@ -15,3 +15,17 @@ jobs:
 
           product-name: 'Awesome application'
           release-tag: 'v0.11.1'
+
+  send-dev-build-ready:
+    runs-on: ubuntu-latest
+    name: Send Telegram message
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/templates/dev-build-ready@v1
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'Awesome application'
+          build-version: '0.11.1-2-master'
+          build-category: 'dev'

@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: version-detector
-        uses: milaboratory/github-ci/actions/detect-version@ts_common_lib
+        uses: milaboratory/github-ci/actions/detect-version@v1-beta
 
     outputs:
       version: ${{ steps.version-detector.outputs.version }}

@@ -15,7 +15,7 @@ jobs:
             ghwa_set_output "myvar" "myvalue"
 
     outputs:
-      data: ${{ toJSON(steps.sh.outputs) }}
+      data: ${{ steps.sh.outputs.data }}
 
   check:
     runs-on: ubuntu-latest

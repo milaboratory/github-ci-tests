@@ -12,7 +12,7 @@ jobs:
       - id: props
         uses: milaboratory/github-ci/actions/java/gradle/project-properties@v1-beta
         with:
-          gradle_cmd: |
+          gradle-cmd: |
             ./gradle/gradlew --quiet :properties
 
     outputs:
@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Test output
         run: |
-          jq . <<EneOfProps
+          jq . <<EneOfJSON
             ${{ needs.dump-props.outputs.all-props }}
-          EndOfProps
+          EndOfJSON
 

@@ -1,0 +1,30 @@
+name: "[A] shell"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-shell:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: sh
+        uses: milaboratory/github-ci/actions/shell@v1-beta
+        with:
+          run: |
+            ghwa_set_output "myvar" "myvalue"
+
+    outputs:
+      data: ${{ toJSON(steps.sh.outputs) }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - run-shell
+
+    steps:
+      - name: Test output
+        run: |
+          jq . <<EndOfJSON
+            ${{ needs.run-shell.outputs.data }}
+          EndOfJSON

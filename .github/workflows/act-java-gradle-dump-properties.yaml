@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: props
-        uses: milaboratory/github-ci/actions/java/gradle/project-properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/dump-properties@v1-beta
         with:
           project-dir: ./gradle
           project-name: ''

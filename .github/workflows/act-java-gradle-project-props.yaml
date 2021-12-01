@@ -13,7 +13,7 @@ jobs:
         uses: milaboratory/github-ci/actions/java/gradle/project-properties@v1-beta
         with:
           project-dir: ./gradle
-          gradle-cmd: ./gradlew --quiet :properties
+          project-name: ''
 
     outputs:
       all-props: ${{ toJSON(steps.props.outputs) }}

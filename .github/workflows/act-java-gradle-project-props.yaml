@@ -13,6 +13,7 @@ jobs:
         uses: milaboratory/github-ci/actions/java/gradle/project-properties@v1-beta
         with:
           project-dir: ./gradle
+          gradle-cmd: ./gradlew --quiet :properties
 
     outputs:
       all-props: ${{ toJSON(steps.props.outputs) }}
@@ -25,7 +26,7 @@ jobs:
     steps:
       - name: Test output
         run: |
-          jq . <<EneOfJSON
+          jq . <<EndOfJSON
             ${{ needs.dump-props.outputs.all-props }}
           EndOfJSON
 

@@ -1,4 +1,4 @@
-name: Dump gradle project properties
+name: [A] java/gradle/project-properties
 
 on:
   workflow_dispatch:

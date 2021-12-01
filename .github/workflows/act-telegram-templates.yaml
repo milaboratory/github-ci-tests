@@ -1,4 +1,4 @@
-name: Send test notification
+name: [A] Telegram notifications
 
 on: [workflow_dispatch]
 

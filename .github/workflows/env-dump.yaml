@@ -1,4 +1,4 @@
-name: Dump Action env
+name: Dump Action Environment
 
 on: [workflow_dispatch]
 

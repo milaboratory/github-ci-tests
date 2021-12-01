@@ -17,6 +17,7 @@ jobs:
         ['ubuntu-latest', 'macos-latest']
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
+      project-dir: './node'
       notify-telegram: true
     secrets:
       TELEGRAM_NOTIFICATION_TARGET: "95899978"

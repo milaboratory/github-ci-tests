@@ -1,0 +1,32 @@
+name: Dump gradle project properties
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dump-props:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: props
+        uses: milaboratory/github-ci/actions/node/gradle/project-properties@v1-beta
+        with:
+          gradle_cmd: |
+            ./gradle/gradlew --quiet :properties
+
+    outputs:
+      all-props: ${{ toJSON(steps.props.outputs) }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - dump-props
+
+    steps:
+      - name: Test output
+        run: |
+          jq . <<EneOfProps
+            ${{ needs.dump-props.outputs.all-props }}
+          EndOfProps
+

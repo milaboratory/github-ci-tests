@@ -12,8 +12,7 @@ jobs:
       - id: props
         uses: milaboratory/github-ci/actions/java/gradle/project-properties@v1-beta
         with:
-          gradle-cmd: |
-            ./gradle/gradlew --quiet :properties
+          project-dir: ./gradle
 
     outputs:
       all-props: ${{ toJSON(steps.props.outputs) }}

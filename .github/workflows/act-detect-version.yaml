@@ -1,4 +1,4 @@
-name: [A] detect-version
+name: "[A] detect-version"
 
 on:
   workflow_dispatch:

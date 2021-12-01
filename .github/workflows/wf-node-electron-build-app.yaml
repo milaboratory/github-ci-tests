@@ -1,7 +1,4 @@
-# This workflow will do a clean install of node dependencies,
-# cache/restore them, build the source code and run tests across different OS
-
-name: [W] node-build-electron-app
+name: "[W] node-build-electron-app"
 
 on:
   push:

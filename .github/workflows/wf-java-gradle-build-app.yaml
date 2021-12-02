@@ -10,7 +10,7 @@ jobs:
     uses: milaboratory/github-ci/.github/workflows/java-build-gradle-app.yaml@v1-beta
     with:
       java-version: '11'
-      app-name: Hello World
+      app-name: JAVA Gradle
       app-name-slug: 'hello-world'
       build-project: ''
       build-project-dir: './gradle'

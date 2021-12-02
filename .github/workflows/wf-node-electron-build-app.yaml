@@ -12,6 +12,7 @@ jobs:
       node-version: '14.x'
       os: |
         ['ubuntu-latest', 'macos-latest']
+      app-name: Node Electron
       app-name-slug: 'some-test-app'
       build-script-name: 'electron:build'
       notify-telegram: true

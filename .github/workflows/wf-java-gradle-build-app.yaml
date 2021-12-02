@@ -1,0 +1,26 @@
+name: "[W] java-build-gradle-app"
+
+on:
+  push:
+    tags: [ '*' ]
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    uses: milaboratory/github-ci/.github/workflows/java-build-gradle-app.yaml@v1-beta
+    with:
+      java-version: '11'
+      app-name: Java Gradle Build
+      app-name-slug: 'java-gradle-build-test'
+      build-project: ''
+      build-project-dir: './gradle'
+      notify-telegram: true
+
+    secrets:
+      GRADLE_PROPERTIES: |
+        someSecret1=${{ secrets.TG_CHANNEL_MIBUILDS }}
+        someSecret2=uhahaha
+        someSecret3=bebebe
+
+      TELEGRAM_NOTIFICATION_TARGET: "95899978"
+      TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

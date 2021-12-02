@@ -20,6 +20,10 @@ jobs:
         with:
           auth-token: ${{ secrets.GITHUB_TOKEN }}
           source: 'test:0.0.1'
+          targets: |
+            ${{ github.repository }}/test:0.0.1
+            ${{ github.repository }}/test:latest
+            ${{ github.repository }}/test:latest-dev
 
     outputs:
       pushed: ${{ steps.docker-push.outputs.pushed-tags }}

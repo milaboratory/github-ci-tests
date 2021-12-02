@@ -15,6 +15,8 @@ jobs:
             echo "myvalue 1"
             echo "myvalue 2"
 
+            ghwa_set_output "myvar" "myvalue 3"
+
     outputs:
       data: ${{ steps.sh.outputs.data }}
 
@@ -27,4 +29,10 @@ jobs:
       - name: Test output
         env:
           OUTPUT: ${{ needs.run-shell.outputs.stdout }}
-        run: echo "${OUTPUT}"
+        run: |
+          echo "stdout is: ${OUTPUT}"
+
+          echo "All outputs are:"
+          jq . <<EndOfJSON
+            ${{ needs.run-shell.outputs.data }}
+          EndOfJSON

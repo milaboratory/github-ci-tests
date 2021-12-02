@@ -18,6 +18,7 @@ jobs:
             ghwa_set_output "myvar" "myvalue 3"
 
     outputs:
+      stdout: ${{ steps.sh.outputs.stdout }}
       data: ${{ steps.sh.outputs.data }}
 
   check:

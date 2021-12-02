@@ -18,6 +18,7 @@ jobs:
       - id: docker-publish
         uses: milaboratory/github-ci/actions/docker/publish-github@v1-beta
         with:
+          auth-token: ${{ secrets.GITHUB_TOKEN }}
           tag-name: test
           tag-version: 0.0.1
           update-latest: false

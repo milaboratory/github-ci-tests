@@ -1,4 +1,4 @@
-name: "[A] docker/publish-github"
+name: "[A] docker/push-github"
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
           docker build --tag test:0.0.1 .
 
       - id: docker-publish
-        uses: milaboratory/github-ci/actions/docker/publish-github@v1-beta
+        uses: milaboratory/github-ci/actions/docker/push-github@v1-beta
         with:
           auth-token: ${{ secrets.GITHUB_TOKEN }}
           tag-name: test

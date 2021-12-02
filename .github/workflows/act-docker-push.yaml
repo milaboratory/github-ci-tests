@@ -15,14 +15,14 @@ jobs:
         run: |
           docker build --tag test:0.0.1 .
 
-      - id: docker-publish
+      - id: docker-push
         uses: milaboratory/github-ci/actions/docker/push@v1-beta
         with:
           auth-token: ${{ secrets.GITHUB_TOKEN }}
           source: 'test:0.0.1'
 
     outputs:
-      pushed: ${{ steps.docker-publish.outputs.pushed }}
+      pushed: ${{ steps.docker-push.outputs.pushed-tags }}
 
   check:
     runs-on: ubuntu-latest
@@ -32,4 +32,4 @@ jobs:
     steps:
       - name: Test output
         run: |
-          echo "Pushed tags:$'\n'${{ needs.build-and-publish.outputs.pushed }}"
+          echo "Pushed tags:"$'\n'"${{ needs.build-and-publish.outputs.pushed }}"

@@ -12,7 +12,8 @@ jobs:
         uses: milaboratory/github-ci/actions/shell@v1-beta
         with:
           run: |
-            ghwa_set_output "myvar" "myvalue"
+            echo "myvalue 1"
+            echo "myvalue 2"
 
     outputs:
       data: ${{ steps.sh.outputs.data }}
@@ -24,7 +25,6 @@ jobs:
 
     steps:
       - name: Test output
-        run: |
-          jq . <<EndOfJSON
-            ${{ needs.run-shell.outputs.data }}
-          EndOfJSON
+        env:
+          OUTPUT: ${{ needs.run-shell.outputs.stdout }}
+        run: echo "${OUTPUT}"

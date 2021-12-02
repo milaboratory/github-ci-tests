@@ -1,0 +1,35 @@
+name: "[A] docker/push"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build stub docker image
+        working-directory: ./docker
+        run: |
+          docker build --tag test:0.0.1 .
+
+      - id: docker-publish
+        uses: milaboratory/github-ci/actions/docker/push@v1-beta
+        with:
+          auth-token: ${{ secrets.GITHUB_TOKEN }}
+          source: 'test:0.0.1'
+
+    outputs:
+      pushed: ${{ steps.docker-publish.outputs.pushed }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-publish
+
+    steps:
+      - name: Test output
+        run: |
+          echo "Pushed tags:$'\n'${{ needs.build-and-publish.outputs.pushed }}"

@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Build stub docker image
         working-directory: ./docker
         run: |
-          ls
-          pwd
           docker build --tag test:0.0.1 .
 
       - id: docker-publish

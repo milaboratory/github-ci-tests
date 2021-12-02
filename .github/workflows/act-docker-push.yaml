@@ -22,11 +22,11 @@ jobs:
           source: 'test:0.0.1'
           targets: |
             ${{ github.repository }}/test:0.0.1
-            ${{ github.repository }}/test:latest
+            ${{ github.repository }}/test:tralala
             ${{ github.repository }}/test:latest-dev
 
     outputs:
-      pushed: ${{ steps.docker-push.outputs.pushed-tags }}
+      pushed-tags: ${{ steps.docker-push.outputs.pushed-tags }}
 
   check:
     runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Test output
         run: |
-          echo "Pushed tags:"$'\n'"${{ needs.build-and-publish.outputs.pushed }}"
+          echo "Pushed tags:"$'\n'"${{ needs.build-and-publish.outputs.pushed-tags }}"

@@ -78,32 +78,36 @@ jobs:
           run: |
             # Check templates rendered what we expected
 
-            test1_expect="Some template:
+            function equals() {
+              local _test_name="${1}"
+              local _expected="${2}"
+              local _actual="${3}"
+
+              if [ "${_expected}" != "${_actual}" ]; then
+                ghwa_error "(${_test_name}) wrong test result:
+                  expected:
+            ${_expected}
+
+                  actual:
+            ${_actual}"
+
+                exit 1
+              fi
+
+            equals "Test 1" \
+              "Some template:
               - var1: 'value of var1'
-              - var2: 'value of var2'"
+              - var2: 'value of var2'" \
+              "${TEST1_DATA}"
 
-            if [ "${test1_expect}" != "${TEST1_DATA}" ]; then
-              ghwa_error "Wrong render result from test 1"
-              exit 1
-            fi
+            equals "Test 2" \
+              "env substitution: 'value from test 2'" \
+              "${TEST2_DATA}"
 
-            test2_expect="env substitution: 'value from test 2'"
+            equals "Test 3" \
+              "data substitution: 'value from test 3'" \
+              "${TEST3_DATA}"
 
-            if [ "${test2_expect}" != "${TEST2_DATA}" ]; then
-              ghwa_error "Wrong render result from test 1"
-              exit 1
-            fi
-
-            test3_expect="data substitution: 'value from test 3'"
-
-            if [ "${test3_expect}" != "${TEST3_DATA}" ]; then
-              ghwa_error "Wrong render result from test 3"
-              exit 1
-            fi
-
-            test4_expect="template-output.txt"
-
-            if [ "${test4_expect}" != "${TEST4_PATH}" ]; then
-              ghwa_error "Wrong output file path from test4"
-              exit 1
-            fi
+            equals "Test 4" \
+              "template-output.txt" \
+              "${TEST4_PATH}"

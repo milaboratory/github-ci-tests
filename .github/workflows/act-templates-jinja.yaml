@@ -74,7 +74,7 @@ jobs:
           TEST2_DATA: ${{ needs.tests.outputs.test2 }}
           TEST3_DATA: ${{ needs.tests.outputs.test3 }}
           TEST4_DATA: ${{ needs.tests.outputs.test4-data }}
-          TEST4_PATH: ${{ needs.tests.outputs.test4-file }}
+          TEST4_FILE: ${{ needs.tests.outputs.test4-file }}
         with:
           dump-stdout: false
           run: |
@@ -106,20 +106,23 @@ jobs:
               "${TEST1_DATA}"
 
             equals "Test 2" \
-              "env substitution : 'value from test 2'" \
+              "env substitution: 'value from test 2'" \
               "${TEST2_DATA}"
 
             equals "Test 3" \
-              "data substitution : 'value from test 3'" \
+              "data substitution: 'value from test 3'" \
               "${TEST3_DATA}"
 
             equals "Test 4-file" \
               "template-output.txt" \
-              "${TEST4_PATH}"
+              "${TEST4_FILE}"
 
+            pwd
+            ls -lA
+            
             equals "Test 4-data" \
               "${TEST4_DATA}" \
-              "$(cat "${TEST4_PATH}")"
+              "$(cat "${TEST4_FILE}")"
 
             if "${test_is_broken}"; then
               exit 1

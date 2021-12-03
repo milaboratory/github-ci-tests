@@ -33,5 +33,7 @@ jobs:
         env:
           DATA: ${{ needs.render-template.outputs.data }}
         run: |
-          echo "Rendered template is:"
-          printf "%s\n" "${OUTPUT}"
+          expected_result="Var1 value is: 'value of var1'
+          Var2 value is: 'value of var 2'"
+
+          [ "${expected_result}" = "${DATA}" ]

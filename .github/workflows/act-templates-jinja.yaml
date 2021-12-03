@@ -93,6 +93,7 @@ jobs:
 
                 exit 1
               fi
+            }
 
             equals "Test 1" \
               "Some template:

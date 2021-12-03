@@ -25,6 +25,8 @@ jobs:
       latest-tag: ${{ steps.version-detector.outputs.latest-tag }}
       latest-sha: ${{ steps.version-detector.outputs.latest-sha }}
 
+      is-branch-head: ${{ steps.version-detector.outputs.is-branch-head }}
+
   check:
     runs-on: ubuntu-latest
     needs:
@@ -44,4 +46,6 @@ jobs:
           echo "Latest Version: ${{ needs.detect-version.outputs.latest-version }}"
           echo "Latest Tag: ${{ needs.detect-version.outputs.latest-tag }}"
           echo "Latest Sha: ${{ needs.detect-version.outputs.latest-sha }}"
+
+          echo "Is branch HEAD: ${{ needs.detect-version.outputs.is-branch-head }}"
 

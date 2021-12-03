@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,19 +26,19 @@ jobs:
             ${{ github.repository }}/test:latest-dev
 
     outputs:
-      pushed-tags: ${{ steps.docker-push.outputs.pushed-tags }}
-      pushed-tags-json: ${{ steps.docker-push.outputs.pushed-tags-json }}
+      pushed: ${{ steps.docker-push.outputs.pushed }}
+      pushed-json: ${{ steps.docker-push.outputs.pushed-json }}
 
   check:
     runs-on: ubuntu-latest
     needs:
-      - build-and-publish
+      - tests
 
     steps:
       - name: Test output
         run: |
-          echo "Pushed tags:"$'\n'"${{ needs.build-and-publish.outputs.pushed-tags }}"
+          echo "Pushed tags:"$'\n'"${{ needs.tests.outputs.pushed }}"
           echo "Pushed tags json:"
           jq . <<EndOfJSON
-          ${{ needs.build-and-publish.outputs.pushed-tags-json }}
+          ${{ needs.tests.outputs.pushed-json }}
           EndOfJSON

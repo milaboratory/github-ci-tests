@@ -4,37 +4,106 @@ on:
   workflow_dispatch:
 
 jobs:
-  render-template:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
-      - id: tpl
+      - id: test1
         uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
         with:
           template: |
-            Var1 value is: '{{ var1 }}'
-            Var2 value is: '{{ var2 }}'
-            Mimimi
+            Some template:
+              - var1: '{{ var1 }}'
+              - var2: '{{ var2 }}'
           data: |
             {"var1": "value of var1"}
-          variables: |
-            var2=value of var 2
+          variables: var2=value of var 2
+
+      - id: prepare-test2
+        shell: bash
+        run: |
+          cat >my-test2-template.j2 <<EndOfTemplate
+          env substitution: '{{ env.get('SOME_TPL_VAR', '') }}'
+          EndOfTemplate
+      - id: test2
+        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        env:
+          SOME_TPL_VAR: 'value from test 2'
+        with:
+          template-file: my-test2-template.j2
+
+      - id: prepare-test3
+        shell: bash
+        run: |
+          cat >test3-template.j2 <<EndOfTemplate
+          data substitution: '{{ somevar }}'
+          EndOfTemplate
+
+          cat >test3-data.yaml <<EndOfTemplate
+          somevar: value from test 3
+          EndOfTemplate
+      - id: test3
+        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        with:
+          template-file: test3-template.j2
+          data-file: test3-data.yaml
+
+      - id: test4
+        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        with:
+          template: static text with no vars
+          out-file: template-output.txt
 
     outputs:
-      out-file: ${{ steps.tpl.outputs.out-file }}
-      data: ${{ steps.tpl.outputs.data }}
+      test1: ${{ steps.test1.outputs.data }}
+      test2: ${{ steps.test2.outputs.data }}
+      test3: ${{ steps.test3.outputs.data }}
+      test4: ${{ steps.test4.outputs.out-file }}
 
   check:
     runs-on: ubuntu-latest
     needs:
-      - render-template
+      - tests
 
     steps:
       - name: Test output
+        uses: milaboratory/github-ci/actions/shell@v1
         env:
-          DATA: ${{ needs.render-template.outputs.data }}
-        run: |
-          expected_result="Var1 value is: 'value of var1'
-          Var2 value is: 'value of var 2'"
+          TEST1_DATA: ${{ needs.tests.outputs.test1 }}
+          TEST2_DATA: ${{ needs.tests.outputs.test2 }}
+          TEST3_DATA: ${{ needs.tests.outputs.test3 }}
+          TEST4_PATH: ${{ needs.tests.outputs.test4 }}
+        with:
+          dump-stdout: false
+          run: |
+            # Check templates rendered what we expected
 
-          [ "${expected_result}" = "${DATA}" ]
+            test1_expect="Some template:
+              - var1: 'value of var1'
+              - var2: 'value of var2'"
+
+            if [ "${test1_expect}" != "${TEST1_DATA}" ]; then
+              ghwa_error "Wrong render result from test 1"
+              exit 1
+            fi
+
+            test2_expect="env substitution: 'value from test 2'"
+
+            if [ "${test2_expect}" != "${TEST2_DATA}" ]; then
+              ghwa_error "Wrong render result from test 1"
+              exit 1
+            fi
+
+            test3_expect="data substitution: 'value from test 3'"
+
+            if [ "${test3_expect}" != "${TEST3_DATA}" ]; then
+              ghwa_error "Wrong render result from test 3"
+              exit 1
+            fi
+
+            test4_expect="template-output.txt"
+
+            if [ "${test4_expect}" != "${TEST4_PATH}" ]; then
+              ghwa_error "Wrong output file path from test4"
+              exit 1
+            fi

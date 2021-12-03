@@ -14,6 +14,7 @@ jobs:
           template: |
             Var1 value is: '{{ var1 }}'
             Var2 value is: '{{ var2 }}'
+            Mimimi
           data: |
             {"var1": "value of var1"}
           variables: |

@@ -5,7 +5,8 @@ set -o nounset
 
 
 dst_dir="${1}"
-target_platform="${2:-${RUNNER_OS:-}}"
+app_name="${2}"
+target_platform="${3:-${RUNNER_OS:-}}"
 
 echo "Fake App build was triggered for '${dst_dir}' (${target_platform})"
 
@@ -27,4 +28,4 @@ case "${target_platform}" in
 esac
 
 version="$(jq --raw-output --compact-output '.version' ./package.json)"
-echo $'\0' > "${dst_dir}/fake-app-${version}${ext}"
+echo $'\0' > "${dst_dir}/${app_name}-${version}${ext}"

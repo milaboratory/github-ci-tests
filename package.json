@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node/scripts/fake-app.sh 'dist' 'JavaScript'",
-    "electron:build": "node/scripts/fake-app.sh 'dist_electron'"
+    "build": "node/scripts/fake-app.sh 'dist' 'node-app' 'JavaScript'",
+    "electron:build": "node/scripts/fake-app.sh 'dist_electron' 'electron-app'"
   },
   "repository": {
     "type": "git",

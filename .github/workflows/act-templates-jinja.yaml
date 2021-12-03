@@ -111,9 +111,9 @@ jobs:
               "${TEST4_FILE}"
 
             echo "Current directory: $(pwd)"
-            echo "Contents: $(ls -lA)"
-            echo "Action dir contents: $(ls -la "${{ github.action_path }}")"
-            echo "Shell action dir contents: $(ls -la "${{ github.action_path }}/../../shell")"
+            echo "Current dir contents: $(ls -lA)"
+            echo "Parent dir contents: $(ls -lA ../)"
+            echo "All parent dir files: $(find ../)"
 
             equals "Test 4-data" \
               "${TEST4_DATA}" \

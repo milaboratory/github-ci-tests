@@ -80,6 +80,8 @@ jobs:
           run: |
             # Check templates rendered what we expected
 
+            test_is_broken=false
+
             function equals() {
               local _test_name="${1}"
               local _expected="${2}"
@@ -93,7 +95,7 @@ jobs:
                   actual:
             ${_actual}"
 
-                exit 1
+                test_is_broken=true
               fi
             }
 
@@ -104,17 +106,21 @@ jobs:
               "${TEST1_DATA}"
 
             equals "Test 2" \
-              "env substitution: 'value from test 2'" \
+              "env substitution : 'value from test 2'" \
               "${TEST2_DATA}"
 
             equals "Test 3" \
-              "data substitution: 'value from test 3'" \
+              "data substitution : 'value from test 3'" \
               "${TEST3_DATA}"
-
-            equals "Test 4-data" \
-              "static text with no vars" \
-              "${TEST4_DATA}"
 
             equals "Test 4-file" \
               "template-output.txt" \
               "${TEST4_PATH}"
+
+            equals "Test 4-data" \
+              "${TEST4_DATA}" \
+              "$(cat "${TEST4_PATH}")"
+
+            if "${test_is_broken}"; then
+              exit 1
+            fi

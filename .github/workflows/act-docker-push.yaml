@@ -27,6 +27,7 @@ jobs:
 
     outputs:
       pushed-tags: ${{ steps.docker-push.outputs.pushed-tags }}
+      pushed-tags-json: ${{ steps.docker-push.outputs.pushed-tags-json }}
 
   check:
     runs-on: ubuntu-latest
@@ -37,3 +38,7 @@ jobs:
       - name: Test output
         run: |
           echo "Pushed tags:"$'\n'"${{ needs.build-and-publish.outputs.pushed-tags }}"
+          echo "Pushed tags json:"
+          jq . <<EndOfJSON
+          ${{ needs.build-and-publish.outputs.pushed-tags-json }}
+          EndOfJSON

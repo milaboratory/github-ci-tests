@@ -12,9 +12,7 @@ jobs:
         uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
         with:
           template: |
-            Some template:
-              - var1: '{{ var1 }}'
-              - var2: '{{ var2 }}'
+            var1: '{{ var1 }}', var2: '{{ var2 }}'
           data: |
             {"var1": "value of var 1"}
           variables: var2=value of var 2
@@ -89,20 +87,15 @@ jobs:
 
               if [ "${_expected}" != "${_actual}" ]; then
                 ghwa_error "(${_test_name}) wrong test result:
-                  expected:
-            ${_expected}
-
-                  actual:
-            ${_actual}"
+                  expected: '${_expected}'
+                  actual: '${_actual}'"
 
                 test_is_broken=true
               fi
             }
 
             equals "Test 1" \
-              "Some template:
-              - var1: 'value of var 1'
-              - var2: 'value of var 2'" \
+              "var1: 'value of var 1', var2: 'value of var 2'" \
               "${TEST1_DATA}"
 
             equals "Test 2" \
@@ -117,9 +110,9 @@ jobs:
               "template-output.txt" \
               "${TEST4_FILE}"
 
-            pwd
-            ls -lA
-            
+            echo "Current directory: $(pwd)"
+            echo "Contents: $(ls -lA)"
+
             equals "Test 4-data" \
               "${TEST4_DATA}" \
               "$(cat "${TEST4_FILE}")"

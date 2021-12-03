@@ -16,7 +16,7 @@ jobs:
               - var1: '{{ var1 }}'
               - var2: '{{ var2 }}'
           data: |
-            {"var1": "value of var1"}
+            {"var1": "value of var 1"}
           variables: var2=value of var 2
 
       - id: prepare-test2
@@ -97,8 +97,8 @@ jobs:
 
             equals "Test 1" \
               "Some template:
-              - var1: 'value of var1'
-              - var2: 'value of var2'" \
+              - var1: 'value of var 1'
+              - var2: 'value of var 2'" \
               "${TEST1_DATA}"
 
             equals "Test 2" \

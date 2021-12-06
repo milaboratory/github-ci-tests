@@ -12,7 +12,7 @@ jobs:
       java-version: '11'
       app-name: JAVA Gradle App
       app-name-slug: 'gradle-stub-app'
-      build-project: ':stub-app'
+      build-project: 'stub-app'
       build-project-dir: './gradle'
       notify-telegram: true
 

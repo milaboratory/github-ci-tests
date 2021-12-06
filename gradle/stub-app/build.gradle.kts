@@ -24,6 +24,13 @@ application {
     mainClass.set("com.milaboratory.stub.app.Main")
 }
 
+docker {
+    javaApplication {
+        baseImage.set("openjdk:11")
+        images.set(listOf("$name:$version", "$name:latest"))
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }

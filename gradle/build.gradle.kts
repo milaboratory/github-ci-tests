@@ -25,13 +25,6 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
-docker {
-    javaApplication {
-        baseImage.set("openjdk:11")
-        images.set(listOf("$name:$version", "$name:latest"))
-    }
-}
-
 tasks.test {
     useJUnitPlatform()
 }

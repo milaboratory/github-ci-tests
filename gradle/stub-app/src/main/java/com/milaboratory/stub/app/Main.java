@@ -1,4 +1,4 @@
-class HelloWorld
+class StubApp
 {
     public static void main(String args[])
     {

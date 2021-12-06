@@ -1,6 +1,5 @@
 plugins {
     java
-    application
     id("com.bmuschko.docker-java-application") version "7.1.0"
     id("com.palantir.git-version") version "0.12.3"
 }
@@ -8,7 +7,7 @@ plugins {
 val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
 val gitDetails = versionDetails()
 
-group "com.milaboratory.helloworld"
+group = "com.milaboratory.stub"
 version = if (version != "unspecified") {
     version
 } else if (gitDetails.commitDistance == 0) {
@@ -24,10 +23,6 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-}
-
-application {
-    mainClass.set("com.milaboratory.helloworld.Main")
 }
 
 docker {

@@ -8,7 +8,14 @@ plugins {
 val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
 val gitDetails = versionDetails()
 
-group = "com.milaboratory.stub.app"
+val group: String = "com.milaboratory.stub.app"
+version = if (version != "unspecified") {
+    version
+} else if (gitDetails.commitDistance == 0) {
+    gitDetails.lastTag
+} else {
+    "${gitDetails.lastTag}-${gitDetails.commitDistance}-${gitDetails.gitHash}"
+}
 
 repositories {
     mavenCentral()

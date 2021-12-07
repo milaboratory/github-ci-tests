@@ -65,49 +65,35 @@ jobs:
 
     steps:
       - name: Test output
-        uses: milaboratory/github-ci/actions/shell@v1
+        uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          TEST1_DATA: ${{ needs.tests.outputs.test1 }}
-          TEST2_DATA: ${{ needs.tests.outputs.test2 }}
-          TEST3_DATA: ${{ needs.tests.outputs.test3 }}
-          TEST4_FILE: ${{ needs.tests.outputs.test4-file }}
+          TEST1_EXPECTED: "var1: 'value of var 1', var2: 'value of var 2'"
+          TEST1_ACTUAL: ${{ needs.tests.outputs.test1 }}
+
+          TEST2_EXPECTED: "env substitution: 'value from test 2'"
+          TEST2_ACTUAL: ${{ needs.tests.outputs.test2 }}
+
+          TEST3_EXPECTED: "data substitution: 'value from test 3'"
+          TEST3_ACTUAL: ${{ needs.tests.outputs.test3 }}
+
+          TEST4_EXPECTED: "template-output.txt"
+          TEST4_ACTUAL: ${{ needs.tests.outputs.test4-file }}
         with:
-          dump-stdout: false
-          run: |
+          test: |
             # Check templates rendered what we expected
 
-            test_is_broken=false
+            test_equals "Test data 1" \
+              "${TEST1_EXPECTED}" \
+              "${TEST1_ACTUAL}"
 
-            function equals() {
-              local _test_name="${1}"
-              local _expected="${2}"
-              local _actual="${3}"
+            test_equals "Test data 2" \
+              "${TEST2_EXPECTED}" \
+              "${TEST2_ACTUAL}"
 
-              if [ "${_expected}" != "${_actual}" ]; then
-                ghwa_error "(${_test_name}) wrong test result:
-                  expected: '${_expected}'
-                  actual: '${_actual}'"
+            test_equals "Test data 3" \
+              "${TEST3_EXPECTED}" \
+              "${TEST3_ACTUAL}"
 
-                test_is_broken=true
-              fi
-            }
-
-            equals "Test 1" \
-              "var1: 'value of var 1', var2: 'value of var 2'" \
-              "${TEST1_DATA}"
-
-            equals "Test 2" \
-              "env substitution: 'value from test 2'" \
-              "${TEST2_DATA}"
-
-            equals "Test 3" \
-              "data substitution: 'value from test 3'" \
-              "${TEST3_DATA}"
-
-            equals "Test 4-file" \
-              "template-output.txt" \
-              "${TEST4_FILE}"
-
-            if "${test_is_broken}"; then
-              exit 1
-            fi
+            test_equals "Test file path" \
+              "${TEST4_EXPECTED}" \
+              "${TEST4_ACTUAL}"

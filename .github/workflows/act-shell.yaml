@@ -10,6 +10,10 @@ jobs:
     steps:
       - id: sh
         uses: milaboratory/github-ci/actions/shell@v1-beta
+        env:
+          MISH_DEBUG: true
+          MISH_ECHO_COMMANDS: on
+
         with:
           run: |
             echo "myvalue 1"
@@ -29,8 +33,6 @@ jobs:
     steps:
       - name: Test output
         env:
-          MISH_DEBUG: true
-          MISH_ECHO_COMMANDS: on
           OUTPUT: ${{ needs.run-shell.outputs.stdout }}
         run: |
           echo "stdout is: ${OUTPUT}"

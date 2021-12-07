@@ -1,0 +1,93 @@
+name: "[A] strings-prefix"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-multiline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        with:
+          input: |
+            line1
+            line2
+          prefix: common-prefix/
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-singleline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        with:
+          input: single-line-text
+          prefix: prefix-text.
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty-prefix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        with:
+          input: |
+            line-one
+            line-two
+          prefix: ''
+
+  test-empty-input:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        with:
+          input: ''
+          prefix: asdf
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-multiline
+      - test-singleline
+      - test-empty-prefix
+      - test-empty-input
+
+    steps:
+      - id: tests
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          MULTILINE_EXPECTED: |
+            common-prefix/line1
+            common-prefix/line2
+          MULTILINE_ACTUAL: ${{ needs.test-multiline.outputs.result }}
+
+          SINGLELINE_EXPECTED: prefix-text.single-line-text
+          SINGLELINE_ACTUAL: ${{ needs.test-singleline.outputs.result }}
+
+          EMPTY_PREFIX_EXPECTED: |
+            line-one
+            line-two
+          EMPTY_PREFIX_ACTUAL: ${{ needs.test-empty-prefix.outputs.result }}
+
+          EMPTY_INPUT_EXPECTED: ''
+          EMPTY_INPUT_ACTUAL: ${{ needs.test-empty-input.outputs.result }}
+
+        with:
+          test: |
+            test_equals "Multiline" "${MULTILINE_EXPECTED}" "${MULTILINE_ACTUAL}"
+            test_equals "Single line" "${SINGLELINE_EXPECTED}" "${SINGLELINE_ACTUAL}"
+            test_equals "Empty prefix" "${EMPTY_PREFIX_EXPECTED}" "${EMPTY_PREFIX_ACTUAL}"
+            test_equals "Empty input" "${EMPTY_INPUT_EXPECTED}" "${EMPTY_INPUT_ACTUAL}"

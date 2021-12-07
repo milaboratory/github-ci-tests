@@ -1,4 +1,4 @@
-name: "[W] java-build-gradle-app"
+name: "[W] java-gradle-lib"
 
 on:
   push:

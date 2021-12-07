@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Test output
         env:
+          MISH_DEBUG: true
+          MISH_ECHO_COMMANDS: on
           OUTPUT: ${{ needs.run-shell.outputs.stdout }}
         run: |
           echo "stdout is: ${OUTPUT}"

@@ -10,8 +10,8 @@ jobs:
     uses: milaboratory/github-ci/.github/workflows/java-gradle-lib.yaml@v1-beta
     with:
       java-version: '11'
-      app-name: JAVA Gradle Lib
-      app-name-slug: 'gradle-stub-lib'
+      lib-name: JAVA Gradle Lib
+      lib-name-slug: 'gradle-stub-lib'
       build-project: 'stub-lib'
       build-project-dir: './gradle'
       notify-telegram: true

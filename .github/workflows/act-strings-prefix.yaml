@@ -38,6 +38,8 @@ jobs:
     steps:
       - id: test
         uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        env:
+          MICI_DEBUG: true
         with:
           input: |
             line-one

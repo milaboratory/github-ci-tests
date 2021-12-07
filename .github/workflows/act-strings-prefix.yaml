@@ -46,6 +46,9 @@ jobs:
             line-two
           prefix: ''
 
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
   test-empty-input:
     runs-on: ubuntu-latest
 

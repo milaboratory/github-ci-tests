@@ -15,7 +15,7 @@ fun boolProperty(name: String): Boolean {
 val isMiCi: Boolean = boolProperty("mi-ci")
 val isRelease: Boolean = boolProperty("mi-release")
 
-val group: String = "com.milaboratory.stub.lib"
+val group: String = "com.milaboratory.stub"
 version = if (version != "unspecified") {
     version
 } else if (gitDetails.commitDistance == 0) {
@@ -49,7 +49,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = group
-            artifactId = "stub-lib"
+            artifactId = "lib"
             version = version
 
             from(components["java"])

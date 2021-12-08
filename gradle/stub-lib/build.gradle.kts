@@ -5,6 +5,9 @@ plugins {
     id("com.palantir.git-version")
 }
 
+val miGitHubMavenUser: String by project
+val miGitHubMavenToken: String by project
+
 val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
 val gitDetails = versionDetails()
 
@@ -35,13 +38,19 @@ dependencies {
 
 publishing {
     repositories {
-        if (isMiCi && isRelease) {
+        if (isMiCi) {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/milaboratory/releases")
+
+                url = if (isRelease) {
+                    uri("https://maven.pkg.github.com/milaboratory/releases")
+                } else {
+                    uri("https://maven.pkg.github.com/milaboratory/private")
+                }
+
                 credentials {
-                    username = System.getenv("GITHUB_MAVEN_AUTH_USER")
-                    password = System.getenv("GITHUB_MAVEN_AUTH_TOKEN")
+                    username = miGitHubMavenUser
+                    password = miGitHubMavenToken
                 }
             }
         }

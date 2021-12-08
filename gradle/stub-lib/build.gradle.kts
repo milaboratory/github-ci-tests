@@ -40,8 +40,8 @@ publishing {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/milaboratory/releases")
                 credentials {
-                    username = System.getenv("GH_MAVEN_AUTH_USER")
-                    password = System.getenv("GH_MAVEN_AUTH_TOKEN")
+                    username = System.getenv("GITHUB_MAVEN_AUTH_USER")
+                    password = System.getenv("GITHUB_MAVEN_AUTH_TOKEN")
                 }
             }
         }

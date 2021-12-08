@@ -39,14 +39,20 @@ dependencies {
 publishing {
     repositories {
         if (isMiCi) {
+            if (isRelease) {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/milaboratory/releases")
+
+                    credentials {
+                        username = miGitHubMavenUser
+                        password = miGitHubMavenToken
+                    }
+                }
+            }
             maven {
                 name = "GitHubPackages"
-
-                url = if (isRelease) {
-                    uri("https://maven.pkg.github.com/milaboratory/releases")
-                } else {
-                    uri("https://maven.pkg.github.com/milaboratory/private")
-                }
+                url = uri("https://maven.pkg.github.com/milaboratory/private")
 
                 credentials {
                     username = miGitHubMavenUser

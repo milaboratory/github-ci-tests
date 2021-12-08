@@ -49,7 +49,7 @@ jobs:
       - id: test
         uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
         with:
-          input: '\n'
+          input: "\n"
 
     outputs:
       result: ${{ steps.test.outputs.result }}

@@ -41,7 +41,7 @@ publishing {
         if (isMiCi) {
             if (isRelease) {
                 maven {
-                    name = "GitHubPackages"
+                    name = "GitHubReleases"
                     url = uri("https://maven.pkg.github.com/milaboratory/releases")
 
                     credentials {
@@ -51,7 +51,7 @@ publishing {
                 }
             }
             maven {
-                name = "GitHubPackages"
+                name = "GitHubPrivate"
                 url = uri("https://maven.pkg.github.com/milaboratory/private")
 
                 credentials {

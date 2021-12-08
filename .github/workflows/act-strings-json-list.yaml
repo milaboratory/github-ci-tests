@@ -1,4 +1,4 @@
-name: "[A] strings/prefix"
+name: "[A] strings/json-list"
 
 on:
   workflow_dispatch:
@@ -9,12 +9,11 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
         with:
           input: |
             line1
             line2
-          prefix: common-prefix/
 
     outputs:
       result: ${{ steps.test.outputs.result }}
@@ -24,38 +23,33 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
         with:
           input: single-line-text
-          prefix: prefix-text.
 
     outputs:
       result: ${{ steps.test.outputs.result }}
 
-  test-empty-prefix:
+  test-empty:
     runs-on: ubuntu-latest
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
-        with:
-          input: |
-            line-one
-            line-two
-          prefix: ''
-
-    outputs:
-      result: ${{ steps.test.outputs.result }}
-
-  test-empty-input:
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: test
-        uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
         with:
           input: ''
-          prefix: asdf
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty-newline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        with:
+          input: '\n'
 
     outputs:
       result: ${{ steps.test.outputs.result }}
@@ -65,32 +59,23 @@ jobs:
     needs:
       - test-multiline
       - test-singleline
-      - test-empty-prefix
-      - test-empty-input
+      - test-empty
 
     steps:
       - id: tests
         uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          MULTILINE_EXPECTED: |-
-            common-prefix/line1
-            common-prefix/line2
+          MULTILINE_EXPECTED: '["line1","line2"]'
           MULTILINE_ACTUAL: ${{ needs.test-multiline.outputs.result }}
 
-          SINGLELINE_EXPECTED: prefix-text.single-line-text
+          SINGLELINE_EXPECTED: '["single-line-text"]'
           SINGLELINE_ACTUAL: ${{ needs.test-singleline.outputs.result }}
 
-          EMPTY_PREFIX_EXPECTED: |-
-            line-one
-            line-two
-          EMPTY_PREFIX_ACTUAL: ${{ needs.test-empty-prefix.outputs.result }}
-
-          EMPTY_INPUT_EXPECTED: ''
-          EMPTY_INPUT_ACTUAL: ${{ needs.test-empty-input.outputs.result }}
+          EMPTY_EXPECTED: '[]'
+          EMPTY_ACTUAL: ${{ needs.test-empty.outputs.result }}
 
         with:
           test: |
             test_equals "Multiline" "${MULTILINE_EXPECTED}" "${MULTILINE_ACTUAL}"
             test_equals "Single line" "${SINGLELINE_EXPECTED}" "${SINGLELINE_ACTUAL}"
-            test_equals "Empty prefix" "${EMPTY_PREFIX_EXPECTED}" "${EMPTY_PREFIX_ACTUAL}"
-            test_equals "Empty input" "${EMPTY_INPUT_EXPECTED}" "${EMPTY_INPUT_ACTUAL}"
+            test_equals "Empty" "${EMPTY_EXPECTED}" "${EMPTY_ACTUAL}"

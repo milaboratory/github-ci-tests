@@ -35,7 +35,7 @@ jobs:
 
       - name: Test 'sh.output' casts to true
         uses: milaboratory/github-ci/actions/action-test@v1
-        if: steps.sh.outputs.stdout
+        if: '!! steps.sh.outputs.stdout'
         with:
           test: |
             fail_test "'false' stdout do not cast to 'false' boolean in 'if'"

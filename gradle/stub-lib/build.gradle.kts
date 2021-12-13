@@ -38,15 +38,13 @@ dependencies {
 
 publishing {
     repositories {
-        if (isMiCi) {
-            maven {
-                name = "GitHubPrivate"
-                url = uri("https://maven.pkg.github.com/milaboratory/private")
+        maven {
+            name = "GitHubPrivate"
+            url = uri("https://maven.pkg.github.com/milaboratory/private")
 
-                credentials {
-                    username = miGitHubMavenUser
-                    password = miGitHubMavenToken
-                }
+            credentials {
+                username = miGitHubMavenUser
+                password = miGitHubMavenToken
             }
         }
     }

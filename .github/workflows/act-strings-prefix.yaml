@@ -40,7 +40,7 @@ jobs:
         uses: milaboratory/github-ci/actions/strings/prefix@v1-beta
         with:
           input: single-line-text
-          prefix: |
+          prefix: |-
             :prefix-text:
 
     outputs:

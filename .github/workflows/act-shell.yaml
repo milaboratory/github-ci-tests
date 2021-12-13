@@ -4,40 +4,83 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-shell:
+  test-stdout:
     runs-on: ubuntu-latest
 
     steps:
       - id: sh
         uses: milaboratory/github-ci/actions/shell@v1-beta
-        env:
-          MISH_DEBUG: true
-          MISH_ECHO_COMMANDS: on
-
         with:
-          run: |
-            echo "myvalue 1"
-            echo "myvalue 2"
+          dump-stdout: true
 
-            ghwa_set_output "myvar" "myvalue 3"
+          run: |
+            echo "text line 1"
+            echo "text line 2"
 
     outputs:
       stdout: ${{ steps.sh.outputs.stdout }}
-      data: ${{ steps.sh.outputs.data }}
 
-  check:
+  test-outputs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: sh
+        uses: milaboratory/github-ci/actions/shell@v1-beta
+        with:
+          dump-stdout: false
+
+          run: |
+            ghwa_set_output "var1" "line1
+            line2"
+
+            ghwa_set_output "var2" "single-line"
+
+    outputs:
+      stdout: ${{ steps.sh.outputs.stdout }}
+      var1: ${{ fromJSON(steps.sh.outputs.data).var1 }}
+      var2: ${{ fromJSON(steps.sh.outputs.data).var2 }}
+
+  check-stdout:
     runs-on: ubuntu-latest
     needs:
-      - run-shell
+      - test-stdout
 
     steps:
       - name: Test output
+        uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          OUTPUT: ${{ needs.run-shell.outputs.stdout }}
-        run: |
-          echo "stdout is: ${OUTPUT}"
+          OUTPUT_EXPECTED: |-
+            text line 1
+            text line 2
+          OUTPUT_ACTUAL: ${{ needs.test-stdout.outputs.stdout }}
+        with:
+          test: |
+            test_equals "Stdout dump check" \
+              "${OUTPUT_EXPECTED}" \
+              "${OUTPUT_ACTUAL}"
 
-          echo "All outputs are:"
-          jq . <<EndOfJSON
-            ${{ needs.run-shell.outputs.data }}
-          EndOfJSON
+  check-outputs:
+    runs-on: ubuntu-latest
+    needs:
+      - test-outputs
+
+    steps:
+      - name: Test output
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          VAR1_EXPECTED: |-
+            line1
+            line2
+          VAR1_ACTUAL: ${{ needs.test-outputs.outputs.var1 }}
+
+          VAR2_EXPECTED: single-line
+          VAR2_ACTUAL: ${{ needs.test-outputs.outputs.var2 }}
+        with:
+          test: |
+            test_equals "var1 value check" \
+              "${VAR1_EXPECTED}" \
+              "${VAR1_ACTUAL}"
+
+            test_equals "var2 value check" \
+              "${VAR2_EXPECTED}" \
+              "${VAR2_ACTUAL}"

@@ -15,8 +15,8 @@ jobs:
       build-project: 'stub-lib'
       build-project-dir: './gradle'
       notify-telegram: true
-      publish-dev-tasks: publishAllPublicationsToGitHubPrivateRepository
-      publish-release-tasks: publishMavenPublicationToGitHubPrivateRepository
+      publish-dev-tasks: publishAllPublicationsToGitHubRepository
+      publish-release-tasks: publishMavenPublicationToGitHubRepository
 
     secrets:
       GRADLE_PROPERTIES: |

@@ -39,8 +39,8 @@ dependencies {
 publishing {
     repositories {
         maven {
-            name = "GitHubPrivate"
-            url = uri("https://maven.pkg.github.com/milaboratory/private")
+            name = "GitHub"
+            url = uri("https://maven.pkg.github.com/milaboratory/workflow-experiments")
 
             credentials {
                 username = miGitHubMavenUser

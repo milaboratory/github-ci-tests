@@ -1,0 +1,41 @@
+name: "[A] true-false output check"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-true:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: sh
+        uses: milaboratory/github-ci/actions/shell@v1-beta
+        with:
+          dump-stdout: true
+
+          run: echo "true"
+
+      - name: Test 'sh.output' casts to true
+        uses: milaboratory/github-ci/actions/action-test@v1
+        if: ! steps.sh.outputs.stdout
+        with:
+          test: |
+            fail_test "'true' stdout do not cast to 'true' boolean in 'if'"
+
+  test-false:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: sh
+        uses: milaboratory/github-ci/actions/shell@v1-beta
+        with:
+          dump-stdout: true
+
+          run: echo "false"
+
+      - name: Test 'sh.output' casts to true
+        uses: milaboratory/github-ci/actions/action-test@v1
+        if: steps.sh.outputs.stdout
+        with:
+          test: |
+            fail_test "'false' stdout do not cast to 'false' boolean in 'if'"

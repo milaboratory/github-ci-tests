@@ -18,8 +18,8 @@ jobs:
 
     secrets:
       GRADLE_PROPERTIES: |
-        miGitHubMavenUser=${{ secrets.GH_CI_BOT_NAME }}
-        miGitHubMavenToken=${{ secrets.GH_CI_BOT_TOKEN }}
+        miGitHubMavenUser=${{ github.actor }}
+        miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
 
       TELEGRAM_NOTIFICATION_TARGET: "95899978"
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

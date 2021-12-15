@@ -9,7 +9,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - id: props
+
+      - name: Set gradle.properties
+        env:
+          GRADLE_PROPS: |
+            miGitHubMavenUser=${{ github.actor }}
+            miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
+
+        run: |
+          mkdir -p ~/.gradle/
+          printf "%s" "${GRADLE_PROPS}" >> ~/.gradle/gradle.properties
+
+      - id: gradlew
         uses: milaboratory/github-ci/actions/java/gradle/gradlew@v1-beta
         with:
           working-directory: ./gradle

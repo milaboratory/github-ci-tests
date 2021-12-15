@@ -1,0 +1,19 @@
+name: "[A] java/gradle/gradlew"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: props
+        uses: milaboratory/github-ci/actions/java/gradle/gradlew@v1-beta
+        with:
+          working-directory: ./gradle
+          tasks: |-
+            :projects
+            :stub-app:tasks
+            :stub-lib:tasks

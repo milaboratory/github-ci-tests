@@ -17,6 +17,9 @@ jobs:
       notify-telegram: true
       publish-dev-tasks: publishAllPublicationsToGitHubRepository
       publish-release-tasks: publishMavenPublicationToGitHubRepository
+      artifacts-paths: |
+        libs/*.jar
+      release-files: ''
 
     secrets:
       GRADLE_PROPERTIES: |

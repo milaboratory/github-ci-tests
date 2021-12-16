@@ -1,0 +1,84 @@
+name: "[A] strings/convert-paths"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-normal:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/convert-paths@v1-beta
+        with:
+          abs-root: .
+          rel-root: ./rel-dir/
+          paths: |
+            ./relative-1
+            /absolute-1
+            relative-2
+
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty-paths:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/convert-paths@v1-beta
+        with:
+          abs-root: .
+          rel-root: ./rel-dir/
+          paths: ''
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty-roots:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/convert-paths@v1-beta
+        with:
+          abs-root: ''
+          rel-root: ''
+          paths: |
+            /a1
+            r1
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-normal
+      - test-empty-paths
+      - test-empty-roots
+
+    steps:
+      - id: tests
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          NORMAL_EXPECTED: |-
+            ./rel-dir/./relative-1
+            ./absolute-1
+            ./rel-dir/relative-2
+          NORMAL_ACTUAL: ${{ needs.test-normal.outputs.result }}
+
+          EMPTY_PATHS_EXPECTED: ''
+          EMPTY_PATHS_ACTUAL: ${{ needs.test-empty-paths.outputs.result }}
+
+          EMPTY_ROOTS_EXPECTED: |-
+            /a1
+            r1
+          EMPTY_ROOTS_ACTUAL: ${{ needs.test-empty-roots.outputs.result }}
+
+        with:
+          test: |
+            test_equals "Normal" "${NORMAL_EXPECTED}" "${NORMAL_ACTUAL}"
+            test_equals "Empty paths" "${EMPTY_PATHS_EXPECTED}" "${EMPTY_PATHS_ACTUAL}"
+            test_equals "Empty roots" "${EMPTY_ROOTS_EXPECTED}" "${EMPTY_ROOTS_ACTUAL}"

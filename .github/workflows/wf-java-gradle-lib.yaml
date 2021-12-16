@@ -19,7 +19,8 @@ jobs:
       publish-release-tasks: publishMavenPublicationToGitHubRepository
       artifacts-paths: |
         libs/*.jar
-      release-files: ''
+      release-files: |
+        ./libs/*.jar
 
     secrets:
       GRADLE_PROPERTIES: |

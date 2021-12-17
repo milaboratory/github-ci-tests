@@ -1,6 +1,10 @@
 name: "[A] strings/prefix"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-strings-prefix.yaml
+
   workflow_dispatch:
 
 jobs:

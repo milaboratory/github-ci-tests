@@ -1,6 +1,10 @@
 name: "[A] templates/jinja"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-templates-jinja.yaml
+
   workflow_dispatch:
 
 jobs:

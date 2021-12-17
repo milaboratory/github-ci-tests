@@ -1,6 +1,10 @@
 name: "[A] java/gradle/gradlew"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-java-gradle-gradlew.yaml
+
   workflow_dispatch:
 
 jobs:
@@ -27,4 +31,3 @@ jobs:
           tasks: |-
             :projects
             :stub-app:tasks
-            :stub-lib:tasks

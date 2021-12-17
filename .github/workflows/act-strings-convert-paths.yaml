@@ -1,6 +1,10 @@
 name: "[A] strings/convert-paths"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-strings-convert-paths.yaml
+
   workflow_dispatch:
 
 jobs:

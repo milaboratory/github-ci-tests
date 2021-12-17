@@ -1,6 +1,10 @@
 name: "[A] shell"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-shell.yaml
+
   workflow_dispatch:
 
 jobs:

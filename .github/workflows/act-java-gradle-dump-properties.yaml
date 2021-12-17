@@ -1,6 +1,10 @@
 name: "[A] java/gradle/dump-properties"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-java-gradle-dump-properties.yaml
+
   workflow_dispatch:
 
 jobs:

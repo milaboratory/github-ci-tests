@@ -1,6 +1,11 @@
 name: "[A] notify/telegram/*"
 
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - .github/workflows/act-notify-telegram.yaml
+
+  workflow_dispatch:
 
 jobs:
   send-release-ready:

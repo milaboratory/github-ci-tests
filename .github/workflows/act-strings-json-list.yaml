@@ -1,6 +1,10 @@
 name: "[A] strings/json-list"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-strings-json-list.yaml
+
   workflow_dispatch:
 
 jobs:

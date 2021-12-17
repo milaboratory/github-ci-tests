@@ -3,7 +3,10 @@ name: "[W] java-gradle-lib"
 on:
   push:
     tags: [ '*' ]
-  workflow_dispatch: {}
+    paths:
+      - .github/workflows/wf-java-gradle-lib.yaml
+
+  workflow_dispatch:
 
 jobs:
   run:

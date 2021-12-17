@@ -1,0 +1,29 @@
+name: "[W] docker-build-push"
+
+on:
+  push:
+    tags: [ '*' ]
+    paths:
+      - .github/workflows/wf-docker-build-push.yaml
+      - docker/
+
+  workflow_dispatch:
+
+jobs:
+  run:
+    uses: milaboratory/github-ci/.github/workflows/docker-build-push.yaml@v1-beta
+    with:
+      product-name: 'Docker'
+      dockerfile: 'docker/Dockerfile'
+      push-targets: ${{ github.repository }}/hello-world
+      push-dev-versions: true
+      push-branch-latest: true
+      push-release-latest: true
+      notify-telegram: true
+
+    secrets:
+      DOCKER_REGISTRY_USER: ${{ github.actor }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      TELEGRAM_NOTIFICATION_TARGET: "95899978"
+      TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

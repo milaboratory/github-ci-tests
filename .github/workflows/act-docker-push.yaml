@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,7 @@ jobs:
         with:
           auth-token: ${{ secrets.GITHUB_TOKEN }}
           source: 'test:0.0.1'
+          registry: ghcr.io
           targets: |
             ${{ github.repository }}/test:0.0.1
             ${{ github.repository }}/test:tralala
@@ -32,13 +33,22 @@ jobs:
   check:
     runs-on: ubuntu-latest
     needs:
-      - tests
+      - test
 
     steps:
-      - name: Test output
-        run: |
-          echo "Pushed tags:"$'\n'"${{ needs.tests.outputs.pushed }}"
-          echo "Pushed tags json:"
-          jq . <<EndOfJSON
-          ${{ needs.tests.outputs.pushed-json }}
-          EndOfJSON
+      - name: Check tags pushed
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          PUSHED_EXPECTED: |-
+            ghcr.io/${{ github.repository }}/test:0.0.1
+            ghcr.io/${{ github.repository }}/test:tralala
+            ghcr.io/${{ github.repository }}/test:latest-dev
+          PUSHED_ACTUAL: ${{ needs.test.outputs.pushed }}
+
+          JSON_EXPECTED: |-
+            ["ghcr.io/${{ github.repository }}/test:0.0.1","ghcr.io/${{ github.repository }}/test:tralala","ghcr.io/${{ github.repository }}/test:latest-dev"]
+          JSON_ACTUAL: ${{ needs.test.outputs.pushed-json }}
+        with:
+          test: |
+            test_equals "Pushed tags" "${PUSHED_EXPECTED}" "${PUSHED_ACTUAL}"
+            test_equals "JSON" "${JSON_EXPECTED}" "${JSON_ACTUAL}"

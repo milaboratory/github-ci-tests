@@ -15,7 +15,7 @@ jobs:
     with:
       product-name: 'Docker'
       dockerfile: 'docker/Dockerfile'
-      push-targets: ${{ github.repository }}/hello-world
+      push-dev-targets: ${{ github.repository }}/hello-world
       push-dev-versions: true
       push-branch-latest: true
       push-release-latest: true

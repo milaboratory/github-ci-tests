@@ -34,7 +34,7 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     needs:
-      - detect-version
+      - test
 
     steps:
       - name: Test output

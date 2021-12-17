@@ -12,6 +12,7 @@ jobs:
       java-version: '11'
       lib-name: JAVA Gradle Lib
       lib-name-slug: 'gradle-stub-lib'
+      checkout-submodules: 'recursive'
       build-project: 'stub-lib'
       build-project-dir: './gradle'
       notify-telegram: true

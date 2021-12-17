@@ -1,6 +1,10 @@
 name: "[A] docker/push"
 
 on:
+  push:
+    paths:
+      - .github/workflows/act-docker-push.yaml
+
   workflow_dispatch:
 
 jobs:

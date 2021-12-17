@@ -5,8 +5,8 @@ plugins {
     id("com.palantir.git-version")
 }
 
-val miGitHubMavenUser: String by project
-val miGitHubMavenToken: String by project
+val miGitHubMavenUser: String? by project
+val miGitHubMavenToken: String? by project
 
 val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
 val gitDetails = versionDetails()

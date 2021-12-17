@@ -5,6 +5,7 @@ on:
     tags: [ '*' ]
     paths:
       - .github/workflows/wf-java-gradle-build-app.yaml
+      - gradle/stub-app/
 
   workflow_dispatch:
 

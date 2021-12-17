@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/act-java-gradle-gradlew.yaml
+      - gradle/
 
   workflow_dispatch:
 

@@ -1,4 +1,4 @@
-name: "[W] docker-build-push"
+name: "[W] docker-github"
 
 on:
   push:

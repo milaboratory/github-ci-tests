@@ -1,4 +1,4 @@
-name: Dump Env
+name: Workflow custom inputs
 
 on:
   workflow_dispatch:

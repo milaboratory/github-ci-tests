@@ -13,5 +13,5 @@ inputs:
 
 runs:
   using: "docker"
-  image: ubuntu:20.04
+  image: docker://ubuntu:20.04
   entrypoint: '/usr/bin/env'

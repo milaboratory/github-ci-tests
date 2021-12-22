@@ -1,0 +1,17 @@
+name: 'Dump env inside Docker action'
+description: |
+  Dump environment of docker container inside action
+author: 'DenKoren'
+
+inputs:
+  my-input-1:
+    description: 'input 1'
+    required: false
+  my_input_2:
+    description: 'input 2'
+    required: false
+
+runs:
+  using: "docker"
+  image: ubuntu:20.04
+  entrypoint: '/usr/bin/env'

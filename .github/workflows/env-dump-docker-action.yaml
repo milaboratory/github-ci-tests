@@ -1,0 +1,10 @@
+name: Dump Env (Docker)
+
+on: [workflow_dispatch]
+
+jobs:
+  dump-env:
+    runs-on: ubuntu-latest
+    name: Dump env vars inside docker action
+    steps:
+      - uses: ${{ github.repository }}/dump-env-action@${{ github.sha }}

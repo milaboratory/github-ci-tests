@@ -1,0 +1,54 @@
+name: Dump Env
+
+on:
+  workflow_dispatch:
+    inputs:
+      str-var-optional:
+        description: |
+          Variable 1 description
+        type: string
+        required: false
+        default: ''
+
+      str-var-required:
+        description: |
+          Required var description
+        type: string
+        required: true
+
+      bool-var:
+        description: |
+          Optional bool var description
+        type: boolean
+        required: false
+
+      choice-var-optional:
+        description: |
+          Optional choice var
+        type: choice
+        options:
+          - Opt1
+          - Opt2
+        required: false
+        default: 'Opt1'
+
+      choice-var-required:
+        description: |
+          Optional choice var description
+        type: choice
+        options:
+          - Choice 1
+          - Choice 2
+        required: true
+        default: 'Choice 1'
+
+jobs:
+  dump-inputs:
+    runs-on: ubuntu-latest
+
+    name: Dump inputs
+    steps:
+      - env:
+          INPUTS: ${{ toJSON( github.event.inputs ) }}
+        shell: bash
+        run: jq . <<<"${INPUTS}"

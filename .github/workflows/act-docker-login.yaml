@@ -1,0 +1,20 @@
+name: "[A] docker/login"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-docker-login.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: docker-login
+        uses: milaboratory/github-ci/actions/docker/login@v1-beta
+        with:
+          registry: 'ghcr.io'
+          user: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}

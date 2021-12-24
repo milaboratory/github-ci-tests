@@ -1,0 +1,18 @@
+name: "[A] miaws"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-miaws.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/miaws@v1-beta
+        with:
+          args:
+            --help

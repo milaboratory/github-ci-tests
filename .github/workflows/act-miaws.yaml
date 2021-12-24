@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: milaboratory/github-ci/actions/miaws@v1-beta
+      - uses: milaboratory/github-ci/actions/miaws/configure@v1-beta
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: milaboratory/github-ci/actions/miaws@v1-beta
+        with:
           args: --help

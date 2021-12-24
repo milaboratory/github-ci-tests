@@ -14,5 +14,6 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/miaws@v1-beta
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           args:
             --help

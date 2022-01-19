@@ -44,8 +44,8 @@ jobs:
         uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
         with:
           properties: |
-            prop3=prop1value
-            prop4=prop2value
+            prop3=prop3value
+            prop4=prop4value
 
     outputs:
       properties: ${{ steps.props.outputs.properties }}
@@ -69,8 +69,8 @@ jobs:
         with:
           append: true
           properties: |
-            prop3=prop1value
-            prop4=prop2value
+            prop3=prop3value
+            prop4=prop4value
 
     outputs:
       properties: ${{ steps.props.outputs.properties }}

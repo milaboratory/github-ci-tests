@@ -24,7 +24,7 @@ jobs:
             prop2=prop2value
 
     outputs:
-      props: ${{ steps.props.outputs.properties }}
+      properties: ${{ steps.props.outputs.properties }}
 
   test-replace-2:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
             prop4=prop2value
 
     outputs:
-      props: ${{ steps.props.outputs.properties }}
+      properties: ${{ steps.props.outputs.properties }}
 
   test-append-1:
     runs-on: ubuntu-latest
@@ -73,7 +73,7 @@ jobs:
             prop4=prop2value
 
     outputs:
-      props: ${{ steps.props.outputs.properties }}
+      properties: ${{ steps.props.outputs.properties }}
 
   test-empty-1:
     runs-on: ubuntu-latest
@@ -95,7 +95,7 @@ jobs:
           properties: ""
 
     outputs:
-      props: ${{ steps.clear.outputs.properties }}
+      properties: ${{ steps.clear.outputs.properties }}
 
   check:
     runs-on: ubuntu-latest

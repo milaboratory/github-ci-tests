@@ -24,7 +24,7 @@ jobs:
             prop2=prop2value
 
     outputs:
-      properties: ${{ toJSON(steps.props.outputs) }}
+      properties: ${{ steps.props.outputs.properties }}
 
   test-replace-2:
     runs-on: ubuntu-latest
@@ -110,17 +110,17 @@ jobs:
       - id: checks
         uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          REPLACE_1_EXPECTED: |
+          REPLACE_1_EXPECTED: |-
             prop1=prop1value
             prop2=prop2value
           REPLACE_1_ACTUAL: ${{ needs.test-replace-1.outputs.properties }}
 
-          REPLACE_2_EXPECTED: |
+          REPLACE_2_EXPECTED: |-
             prop3=prop3value
             prop4=prop4value
           REPLACE_2_ACTUAL: ${{ needs.test-replace-2.outputs.properties }}
 
-          APPEND_1_EXPECTED: |
+          APPEND_1_EXPECTED: |-
             prop1=prop1value
             prop2=prop2value
             prop3=prop3value

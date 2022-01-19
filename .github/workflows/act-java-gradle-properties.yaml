@@ -24,7 +24,7 @@ jobs:
             prop2=prop2value
 
     outputs:
-      properties: ${{ steps.props.outputs.properties }}
+      properties: ${{ toJSON(steps.props.outputs) }}
 
   test-replace-2:
     runs-on: ubuntu-latest

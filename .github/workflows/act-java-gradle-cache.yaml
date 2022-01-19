@@ -1,0 +1,39 @@
+name: "[A] java/gradle/cache"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-java-gradle-cache.yaml
+      - gradle/
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set gradle.properties
+        uses: milaboratory/github-ci/actions/java/gradle/properties@v1
+        with:
+          append: true
+          properties:
+            miGitHubMavenUser=${{ github.actor }}
+            miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare env for Java application build
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - id: cache
+        uses: milaboratory/github-ci/actions/java/gradle/cache@v1-beta
+        with:
+          job-id: jdk11
+          build-root-directory: ./gradle
+          arguments: |-
+            :projects
+            :stub-app:tasks

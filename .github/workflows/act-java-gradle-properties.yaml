@@ -1,4 +1,4 @@
-name: "[A] java/gradle/gradlew"
+name: "[A] java/gradle/properties"
 
 on:
   push:

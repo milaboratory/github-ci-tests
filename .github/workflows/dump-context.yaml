@@ -16,6 +16,35 @@ jobs:
     steps:
       - shell: bash
         env:
-          CONTEXT: ${{ toJSON(context) }}
+          CONTEXT_GITHUB: ${{ toJSON(context.github) }}
+          CONTEXT_JOB: ${{ toJSON(context.job) }}
+          CONTEXT_STEPS: ${{ toJSON(context.steps) }}
+          CONTEXT_RUNNER: ${{ toJSON(context.runner) }}
+          CONTEXT_STRATEGY: ${{ toJSON(context.strategy) }}
+          CONTEXT_MATRIX: ${{ toJSON(context.matrix) }}
+          CONTEXT_NEEDS: ${{ toJSON(context.needs) }}
+          CONTEXT_INPUTS: ${{ toJSON(context.inputs) }}
         run:
-          jq '.' <<<"${CONTEXT}"
+          echo "context.github"
+          jq '.' <<<"${CONTEXT_GITHUB}"
+
+          echo "context.job"
+          jq '.' <<<"${CONTEXT_JOB}"
+
+          echo "context.steps"
+          jq '.' <<<"${CONTEXT_STEPS}"
+
+          echo "context.runner"
+          jq '.' <<<"${CONTEXT_RUNNER}"
+
+          echo "context.strategy"
+          jq '.' <<<"${CONTEXT_STRATEGY}"
+
+          echo "context.matrix"
+          jq '.' <<<"${CONTEXT_MATRIX}"
+
+          echo "context.needs"
+          jq '.' <<<"${CONTEXT_NEEDS}"
+
+          echo "context.inputs"
+          jq '.' <<<"${CONTEXT_INPUTS}"

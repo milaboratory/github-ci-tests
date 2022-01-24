@@ -1,9 +1,9 @@
-name: "[A] java/gradle/dump-properties"
+name: "[A] java/gradle/properties/read"
 
 on:
   push:
     paths:
-      - .github/workflows/act-java-gradle-dump-properties.yaml
+      - .github/workflows/act-java-gradle-properties-read.yaml
       - gradle/
 
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: props
-        uses: milaboratory/github-ci/actions/java/gradle/dump-properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/read@v1-beta
         with:
           project-dir: ./gradle
           project-name: ''

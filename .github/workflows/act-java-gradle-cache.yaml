@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set gradle.properties
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1
         with:
           append: true
           properties:

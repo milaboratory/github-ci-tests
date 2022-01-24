@@ -1,9 +1,9 @@
-name: "[A] java/gradle/properties"
+name: "[A] java/gradle/properties/set"
 
 on:
   push:
     paths:
-      - .github/workflows/act-java-gradle-properties.yaml
+      - .github/workflows/act-java-gradle-properties-set.yaml
       - gradle/
 
   workflow_dispatch:
@@ -16,33 +16,18 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set gradle.properties
-        id: props
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
-          properties: |
-            prop1=prop1value
-            prop2=prop2value
-
-    outputs:
-      properties: ${{ steps.props.outputs.properties }}
-
-  test-replace-2:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set gradle.properties
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
-        with:
+          replace: true
           properties: |
             prop1=prop1value
             prop2=prop2value
 
       - name: Set gradle.properties
         id: props
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
+          replace: true
           properties: |
             prop3=prop3value
             prop4=prop4value
@@ -57,17 +42,18 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set gradle.properties
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
+          replace: true
           properties: |
             prop1=prop1value
             prop2=prop2value
 
       - name: Set gradle.properties
         id: props
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
-          append: true
+          replace: false
           properties: |
             prop3=prop3value
             prop4=prop4value
@@ -82,7 +68,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set gradle.properties
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
           properties: |
             prop1=prop1value
@@ -90,7 +76,7 @@ jobs:
 
       - name: clear gradle.properties
         id: clear
-        uses: milaboratory/github-ci/actions/java/gradle/properties@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
           properties: ""
 
@@ -102,7 +88,6 @@ jobs:
 
     needs:
       - test-replace-1
-      - test-replace-2
       - test-append-1
       - test-empty-1
 
@@ -111,14 +96,9 @@ jobs:
         uses: milaboratory/github-ci/actions/action-test@v1
         env:
           REPLACE_1_EXPECTED: |-
-            prop1=prop1value
-            prop2=prop2value
-          REPLACE_1_ACTUAL: ${{ needs.test-replace-1.outputs.properties }}
-
-          REPLACE_2_EXPECTED: |-
             prop3=prop3value
             prop4=prop4value
-          REPLACE_2_ACTUAL: ${{ needs.test-replace-2.outputs.properties }}
+          REPLACE_1_ACTUAL: ${{ needs.test-replace-1.outputs.properties }}
 
           APPEND_1_EXPECTED: |-
             prop1=prop1value
@@ -133,7 +113,6 @@ jobs:
         with:
           test: |
             test_equals "Replace 1" "${REPLACE_1_EXPECTED}" "${REPLACE_1_ACTUAL}"
-            test_equals "Replace 2" "${REPLACE_2_EXPECTED}" "${REPLACE_2_ACTUAL}"
 
             test_equals "Append 1" "${APPEND_1_EXPECTED}" "${APPEND_1_ACTUAL}"
 

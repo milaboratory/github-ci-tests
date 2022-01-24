@@ -29,6 +29,6 @@ jobs:
         uses: milaboratory/github-ci/actions/java/gradle/gradlew@v1-beta
         with:
           working-directory: ./gradle
-          tasks: |-
+          arguments: |-
             :projects
             :stub-app:tasks

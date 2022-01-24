@@ -12,39 +12,19 @@ jobs:
           - windows-latest
 
     runs-on: ${{ matrix.os }}
-    name: Dump env vars
+
+    name: Dump context
     steps:
-      - shell: bash
-        env:
-          CONTEXT_GITHUB: ${{ toJSON(github) }}
-          CONTEXT_JOB: ${{ toJSON(job) }}
-          CONTEXT_STEPS: ${{ toJSON(steps) }}
-          CONTEXT_RUNNER: ${{ toJSON(runner) }}
-          CONTEXT_STRATEGY: ${{ toJSON(strategy) }}
-          CONTEXT_MATRIX: ${{ toJSON(matrix) }}
-          CONTEXT_NEEDS: ${{ toJSON(needs) }}
-          CONTEXT_INPUTS: ${{ toJSON(inputs) }}
-        run:
-          echo "context.github"
-          jq '.' <<<"${CONTEXT_GITHUB}"
-
-          echo "context.job"
-          jq '.' <<<"${CONTEXT_JOB}"
-
-          echo "context.steps"
-          jq '.' <<<"${CONTEXT_STEPS}"
-
-          echo "context.runner"
-          jq '.' <<<"${CONTEXT_RUNNER}"
-
-          echo "context.strategy"
-          jq '.' <<<"${CONTEXT_STRATEGY}"
-
-          echo "context.matrix"
-          jq '.' <<<"${CONTEXT_MATRIX}"
-
-          echo "context.needs"
-          jq '.' <<<"${CONTEXT_NEEDS}"
-
-          echo "context.inputs"
-          jq '.' <<<"${CONTEXT_INPUTS}"
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'

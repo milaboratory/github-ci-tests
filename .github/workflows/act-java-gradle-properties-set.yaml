@@ -78,6 +78,7 @@ jobs:
         id: clear
         uses: milaboratory/github-ci/actions/java/gradle/properties/set@v1-beta
         with:
+          replace: true
           properties: ""
 
     outputs:

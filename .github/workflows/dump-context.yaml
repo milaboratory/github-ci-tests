@@ -1,0 +1,21 @@
+name: Dump Context
+
+on: [workflow_dispatch]
+
+jobs:
+  dump-env:
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+    name: Dump env vars
+    steps:
+      - shell: bash
+        env:
+          CONTEXT: ${{ toJSON(context) }}
+        run:
+          jq '.' <<<"${CONTEXT}"

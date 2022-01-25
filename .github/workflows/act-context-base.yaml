@@ -1,4 +1,4 @@
-name: "[A] context/*"
+name: "[A] context/<base>"
 
 on:
   push:
@@ -91,12 +91,12 @@ jobs:
       - uses: milaboratory/github-ci/actions/context/put@v1-beta
         with:
           key: ctx4
-          value: ctx-value-4
+          value: ctx-value-old
 
       - uses: milaboratory/github-ci/actions/context/put@v1-beta
         with:
           key: ctx4
-          value: ctx-value-4
+          value: ctx-value-new
 
   test-get-twice:
     runs-on: ubuntu-latest
@@ -116,6 +116,31 @@ jobs:
 
     outputs:
       value: ${{ steps.data.outputs.value }}
+
+  test-rewrite-flood:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        i: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+      max-parallel: 50
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx-rewrite-flood
+          value: ctx-value-flood
+
+  check-rewrite-flood:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-rewrite-flood
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx-rewrite-flood
 
   check:
     runs-on: ubuntu-latest
@@ -139,7 +164,7 @@ jobs:
           EXPECTED_3: ctx-value-3
           ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
 
-          EXPECTED_TWICE: ctx-value-4
+          EXPECTED_TWICE: ctx-value-new
           ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
 
         with:

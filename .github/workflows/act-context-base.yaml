@@ -108,6 +108,7 @@ jobs:
           value: ctx-value-old
 
       - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        continue-on-error: true
         with:
           key: ctx4
           value: ctx-value-new

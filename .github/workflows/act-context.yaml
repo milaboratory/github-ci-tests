@@ -25,6 +25,8 @@ jobs:
       - id: context
         uses: milaboratory/github-ci/actions/context@v1-beta
 
+      - uses: milaboratory/github-ci/actions/context@v1-beta
+
 
     outputs:
       current-version: ${{ steps.context.outputs.current-version }}

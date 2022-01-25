@@ -53,4 +53,13 @@ jobs:
 
         with:
           test: |
-            test_equals "Context not empty" "" ""
+            keys_count=$(jq -r 'keys[]' <<<"${CTX_CONTENT}" | wc -l)
+
+            if [ "${keys_count}" = "0" ]; then
+              fail_test "Empty context after init"
+            fi
+
+            jq -r 'keys[]' <<<"${CTX_CONTENT}" |
+              while read -r key; do
+                test_not_empty "Key '${key}' not empty" "$(jq ".${key}" <<<"${CTX_CONTENT}")"
+              done

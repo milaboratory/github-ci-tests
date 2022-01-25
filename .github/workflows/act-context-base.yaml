@@ -1,0 +1,118 @@
+name: "[A] context/*"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-context-put.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-put-1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx1
+          value: ctx-value-1
+
+  test-put-2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx2
+          value: ctx-value-2
+
+  test-put-3:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-1
+      - test-put-2
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx3
+          value: ctx-value-3
+
+  test-get-1:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-1
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx1
+
+  test-get-2:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-2
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx2
+
+  test-get-3:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-3
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx3
+
+  test-get-twice:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-3
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx3
+      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx3
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-get-1
+      - test-get-2
+      - test-get-3
+      - test-get-twice
+
+    steps:
+      - name: Test output
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          EXPECTED_1: ctx-value-1
+          ACTUAL_1: ${{ needs.test-get-1.outputs.value }}
+
+          EXPECTED_2: ctx-value-2
+          ACTUAL_2: ${{ needs.test-get-2.outputs.value }}
+
+          EXPECTED_3: ctx-value-3
+          ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
+
+          EXPECTED_TWICE: ctx-value-3
+          ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
+        with:
+          test: |
+            test_equals "Test PUT/GET 1" "${EXPECTED_1}" "${ACTUAL_1}"
+            test_equals "Test PUT/GET 2" "${EXPECTED_2}" "${ACTUAL_2}"
+            test_equals "Test PUT/GET 3" "${EXPECTED_3}" "${ACTUAL_3}"
+
+            test_equals "Test GET twice" "${EXPECTED_TWICE}" "${ACTUAL_TWICE}"

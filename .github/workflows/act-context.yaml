@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs:
-      - test-init
+      - test-context-init
 
     steps:
       - id: context

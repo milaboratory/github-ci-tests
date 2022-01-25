@@ -3,7 +3,7 @@ name: "[A] context/*"
 on:
   push:
     paths:
-      - .github/workflows/act-context-put.yaml
+      - .github/workflows/act-context-base.yaml
 
   workflow_dispatch:
 
@@ -46,9 +46,13 @@ jobs:
       - test-put-1
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+      - id: data
+        uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
           key: ctx1
+
+    outputs:
+      value: ${{ steps.data.outputs.value }}
 
   test-get-2:
     runs-on: ubuntu-latest
@@ -57,9 +61,13 @@ jobs:
       - test-put-2
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+      - id: data
+        uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
           key: ctx2
+
+    outputs:
+      value: ${{ steps.data.outputs.value }}
 
   test-get-3:
     runs-on: ubuntu-latest
@@ -68,23 +76,46 @@ jobs:
       - test-put-3
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+      - id: data
+        uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
           key: ctx3
+
+    outputs:
+      value: ${{ steps.data.outputs.value }}
+
+  test-put-twice:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx4
+          value: ctx-value-4
+
+      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+        with:
+          key: ctx4
+          value: ctx-value-4
 
   test-get-twice:
     runs-on: ubuntu-latest
 
     needs:
-      - test-put-3
+      - test-put-twice
 
     steps:
       - uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
-          key: ctx3
-      - uses: milaboratory/github-ci/actions/context/get@v1-beta
+          key: ctx4
+
+      - id: data
+        uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
-          key: ctx3
+          key: ctx4
+
+    outputs:
+      value: ${{ steps.data.outputs.value }}
 
   check:
     runs-on: ubuntu-latest
@@ -107,7 +138,7 @@ jobs:
           EXPECTED_3: ctx-value-3
           ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
 
-          EXPECTED_TWICE: ctx-value-3
+          EXPECTED_TWICE: ctx-value-4
           ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
         with:
           test: |

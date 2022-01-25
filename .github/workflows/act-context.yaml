@@ -59,7 +59,7 @@ jobs:
               fail_test "Empty context after init"
             fi
 
-            jq -r 'keys[]' <<<"${CTX_CONTENT}" |
+            jq 'keys[]' <<<"${CTX_CONTENT}" |
               while read -r key; do
-                test_not_empty "Key '${key}' not empty" "$(jq ".${key}" <<<"${CTX_CONTENT}")"
+                test_not_empty "Check ${key}" "$(jq ".${key}" <<<"${CTX_CONTENT}")"
               done

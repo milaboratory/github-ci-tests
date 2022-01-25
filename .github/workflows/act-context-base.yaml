@@ -138,6 +138,7 @@ jobs:
       - test-get-1
       - test-get-2
       - test-get-3
+      - test-put-twice
       - test-get-twice
 
     steps:
@@ -154,7 +155,7 @@ jobs:
           EXPECTED_3: ctx-value-3
           ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
 
-          EXPECTED_TWICE: ctx-value-new
+          EXPECTED_TWICE: ctx-value-old
           ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
 
         with:
@@ -164,3 +165,4 @@ jobs:
             test_equals "Test PUT/GET 3" "${EXPECTED_3}" "${ACTUAL_3}"
 
             test_equals "Test GET twice" "${EXPECTED_TWICE}" "${ACTUAL_TWICE}"
+            test_equals "Test PUT twice" "failure" "${{ needs.test-put-twice.result }}"

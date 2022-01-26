@@ -1,0 +1,30 @@
+name: "[B] java/build"
+
+on:
+  push:
+    paths:
+      - .github/workflows/blk-java-build.yaml
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/blocks/java/build@v1-beta
+        with:
+          project: 'stub-lib'
+          tasks: 'build'
+          exclude-tasks: 'test'
+          project-dir: './gradle'
+
+          checkout-submodules: 'recursive'
+          java-version: '11'
+
+          properties: |
+            miGitHubMavenUser=${{ github.actor }}
+            miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
+
+          artifacts-paths: |
+            libs/*.jar

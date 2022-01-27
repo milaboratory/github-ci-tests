@@ -40,7 +40,7 @@ publishing {
     repositories {
         maven {
             name = "GitHub"
-            url = uri("https://maven.pkg.github.com/milaboratory/workflow-experiments")
+            url = uri("https://maven.pkg.github.com/milaboratory/github-ci-tests")
 
             credentials {
                 username = miGitHubMavenUser

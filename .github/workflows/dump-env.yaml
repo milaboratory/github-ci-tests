@@ -19,11 +19,5 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Dump env vars
     steps:
-      - name: Prepare env for Java application build
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: 11
-
       - run: env
         shell: bash

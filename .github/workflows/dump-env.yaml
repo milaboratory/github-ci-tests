@@ -22,8 +22,8 @@ jobs:
       - name: Prepare env for Java application build
         uses: actions/setup-java@v2
         with:
-          distribution: ${{ inputs.java-distribution }}
-          java-version: ${{ inputs.java-version }}
+          distribution: 'temurin'
+          java-version: 11
 
       - run: env
         shell: bash

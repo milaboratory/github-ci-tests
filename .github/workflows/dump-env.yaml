@@ -1,6 +1,11 @@
 name: Dump Env
 
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - .github/workflows/dump-env.yaml
+
+  workflow_dispatch:
 
 jobs:
   dump-env:

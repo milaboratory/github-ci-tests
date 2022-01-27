@@ -14,5 +14,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Dump env vars
     steps:
+      - name: Prepare env for Java application build
+        uses: actions/setup-java@v2
+        with:
+          distribution: ${{ inputs.java-distribution }}
+          java-version: ${{ inputs.java-version }}
+
       - run: env
         shell: bash

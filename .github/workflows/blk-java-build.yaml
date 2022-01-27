@@ -28,5 +28,6 @@ jobs:
             miGitHubMavenUser=${{ github.actor }}
             miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
 
-          artifacts-paths: |
+          artifact-paths: |
             libs/*.jar
+          artifact-retention: 1

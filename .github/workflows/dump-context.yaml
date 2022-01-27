@@ -1,9 +1,25 @@
 name: Dump Context
 
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - .github/workflows/dump-context.yaml
+
+  workflow_dispatch:
 
 jobs:
-  dump-env:
+  failure:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: exit 1
+
+  dump-context:
+    needs:
+      - failure
+
+    if: always()
+
     strategy:
       matrix:
         os:

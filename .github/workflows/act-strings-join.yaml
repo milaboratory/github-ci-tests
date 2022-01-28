@@ -1,0 +1,94 @@
+name: "[A] strings/join"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-strings-join.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-multiline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        with:
+          input: |
+            line1
+            line2
+          separator: '{S}'
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-singleline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        with:
+          input: single-line-text
+          separator: '{S}'
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        with:
+          input: ''
+          separator: '{S}'
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  test-empty-newline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: test
+        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        with:
+          input: "\n"
+          separator: '{S}'
+
+    outputs:
+      result: ${{ steps.test.outputs.result }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-multiline
+      - test-singleline
+      - test-empty
+      - test-empty-newline
+
+    steps:
+      - id: tests
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          MULTILINE_EXPECTED: 'line1{S}line2'
+          MULTILINE_ACTUAL: ${{ needs.test-multiline.outputs.result }}
+
+          SINGLELINE_EXPECTED: 'single-line-text'
+          SINGLELINE_ACTUAL: ${{ needs.test-singleline.outputs.result }}
+
+          EMPTY_EXPECTED: ''
+          EMPTY_ACTUAL: ${{ needs.test-empty.outputs.result }}
+
+          NEWLINE_EXPECTED: ''
+          NEWLINE_ACTUAL: ${{ needs.test-empty-newline.outputs.result }}
+
+        with:
+          test: |
+            test_equals "Multiline" "${MULTILINE_EXPECTED}" "${MULTILINE_ACTUAL}"
+            test_equals "Single line" "${SINGLELINE_EXPECTED}" "${SINGLELINE_ACTUAL}"
+            test_equals "Empty" "${EMPTY_EXPECTED}" "${EMPTY_ACTUAL}"
+            test_equals "Newline-only" "${NEWLINE_EXPECTED}" "${NEWLINE_ACTUAL}"

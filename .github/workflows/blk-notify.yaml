@@ -12,12 +12,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v1
-      - shell: bash
-        run: exit 1
 
-  notify:
+  notify-failure:
+
+    name: Notify (failure)
     runs-on: ubuntu-latest
-    if: always()
+
+    if: failure()
+
+    needs:
+      - init
+
+    steps:
+      - name: Report build failure to Telegram
+        uses: milaboratory/github-ci/blocks/notify/failure@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+          product-name: 'TG Notify Test'
+
+  notify-success:
+
+    name: Notify (success)
+    runs-on: ubuntu-latest
+
+    if: success()
 
     needs:
       - init
@@ -28,5 +47,4 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
           product-name: 'TG Notify Test'
-          is-failed: ${{ job.status }}
           docker-images: '["a/b/c:d"]'

@@ -24,6 +24,8 @@ jobs:
       - id: context
         uses: milaboratory/github-ci/actions/context@v1
 
+      - uses: actions/checkout@v2
+
       - shell: bash
         env:
           CURRENT_VERSION: ${{ steps.context.outputs.current-version }}

@@ -23,6 +23,10 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: context
+
       - uses: milaboratory/github-ci/actions/release/create@v1-beta
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -30,5 +34,6 @@ jobs:
           name: ${{ steps.context.outputs.current-version }}
           tag: ${{ steps.context.outputs.current-tag }}
 
-          assets: assets/test-asset.txt
-          artifact: context
+          assets: |
+            assets/test-asset.txt
+            context/*

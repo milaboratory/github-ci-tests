@@ -8,18 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  failure:
-    runs-on: ubuntu-latest
-    steps:
-      - shell: bash
-        run: exit 1
-
   dump-context:
-    needs:
-      - failure
-
-    if: always()
-
     strategy:
       matrix:
         os:

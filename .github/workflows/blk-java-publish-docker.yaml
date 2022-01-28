@@ -1,0 +1,26 @@
+name: "[B] java/publish/docker"
+
+on:
+  push:
+    paths:
+      - .github/workflows/blk-java-publish-docker.yaml
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/init@v1
+
+      - shell: bash
+        env:
+          CURRENT_VERSION: ${{ steps.context.outputs.current-version }}
+        run: |
+          docker build --tag "stub-docker:${CURRENT_VERSION}" ./docker
+
+      - uses: milaboratory/github-ci/blocks/java/publish/docker@v1-beta
+        with:
+          project: stub-docker
+          github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,34 @@
+name: "[A] release/create"
+
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/context/init@v1
+
+  create-release:
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - id: context
+        uses: milaboratory/github-ci/actions/context@v1
+
+      - uses: actions/checkout@v2
+
+      - uses: milaboratory/github-ci/actions/release/create@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          name: ${{ steps.context.outputs.current-version }}
+          tag: ${{ steps.context.outputs.current-tag }}
+
+          assets: assets/test-asset.txt
+          artifact: context

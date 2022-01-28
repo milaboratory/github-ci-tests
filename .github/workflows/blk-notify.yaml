@@ -1,4 +1,4 @@
-name: "[B] java/build"
+name: "[B] notify"
 
 on:
   push:

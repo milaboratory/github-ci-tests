@@ -8,12 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  notify:
+  init:
     runs-on: ubuntu-latest
-
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v1
+      - shell: bash
+        run: exit 1
 
+  notify:
+    runs-on: ubuntu-latest
+    if: always()
+
+    needs:
+      - init
+
+    steps:
       - uses: milaboratory/github-ci/blocks/notify@v1-beta
         with:
           telegram-target: 95899978

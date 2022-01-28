@@ -31,6 +31,15 @@ jobs:
           product-name: 'TG Notify Test'
           docker-images: '["a/b/c:d"]'
 
+  fail:
+    runs-on: ubuntu-latest
+    needs:
+      - init
+
+    steps:
+      - shell: bash
+        run: exit 1
+
   notify-failure:
 
     name: Notify (failure)
@@ -39,7 +48,7 @@ jobs:
     if: failure()
 
     needs:
-      - init
+      - fail
 
     steps:
       - name: Report build failure to Telegram

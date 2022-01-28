@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        uses: milaboratory/github-ci/actions/strings/join@v1-beta
         with:
           input: |
             line1
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        uses: milaboratory/github-ci/actions/strings/join@v1-beta
         with:
           input: single-line-text
           separator: '{S}'
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        uses: milaboratory/github-ci/actions/strings/join@v1-beta
         with:
           input: ''
           separator: '{S}'
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - id: test
-        uses: milaboratory/github-ci/actions/strings/json-list@v1-beta
+        uses: milaboratory/github-ci/actions/strings/join@v1-beta
         with:
           input: "\n"
           separator: '{S}'

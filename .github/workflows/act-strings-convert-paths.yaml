@@ -80,7 +80,7 @@ jobs:
           EMPTY_PATHS_ACTUAL: ${{ needs.test-empty-paths.outputs.result }}
 
           EMPTY_ROOTS_EXPECTED: |-
-            ${{ needs.test-normal.outputs.root }}/a1
+            /a1
             ${{ needs.test-normal.outputs.root }}/r1
           EMPTY_ROOTS_ACTUAL: ${{ needs.test-empty-roots.outputs.result }}
 

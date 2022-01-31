@@ -11,6 +11,9 @@ on:
 jobs:
   run:
     uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
+    env:
+      MISH_DEBUG: 'true'
+
     with:
       node-version: '14.x'
       os: |

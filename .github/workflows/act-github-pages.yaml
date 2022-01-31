@@ -1,0 +1,36 @@
+name: "[A] context"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-github-pages.yaml
+
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: milaboratory/github-ci/actions/context/init@v1
+      - id: context
+        uses: milaboratory/github-ci/actions/context@v1
+
+      - uses: milaboratory/github-ci/actions/shell@v1
+        env:
+          VERSION: ${{ steps.context.outputs.current-version }}
+          TEMPLATE: assets/index.html.tpl
+          OUT_FILE: github-pages/index.html
+        with:
+          run: |
+            mkdir -p "$(dirname "${OUT_FILE}")"
+            envsubst < "${TEMPLATE}" > "${OUT_FILE}"
+
+
+      - uses: milaboratory/github-ci/actions/github-pages@v1-beta
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          publish-branch: gh-pages
+          publish-dir: github-pages
+

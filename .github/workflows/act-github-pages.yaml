@@ -1,4 +1,4 @@
-name: "[A] context"
+name: "[A] github-pages"
 
 on:
   push:

@@ -45,17 +45,6 @@ jobs:
           dockerfile: ./docker/Dockerfile
           tags: ''
 
-      - id: images
-        uses: milaboratory/github-ci/actions/shell@v1
-        with:
-          run: |
-            docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
-              tr -d " " |
-              grep --extended-regexp '^test:'
-
-    outputs:
-      images: ${{ steps.images.outputs.stdout }}
-
   test-w-args:
     runs-on: ubuntu-latest
 
@@ -66,6 +55,9 @@ jobs:
         uses: milaboratory/github-ci/actions/docker/build@v1-beta
         with:
           dockerfile: ./docker/Dockerfile
+          tags: |
+            test:0.0.1
+            test:latest
           args: |
             NODE_ENV=production
             MYCUSTOM=value
@@ -97,10 +89,9 @@ jobs:
             test:latest
           NO_ARGS_ACTUAL: ${{ needs.test-no-args.outputs.images }}
 
-          NO_TAGS_EXPECTED: ''
-          NO_TAGS_ACTUAL: ${{ needs.test-no-tags.outputs.images }}
-
-          W_ARGS_EXPECTED: ''
+          W_ARGS_EXPECTED: |-
+            test:0.0.1
+            test:latest
           W_ARGS_ACTUAL: ${{ needs.test-w-args.outputs.images }}
         with:
           test: |

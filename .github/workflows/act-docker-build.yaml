@@ -96,5 +96,4 @@ jobs:
         with:
           test: |
             test_equals "No args" "${NO_ARGS_EXPECTED}" "${NO_ARGS_ACTUAL}"
-            test_equals "Not tags" "${NO_TAGS_EXPECTED}" "${NO_TAGS_ACTUAL}"
             test_equals "With args" "${W_ARGS_EXPECTED}" "${W_ARGS_ACTUAL}"

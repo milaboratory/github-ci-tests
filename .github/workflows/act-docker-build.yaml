@@ -1,0 +1,106 @@
+name: "[A] docker/build"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-docker-build.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-no-args:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build stub docker image
+        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        with:
+          dockerfile: ./docker/Dockerfile
+          tags: |
+            test:0.0.1
+            test:latest
+
+      - id: images
+        uses: milaboratory/github-ci/actions/shell@v1
+        with:
+          run: |
+            docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              grep --extended-regexp '^test:'
+
+    outputs:
+      images: ${{ steps.images.outputs.stdout }}
+
+  test-no-tags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build stub docker image
+        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        with:
+          dockerfile: ./docker/Dockerfile
+          tags: ''
+
+      - id: images
+        uses: milaboratory/github-ci/actions/shell@v1
+        with:
+          run: |
+            docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              grep --extended-regexp '^test:'
+
+    outputs:
+      images: ${{ steps.images.outputs.stdout }}
+
+  test-w-args:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build stub docker image
+        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        with:
+          dockerfile: ./docker/Dockerfile
+          args: |
+            NODE_ENV=production
+            MYCUSTOM=value
+
+      - id: images
+        uses: milaboratory/github-ci/actions/shell@v1
+        with:
+          run: |
+            docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              grep --extended-regexp '^test:'
+
+    outputs:
+      images: ${{ steps.images.outputs.stdout }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-no-args
+      - test-no-tags
+      - test-w-args
+
+    steps:
+      - name: Check tags pushed
+        uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          NO_ARGS_EXPECTED: |-
+            test:0.0.1
+            test:latest
+          NO_ARGS_ACTUAL: ${{ needs.test-no-args.outputs.images }}
+
+          NO_TAGS_EXPECTED: ''
+          NO_TAGS_ACTUAL: ${{ needs.test-no-tags.outputs.images }}
+
+          W_ARGS_EXPECTED: ''
+          W_ARGS_ACTUAL: ${{ needs.test-w-args.outputs.images }}
+        with:
+          test: |
+            test_equals "No args" "${NO_ARGS_EXPECTED}" "${NO_ARGS_ACTUAL}"
+            test_equals "Not tags" "${NO_TAGS_EXPECTED}" "${NO_TAGS_ACTUAL}"
+            test_equals "With args" "${W_ARGS_EXPECTED}" "${W_ARGS_ACTUAL}"

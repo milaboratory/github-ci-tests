@@ -27,6 +27,7 @@ jobs:
         with:
           run: |
             docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              tr -d " " |
               grep --extended-regexp '^test:'
 
     outputs:
@@ -49,6 +50,7 @@ jobs:
         with:
           run: |
             docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              tr -d " " |
               grep --extended-regexp '^test:'
 
     outputs:
@@ -73,6 +75,7 @@ jobs:
         with:
           run: |
             docker image ls --format '{{ if ne .Repository "<none>" }} {{ .Repository }}:{{ .Tag }} {{ end }}' |
+              tr -d " " |
               grep --extended-regexp '^test:'
 
     outputs:

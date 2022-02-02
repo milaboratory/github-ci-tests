@@ -25,6 +25,9 @@ jobs:
           run: |
             ghwa_set_output "os" "${RUNNER_OS}"
 
+    outputs:
+      os: ${{ fromJSON(steps.os.outputs.data).os }}
+
   needs-check:
     runs-on: ubuntu-latest
 

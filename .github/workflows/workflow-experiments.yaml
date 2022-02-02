@@ -9,7 +9,7 @@ on:
 
 jobs:
   experiment:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v1

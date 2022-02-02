@@ -15,7 +15,7 @@ jobs:
 
   notify-success:
 
-    name: Notify (success)
+    name: Notify build ready
     runs-on: ubuntu-latest
 
     if: success()
@@ -42,7 +42,7 @@ jobs:
 
   notify-failure:
 
-    name: Notify (failure)
+    name: Notify build failed
     runs-on: ubuntu-latest
 
     if: failure()

@@ -23,4 +23,4 @@ jobs:
 
       - shell: bash
         run: |
-          echo "'${{ steps.get.outputs.value }}'"
+          echo "${{ steps.get.outputs.value }}"

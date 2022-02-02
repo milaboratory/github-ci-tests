@@ -8,33 +8,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  matrix-run:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
+  experiment:
+    runs-on: macos-latest
 
     steps:
-      - id: os
-        uses: milaboratory/github-ci/actions/shell@v1
-        with:
-          dump-stdout: false
-          run: |
-            ghwa_set_output "os" "${RUNNER_OS}"
-
-    outputs:
-      os: ${{ fromJSON(steps.os.outputs.data).os }}
-
-  needs-check:
-    runs-on: ubuntu-latest
-
-    needs:
-      - matrix-run
-
-    steps:
-      - shell: bash
-        run: |
-          echo "${{ toJSON( needs ) }}"
+      - uses: milaboratory/github-ci/actions/context/init@v1
+        env:
+          MISH_DEBUG: 'true'
+      - uses: milaboratory/github-ci/actions/context@v1
+        env:
+          MISH_DEBUG: 'true'

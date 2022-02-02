@@ -21,11 +21,11 @@ jobs:
       build-project-dir: './gradle'
       notify-telegram: true
       publish-dev-tasks: publishAllPublicationsToGitHubRepository
-      publish-release-tasks: publishMavenPublicationToGitHubRepository
-      artifacts-paths: |
+      publish-release-tasks: ''
+      artifact-paths: |
         libs/*.jar
       release-files: |
-        ./libs/*.jar
+        libs/*.jar
 
     secrets:
       GRADLE_PROPERTIES: |

@@ -57,7 +57,7 @@ jobs:
 
   send-build-ready-unknown-category:
     runs-on: ubuntu-latest
-    name: "'Build ready' for release"
+    name: "'Build ready' for unknown category"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta

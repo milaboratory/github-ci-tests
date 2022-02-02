@@ -15,13 +15,13 @@ jobs:
       - uses: milaboratory/github-ci/actions/context/init@v1
         env:
           MISH_DEBUG: 'true'
-          GHWA_ECHO_COMMANDS: 'true'
+          GHWA_ECHO_COMMANDS: 'on'
 
       - id: get
         uses: milaboratory/github-ci/actions/context/get@v1
         env:
           MISH_DEBUG: 'true'
-          GHWA_ECHO_COMMANDS: 'true'
+          GHWA_ECHO_COMMANDS: 'on'
         with:
           key: "versions.json"
 

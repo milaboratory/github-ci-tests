@@ -10,7 +10,7 @@ on:
 jobs:
   send-release-ready:
     runs-on: ubuntu-latest
-    name: Send Telegram message
+    name: "'Release ready'"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/release-ready@v1-beta
@@ -29,7 +29,7 @@ jobs:
 
   send-build-ready-dev:
     runs-on: ubuntu-latest
-    name: Send Telegram message
+    name: "'Build ready' for dev"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta
@@ -49,7 +49,7 @@ jobs:
 
   send-build-ready-release:
     runs-on: ubuntu-latest
-    name: Send Telegram message
+    name: "'Build ready' for release"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta
@@ -69,7 +69,7 @@ jobs:
 
   send-build-failed:
     runs-on: ubuntu-latest
-    name: Send Telegram message
+    name: "'Build failed'"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/build-failed@v1-beta

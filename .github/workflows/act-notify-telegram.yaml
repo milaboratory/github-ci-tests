@@ -67,9 +67,12 @@ jobs:
 
           product-name: 'TG Notify Test'
           build-version: '0.11.1-2-unknown'
+          build-category: 'unknown'
 
           docker-images: |
             [ "path/to/image:one", "path/to/image:two" ]
+          maven-packages: |
+            [ "pkg1:1", "pkg2:2" ]
 
           additional-info: |
             some additional info at the end of the message

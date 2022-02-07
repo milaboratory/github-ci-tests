@@ -21,4 +21,4 @@ jobs:
     steps:
       - shell: bash
         run: |
-          echo "Time is: ${EPOCHREALTIME}"
+          echo "Random is: ${RANDOM}"

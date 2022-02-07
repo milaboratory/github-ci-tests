@@ -17,17 +17,8 @@ jobs:
           # This step always fails
           exit 1
 
-      - uses: milaboratory/github-ci/actions/shell@v1
-        id: status
-        if: always()
-        env:
-          JOB_STATUS: ${{ job.status }}
-        with:
-          run: |
-            echo "${JOB_STATUS}"
-
     outputs:
-      status: ${{ steps.status.outputs.stdout }}
+      status: ${{ job.status }}
 
   check:
     runs-on: ubuntu-latest

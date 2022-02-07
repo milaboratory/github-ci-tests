@@ -9,22 +9,16 @@ on:
 
 jobs:
   experiment:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/init@v1
-        env:
-          MISH_DEBUG: 'true'
-          GHWA_ECHO_COMMANDS: 'on'
-
-      - id: get
-        uses: milaboratory/github-ci/actions/context/get@v1
-        env:
-          MISH_DEBUG: 'true'
-          GHWA_ECHO_COMMANDS: 'on'
-        with:
-          key: "versions.json"
-
       - shell: bash
         run: |
-          echo "${{ steps.get.outputs.value }}"
+          echo "Time is: ${EPOCHREALTIME}"

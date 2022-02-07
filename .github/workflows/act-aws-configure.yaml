@@ -22,10 +22,10 @@ jobs:
         with:
           test: |
             test -r ~/.aws/credentials ||
-              fail_test "'~/.aws/credentials' file not found'
+              fail_test "'~/.aws/credentials' file not found"
 
             test -r ~/.aws/config ||
-              fail_test "'~/.aws/config' file not found'
+              fail_test "'~/.aws/config' file not found"
 
             grep --quiet 'aws-key-id-string' ~/.aws/credentials ||
               fail_test "key ID not found in '~/.aws/credentials'"

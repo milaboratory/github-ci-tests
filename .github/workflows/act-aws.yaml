@@ -16,7 +16,7 @@ jobs:
         with:
           key-id: awskeyid
           key-secret: awskeysecret
-          default-region: eu-central-1
+          region: eu-central-1
 
       - uses: milaboratory/github-ci/actions/aws@v1-beta
         with:

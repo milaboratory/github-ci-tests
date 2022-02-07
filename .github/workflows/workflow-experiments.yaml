@@ -9,13 +9,32 @@ on:
 
 jobs:
   experiment:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        i:
+          - os: ubuntu-latest
+            code: 1
+          - os: macos-latest
+            code: 0
+          - os: windows-latest
+            code: 0
+
+    runs-on: ${{ matrix.i.os }}
 
     steps:
       - shell: bash
         run: |
-          # This step always fails
-          exit 1
+          exit ${{ matrix.i.code }}
+
+  join:
+    runs-on: ubuntu-latest
+
+    needs:
+      - experiment
+
+    steps:
+      - shell: bash
+        run: "true"
 
     outputs:
       status: ${{ job.status }}
@@ -25,10 +44,13 @@ jobs:
     if: always()
     needs:
       - experiment
+      - join
 
     steps:
       - shell: bash
         env:
-          DEP_STATUS: ${{ needs.experiment.outputs.status }}
+          EXP_STATUS: ${{ needs.experiment.outputs.status }}
+          JOIN_STATUS: ${{ needs.join.outputs.status }}
         run: |
-          echo "Experiment status is: '${DEP_STATUS}'"
+          echo "Experiment status is: '${EXP_STATUS}'"
+          echo "Join status is: '${JOIN_STATUS}'"

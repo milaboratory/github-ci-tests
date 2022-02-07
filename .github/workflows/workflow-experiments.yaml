@@ -40,7 +40,7 @@ jobs:
         run: "true"
 
     outputs:
-      status: ${{ job.status }}
+      status: ${{ job.status || 'failure' }}
 
   check:
     runs-on: ubuntu-latest

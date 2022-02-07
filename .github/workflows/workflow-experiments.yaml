@@ -9,16 +9,34 @@ on:
 
 jobs:
   experiment:
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - shell: bash
         run: |
-          echo "Random is: ${RANDOM}"
+          # This step always fails
+          exit 1
+
+      - uses: milaboratory/github-ci/actions/shell@v1
+        id: status
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        with:
+          run: |
+            echo "${JOB_STATUS}"
+
+    outputs:
+      status: ${{ steps.status.outputs.stdout }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - experiment
+
+    steps:
+      - shell: bash
+        env:
+          DEP_STATUS: ${{ needs.experiment.outputs.status }}
+        run: |
+          echo "Experiment status is: '${DEP_STATUS}'"

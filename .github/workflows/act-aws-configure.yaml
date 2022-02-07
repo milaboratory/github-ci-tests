@@ -1,0 +1,37 @@
+name: "[A] miaws"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-aws.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/aws/configure@v1-beta
+        with:
+          key-id: aws-key-id-string
+          key-secret: aws-key-secret-string
+          default-region: aws-default-region-name
+
+      - uses: milaboratory/github-ci/actions/action-test@v1
+        with:
+          run: |
+            test -r ~/.aws/credentials ||
+              fail_test "'~/.aws/credentials' file not found'
+
+            test -r ~/.aws/config ||
+              fail_test "'~/.aws/config' file not found'
+
+            grep --quiet 'aws-key-id-string' ~/.aws/credentials ||
+              fail_test "key ID not found in '~/.aws/credentials'"
+
+            grep --quiet 'aws-key-secret-string' ~/.aws/credentials ||
+              fail_test "key secret not found in '~/.aws/credentials'"
+
+            grep --quiet 'aws-default-region-name' ~/.aws/config ||
+              fail_test "default region string not found in '~/.aws/config'"

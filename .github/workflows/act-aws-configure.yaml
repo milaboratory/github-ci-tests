@@ -20,7 +20,7 @@ jobs:
 
       - uses: milaboratory/github-ci/actions/action-test@v1
         with:
-          run: |
+          test: |
             test -r ~/.aws/credentials ||
               fail_test "'~/.aws/credentials' file not found'
 

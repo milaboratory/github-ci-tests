@@ -1,9 +1,9 @@
-name: "[A] miaws"
+name: "[A] aws/configure"
 
 on:
   push:
     paths:
-      - .github/workflows/act-aws.yaml
+      - .github/workflows/act-aws-configure.yaml
 
   workflow_dispatch:
 

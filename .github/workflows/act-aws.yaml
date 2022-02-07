@@ -1,0 +1,23 @@
+name: "[A] aws CLI"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-aws.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/aws/configure@v1
+        with:
+          key-id: awskeyid
+          key-secret: awskeysecret
+          default-region: eu-central-1
+
+      - uses: milaboratory/github-ci/actions/aws@v1-beta
+        with:
+          args: --help

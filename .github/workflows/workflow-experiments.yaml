@@ -46,14 +46,11 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - experiment
       - join
 
     steps:
       - shell: bash
         env:
-          EXP_STATUS: ${{ needs.experiment.outputs.status }}
           JOIN_STATUS: ${{ needs.join.outputs.status }}
         run: |
-          echo "Experiment status is: '${EXP_STATUS}'"
           echo "Join status is: '${JOIN_STATUS}'"

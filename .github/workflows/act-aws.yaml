@@ -20,6 +20,6 @@ jobs:
 
       - uses: milaboratory/github-ci/actions/aws@v1-beta
         with:
-          args: |
+          args: |-
             s3
             help

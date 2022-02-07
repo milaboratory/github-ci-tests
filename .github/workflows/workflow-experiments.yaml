@@ -26,6 +26,9 @@ jobs:
         run: |
           exit ${{ matrix.i.code }}
 
+    outputs:
+      status: ${{ job.status }}
+
   join:
     runs-on: ubuntu-latest
 

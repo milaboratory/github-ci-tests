@@ -14,9 +14,9 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/aws/configure@v1-beta
         with:
-          key-id: aws-key-id-string
-          key-secret: aws-key-secret-string
-          default-region: aws-default-region-name
+          key-id: aws-key-id-str
+          key-secret: aws-key-secret-str
+          default-region: aws-default-region
 
       - uses: milaboratory/github-ci/actions/action-test@v1
         with:

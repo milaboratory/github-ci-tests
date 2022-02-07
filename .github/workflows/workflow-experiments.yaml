@@ -40,7 +40,7 @@ jobs:
         run: "true"
 
     outputs:
-      status: ${{ job.status }}
+      status: ${{ job.status != '' && job.status || 'failure' }}
 
   check:
     runs-on: ubuntu-latest
@@ -51,6 +51,6 @@ jobs:
     steps:
       - shell: bash
         env:
-          JOIN_STATUS: ${{ needs.join.outputs.status || 'failure' }}
+          JOIN_STATUS: ${{ needs.join.outputs.status }}
         run: |
           echo "Join status is: '${JOIN_STATUS}'"

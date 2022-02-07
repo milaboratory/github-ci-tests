@@ -1,9 +1,9 @@
-name: "[B] notify"
+name: "[B] notify/build"
 
 on:
   push:
     paths:
-      - .github/workflows/blk-notify.yaml
+      - .github/workflows/blk-notify-build.yaml
 
   workflow_dispatch:
 

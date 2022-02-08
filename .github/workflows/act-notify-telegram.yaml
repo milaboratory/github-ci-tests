@@ -77,7 +77,7 @@ jobs:
 
   send-tests-failed:
     runs-on: ubuntu-latest
-    name: "'Tests ready'"
+    name: "'Tests failed'"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/tests@v1-beta

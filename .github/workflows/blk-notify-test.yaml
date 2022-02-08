@@ -26,7 +26,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/notify/test@v1-beta
+      - uses: milaboratory/github-ci/blocks/notify/tests@v1-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}

@@ -27,5 +27,6 @@ jobs:
           project-dir: './gradle'
 
           java-version: '11'
+          cache-key: temurin-11-v1
 
           s3-bucket: 'milaboratory-artefacts-public-files'

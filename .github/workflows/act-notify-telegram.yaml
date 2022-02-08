@@ -70,7 +70,6 @@ jobs:
 
           product-name: 'TG Notify Test'
           build-version: '0.11.1-2-failed'
-          build-category: 'dev'
 
           additional-info: |
             some additional info at the end of the message

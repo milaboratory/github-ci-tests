@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - uses: milaboratory/github-ci/actions/context/init@v1
 
       - uses: milaboratory/github-ci/blocks/java/build@v1-beta
@@ -21,7 +22,6 @@ jobs:
           exclude-tasks: 'test'
           project-dir: './gradle'
 
-          checkout-submodules: 'recursive'
           java-version: '11'
 
           properties: |

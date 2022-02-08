@@ -1,0 +1,42 @@
+name: "[A] helpers/safe-ctx"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-helpers-safe-ctx.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: ctx
+        uses: milaboratory/github-ci/actions/helpers/safe-ctx@v1-beta
+
+    outputs:
+      github: ${{ steps.ctx.outputs.github }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          GH_CTX: ${{ needs.test.outputs.github }}
+        with:
+          test: |
+            token="$(jq .token <<<"${GH_CTX}")"
+
+            if [ "${token}" != "null" ]; then
+              fail_test "Token was not removed from sanitized github context"
+            fi
+
+            repo="$(jq .repository <<<"${GH_CTX}")"
+            if [ -z "${repo}" ] || [ "${repo}" = "null" ]; then
+              fail_test "'.repository' key not found in sanitized github context"
+            fi

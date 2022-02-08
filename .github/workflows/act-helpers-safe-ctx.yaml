@@ -30,7 +30,7 @@ jobs:
           GH_CTX: ${{ needs.test.outputs.github }}
         with:
           test: |
-            token="$(jq .token <<<"${GH_CTX}")"
+            token="$(jq .sha <<<"${GH_CTX}")"
 
             if [ "${token}" != "null" ]; then
               fail_test "Token was not removed from sanitized github context"

@@ -112,7 +112,7 @@ jobs:
     outputs:
       value: ${{ steps.data.outputs.value }}
 
-  test-put-twice:
+  test-put-race:
     runs-on: ubuntu-latest
 
     needs:
@@ -130,24 +130,22 @@ jobs:
           key: ctx4
           value: ctx-value-new
 
-  test-get-twice:
+  test-get-race:
     runs-on: ubuntu-latest
 
     needs:
-      - test-put-twice
+      - test-put-race
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/get@v1-beta
-        with:
-          key: ctx4
-
       - id: data
         uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
           key: ctx4
+          default-value: race-default-value
 
     outputs:
       status: ${{ job.status }}
+      value: ${{ steps.data.outputs.value }}
 
   check:
     runs-on: ubuntu-latest
@@ -158,7 +156,7 @@ jobs:
       - test-get-2
       - test-get-3
       - test-get-default
-      - test-get-twice
+      - test-get-race
 
     steps:
       - name: Test output
@@ -177,8 +175,10 @@ jobs:
           EXPECTED_DEFAULT: ctx-default-value
           ACTUAL_DEFAULT: ${{ needs.test-get-default.outputs.value }}
 
-          EXPECTED_TWICE: 'failure'
-          ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.status }}
+          EXPECTED_RACE_STATUS: 'failure'
+          ACTUAL_RACE_STATUS: ${{ needs.test-get-race.outputs.status }}
+          EXPECTED_RACE_VALUE: 'race-default-value'
+          ACTUAL_RACE_VALUE: ${{ needs.test-get-race.outputs.value }}
 
         with:
           test: |
@@ -187,4 +187,5 @@ jobs:
             test_equals "Test PUT/GET 3" "${EXPECTED_3}" "${ACTUAL_3}"
             test_equals "Test GET default" "${EXPECTED_DEFAULT}" "${ACTUAL_DEFAULT}"
 
-            test_equals "Test GET twice" "${EXPECTED_TWICE}" "${ACTUAL_TWICE}"
+            test_equals "Test GET race status" "${EXPECTED_RACE_STATUS}" "${ACTUAL_RACE_STATUS}"
+            test_equals "Test GET race value" "${EXPECTED_RACE_VALUE}" "${ACTUAL_RACE_VALUE}"

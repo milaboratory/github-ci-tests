@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs:
-      - test-put-3
+      - init
 
     steps:
       - id: data

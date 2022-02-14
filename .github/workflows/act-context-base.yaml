@@ -95,6 +95,23 @@ jobs:
     outputs:
       value: ${{ steps.data.outputs.value }}
 
+  test-get-default:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-put-3
+
+    steps:
+      - id: data
+        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        with:
+          key: ctx4
+          ignore-missing: true
+          default-value: ctx-4-value
+
+    outputs:
+      value: ${{ steps.data.outputs.value }}
+
   test-put-twice:
     runs-on: ubuntu-latest
 
@@ -138,6 +155,7 @@ jobs:
       - test-get-1
       - test-get-2
       - test-get-3
+      - test-get-default
       - test-get-twice
 
     steps:
@@ -154,6 +172,9 @@ jobs:
           EXPECTED_3: ctx-value-3
           ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
 
+          EXPECTED_DEFAULT: ctx-4-value
+          ACTUAL_DEFAULT: ${{ needs.test-get-default.outputs.value }}
+
           EXPECTED_TWICE: ctx-value-old
           ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
 
@@ -162,5 +183,6 @@ jobs:
             test_equals "Test PUT/GET 1" "${EXPECTED_1}" "${ACTUAL_1}"
             test_equals "Test PUT/GET 2" "${EXPECTED_2}" "${ACTUAL_2}"
             test_equals "Test PUT/GET 3" "${EXPECTED_3}" "${ACTUAL_3}"
+            test_equals "Test GET default" "${EXPECTED_DEFAULT}" "${ACTUAL_DEFAULT}"
 
             test_equals "Test GET twice" "${EXPECTED_TWICE}" "${ACTUAL_TWICE}"

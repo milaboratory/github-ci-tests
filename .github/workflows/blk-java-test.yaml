@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-with-upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,7 @@ jobs:
       - uses: milaboratory/github-ci/actions/context/init@v1
 
       - uses: milaboratory/github-ci/blocks/java/test@v1-beta
+        id: test
         with:
           project: 'stub-lib'
           tasks: 'test'
@@ -28,3 +29,49 @@ jobs:
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
           s3-bucket: 'milaboratory-artefacts-public-files'
           upload-report: 'true'
+
+    outputs:
+      uploaded: ${{ steps.test.outputs.report-uploaded }}
+
+  test-no-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: milaboratory/github-ci/actions/context/init@v1
+
+      - uses: milaboratory/github-ci/blocks/java/test@v1-beta
+        id: test
+        with:
+          project: 'stub-lib'
+          tasks: 'test'
+          project-dir: './gradle'
+
+          java-version: '11'
+          cache-key: temurin-11-v1
+
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
+          s3-bucket: 'milaboratory-artefacts-public-files'
+          upload-report: 'false'
+
+    outputs:
+      uploaded: ${{ steps.test.outputs.report-uploaded }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-with-upload
+      - test-no-upload
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          TEST_WITH_UPLOAD_UPLOADED: ${{ needs.test-with-upload.outputs.uploaded }}
+
+          TEST_NO_UPLOAD_UPLOADED: ${{ needs.test-no-upload.outputs.uploaded }}
+        with:
+          test: |
+            test_equals "'upload-report' true" "true" "${TEST_WITH_UPLOAD_UPLOADED}"
+            test_equals "'upload-report' false" "false" "${TEST_NO_UPLOAD_UPLOADED}"

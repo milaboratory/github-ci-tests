@@ -105,9 +105,9 @@ jobs:
       - id: data
         uses: milaboratory/github-ci/actions/context/get@v1-beta
         with:
-          key: ctx4
+          key: ctx-default
           ignore-missing: true
-          default-value: ctx-4-value
+          default-value: ctx-default-value
 
     outputs:
       value: ${{ steps.data.outputs.value }}
@@ -172,7 +172,7 @@ jobs:
           EXPECTED_3: ctx-value-3
           ACTUAL_3: ${{ needs.test-get-3.outputs.value }}
 
-          EXPECTED_DEFAULT: ctx-4-value
+          EXPECTED_DEFAULT: ctx-default-value
           ACTUAL_DEFAULT: ${{ needs.test-get-default.outputs.value }}
 
           EXPECTED_TWICE: ctx-value-old

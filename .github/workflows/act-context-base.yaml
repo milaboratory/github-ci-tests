@@ -147,10 +147,12 @@ jobs:
           key: ctx4
 
     outputs:
-      value: ${{ steps.data.outputs.value }}
+      status: ${{ job.status }}
 
   check:
     runs-on: ubuntu-latest
+
+    if: always()
     needs:
       - test-get-1
       - test-get-2
@@ -175,8 +177,8 @@ jobs:
           EXPECTED_DEFAULT: ctx-default-value
           ACTUAL_DEFAULT: ${{ needs.test-get-default.outputs.value }}
 
-          EXPECTED_TWICE: ctx-value-old
-          ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.value }}
+          EXPECTED_TWICE: 'failure'
+          ACTUAL_TWICE: ${{ needs.test-get-twice.outputs.status }}
 
         with:
           test: |

@@ -38,9 +38,13 @@ jobs:
     steps:
       - shell: bash
         run: "true"
+      - id: step2
+        shell: bash
+        run: 'true'
 
     outputs:
       status: ${{ job.status }}
+      step2: ${{ toJSON(steps.step2) }}
 
   check:
     runs-on: ubuntu-latest
@@ -51,6 +55,8 @@ jobs:
     steps:
       - shell: bash
         env:
-          JOIN_STATUS: ${{ needs.join.outputs.status != '' && needs.join.outputs.status || 'failure'  }}
+          JOIN_STATUS: ${{ needs.join.outputs.status }}
+          STEP2_INFO: ${{ needs.join.outputs.step2 }}
         run: |
           echo "Join status is: '${JOIN_STATUS}'"
+          echo "Step2 info: '${STEP2_INFO}'"

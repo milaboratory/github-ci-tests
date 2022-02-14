@@ -8,32 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  experiment:
-    strategy:
-      matrix:
-        i:
-          - os: ubuntu-latest
-            code: 1
-          - os: macos-latest
-            code: 0
-          - os: windows-latest
-            code: 0
-
-    runs-on: ${{ matrix.i.os }}
-
-    steps:
-      - shell: bash
-        run: |
-          exit ${{ matrix.i.code }}
-
-    outputs:
-      status: ${{ job.status }}
-
   join:
     runs-on: ubuntu-latest
-
-    needs:
-      - experiment
 
     steps:
       - shell: bash

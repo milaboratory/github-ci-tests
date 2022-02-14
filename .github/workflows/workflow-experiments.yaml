@@ -8,32 +8,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  join:
+  fail:
     runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: 'false'
+
+    outputs:
+      status: ${{ job.status }}
+
+  depend:
+    runs-on: ubuntu-latest
+
+    needs:
+      - fail
 
     steps:
       - shell: bash
         run: "true"
-      - id: step2
-        if: "'a' == 'b'"
-        shell: bash
-        run: 'true'
 
     outputs:
       status: ${{ job.status }}
-      step2: ${{ toJSON(steps.step2) }}
 
   check:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - join
+      - depend
 
     steps:
       - shell: bash
         env:
-          JOIN_STATUS: ${{ needs.join.outputs.status }}
-          STEP2_INFO: ${{ needs.join.outputs.step2 }}
+          DEPEND_STATUS: ${{ needs.depend.outputs.status }}
         run: |
-          echo "Join status is: '${JOIN_STATUS}'"
-          echo "Step2 info: '${STEP2_INFO}'"
+          echo "Depend status is: '${JOIN_STATUS}'"

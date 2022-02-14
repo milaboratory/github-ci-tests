@@ -27,4 +27,4 @@ jobs:
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
           s3-bucket: 'milaboratory-artefacts-public-files'
-          upload-report: 'false'
+          upload-report: 'true'

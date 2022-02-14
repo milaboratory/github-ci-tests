@@ -14,11 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: milaboratory/github-ci/actions/context/init@v1
-      - uses: milaboratory/github-ci/actions/aws/configure@v1
-        with:
-          key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
-          key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
-          region: 'eu-central-1'
 
       - uses: milaboratory/github-ci/blocks/java/test@v1-beta
         with:
@@ -29,4 +24,6 @@ jobs:
           java-version: '11'
           cache-key: temurin-11-v1
 
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
           s3-bucket: 'milaboratory-artefacts-public-files'

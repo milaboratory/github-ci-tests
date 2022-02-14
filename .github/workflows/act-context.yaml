@@ -9,22 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-before-init:
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: context
-        uses: milaboratory/github-ci/actions/context@v1-beta
-
-    outputs:
-      data: ${{ toJSON(steps.context.outputs) }}
-
   test-context-init:
     runs-on: ubuntu-latest
-
-    needs:
-      - test-before-init
-
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v1-beta
 
@@ -45,7 +31,6 @@ jobs:
   check:
     runs-on: ubuntu-latest
     needs:
-      - test-before-init
       - test-after-init
 
     steps:
@@ -53,7 +38,6 @@ jobs:
         uses: milaboratory/github-ci/actions/action-test@v1
 
         env:
-          CTX_BEFORE_INIT: ${{ needs.test-before-init.outputs.data }}
           CTX_AFTER_INIT: ${{ needs.test-after-init.outputs.data }}
 
         with:

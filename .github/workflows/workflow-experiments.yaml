@@ -15,6 +15,7 @@ jobs:
       - shell: bash
         run: "true"
       - id: step2
+        if: "'a' == 'b'"
         shell: bash
         run: 'true'
 

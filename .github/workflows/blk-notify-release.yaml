@@ -28,4 +28,4 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
-          product-name: 'notify/release block test'
+          product-name: "'notify/release' block test"

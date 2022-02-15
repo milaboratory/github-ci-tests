@@ -2,6 +2,7 @@ name: "[B] java/test"
 
 on:
   push:
+    tags: [ '*' ]
     paths:
       - .github/workflows/blk-java-test.yaml
 

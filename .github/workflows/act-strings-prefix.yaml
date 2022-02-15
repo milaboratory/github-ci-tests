@@ -2,6 +2,7 @@ name: "[A] strings/prefix"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-strings-prefix.yaml
 

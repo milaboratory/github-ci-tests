@@ -2,6 +2,7 @@ name: "[A] strings/join"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-strings-join.yaml
 

@@ -2,6 +2,7 @@ name: "[A] shell"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-shell.yaml
 

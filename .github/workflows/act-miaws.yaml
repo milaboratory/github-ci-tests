@@ -2,6 +2,7 @@ name: "[A] miaws"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-miaws.yaml
 

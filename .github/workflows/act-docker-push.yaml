@@ -2,6 +2,7 @@ name: "[A] docker/push"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-docker-push.yaml
 

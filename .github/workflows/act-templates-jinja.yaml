@@ -2,6 +2,7 @@ name: "[A] templates/jinja"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-templates-jinja.yaml
 

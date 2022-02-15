@@ -2,6 +2,7 @@ name: "[B] java/publish/docker"
 
 on:
   push:
+    tags: [ '*' ]
     paths:
       - .github/workflows/blk-java-publish-docker.yaml
 

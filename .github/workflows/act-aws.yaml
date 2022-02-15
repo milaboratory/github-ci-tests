@@ -2,6 +2,7 @@ name: "[A] aws CLI"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-aws.yaml
 

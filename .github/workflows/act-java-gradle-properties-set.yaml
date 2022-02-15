@@ -2,6 +2,7 @@ name: "[A] java/gradle/properties/set"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-java-gradle-properties-set.yaml
       - gradle/

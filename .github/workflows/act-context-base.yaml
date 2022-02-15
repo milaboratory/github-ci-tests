@@ -2,6 +2,7 @@ name: "[A] context/<base>"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-context-base.yaml
 

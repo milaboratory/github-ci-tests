@@ -2,6 +2,7 @@ name: "[A] helpers/safe-ctx"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-helpers-safe-ctx.yaml
 

@@ -2,6 +2,7 @@ name: "[B] notify/tests"
 
 on:
   push:
+    tags: [ '*' ]
     paths:
       - .github/workflows/blk-notify-tests.yaml
 

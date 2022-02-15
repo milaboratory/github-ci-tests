@@ -2,6 +2,7 @@ name: "[A] strings/json-list"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-strings-json-list.yaml
 

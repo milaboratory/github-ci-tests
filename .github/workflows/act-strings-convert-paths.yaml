@@ -2,6 +2,7 @@ name: "[A] strings/convert-paths"
 
 on:
   push:
+    tags-ignore: [ '*' ]
     paths:
       - .github/workflows/act-strings-convert-paths.yaml
 

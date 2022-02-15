@@ -8,12 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  stub:
+  notify-release:
+    name: "'New release'"
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: 'true'
-
       - uses: milaboratory/github-ci/actions/notify/telegram/release@v1-beta
         with:
           telegram-target: 95899978

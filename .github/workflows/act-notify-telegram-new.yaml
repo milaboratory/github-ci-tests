@@ -35,7 +35,7 @@ jobs:
 
   send-publication-failure:
     runs-on: ubuntu-latest
-    name: "'Publication success' for dev"
+    name: "'Publication failure' for dev"
 
     steps:
       - uses: milaboratory/github-ci/actions/notify/telegram/publication@v1-beta

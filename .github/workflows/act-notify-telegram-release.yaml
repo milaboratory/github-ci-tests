@@ -1,9 +1,9 @@
-name: "[A] notify/telegram/*"
+name: "[A] notify/telegram/release"
 
 on:
   push:
     paths:
-      - .github/workflows/act-notify-telegram-new.yaml
+      - .github/workflows/act-notify-telegram-release.yaml
 
   workflow_dispatch:
 

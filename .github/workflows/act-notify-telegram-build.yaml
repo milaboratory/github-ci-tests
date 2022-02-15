@@ -1,0 +1,75 @@
+name: "[A] notify/telegram/build"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-notify-telegram-build.yaml
+
+  workflow_dispatch:
+
+jobs:
+  send-build-ready-dev:
+    runs-on: ubuntu-latest
+    name: "'Build ready' for dev"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          build-version: '0.11.1-2-dev'
+          build-category: 'dev'
+
+  send-build-ready-release:
+    runs-on: ubuntu-latest
+    name: "'Build ready' for release"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          build-version: '0.11.1-2-release'
+          build-category: 'release'
+
+  send-build-ready-unknown-category:
+    runs-on: ubuntu-latest
+    name: "'Build ready' for unknown category"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/build-ready@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          build-version: '0.11.1-2-unknown'
+          build-category: 'unknown'
+
+          docker-images: |
+            [ "path/to/image:one", "path/to/image:two" ]
+          maven-packages: |
+            [ "pkg1:1", "pkg2:2" ]
+
+          additional-info: |
+            some additional info at the end of the message
+
+  send-build-failed:
+    runs-on: ubuntu-latest
+    name: "'Build failed'"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/build-failed@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          build-version: '0.11.1-2-failed'
+
+          additional-info: |
+            some additional info at the end of the message

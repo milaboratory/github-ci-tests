@@ -1,0 +1,53 @@
+name: "[A] notify/telegram/*"
+
+on:
+  push:
+    paths:
+      - .github/workflows/act-notify-telegram-new.yaml
+
+  workflow_dispatch:
+
+jobs:
+  stub:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: 'true'
+
+  send-publication-success:
+    runs-on: ubuntu-latest
+    name: "'Publication success' for dev"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/publication@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          job-status: 'success'
+
+          product-name: 'TG Notify Test'
+          product-type: 'library'
+          build-category: 'dev'
+          repository-category: 'dev'
+          repository-type: 'maven'
+          packages: '[ "my-awesome-package:1.2.3" ]'
+
+  send-publication-failure:
+    runs-on: ubuntu-latest
+    name: "'Publication success' for dev"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/publication@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          job-status: 'failure'
+
+          product-name: 'TG Notify Test'
+          product-type: 'library'
+          build-category: 'dev'
+          repository-category: 'dev'
+          repository-type: 'maven'
+          packages: '[ "my-awesome-package:1.2.3" ]'

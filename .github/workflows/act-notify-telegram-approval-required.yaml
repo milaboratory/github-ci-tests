@@ -1,0 +1,40 @@
+name: "[A] notify/telegram/tests"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    paths:
+      - .github/workflows/act-notify-telegram-approval-required.yaml
+
+  workflow_dispatch:
+
+jobs:
+  send-tests-failed:
+    runs-on: ubuntu-latest
+    name: "'Approval required'"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/approval-required@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: "'approval-required' test"
+          approvers: |
+            @UserOne
+            @UserTwo
+
+
+  send-tests-ready:
+    runs-on: ubuntu-latest
+    name: "'Tests ready'"
+
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/tests@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          build-version: '0.11.1-2-tests'
+          tests-status: 'success'

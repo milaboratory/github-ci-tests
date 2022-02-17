@@ -8,37 +8,51 @@ on:
   workflow_dispatch:
 
 jobs:
-  fail:
-    runs-on: ubuntu-latest
-    steps:
-      - shell: bash
-        run: 'false'
+  git-version:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
 
-    outputs:
-      status: ${{ job.status }}
-
-  depend:
-    runs-on: ubuntu-latest
-
-    needs:
-      - fail
+    runs-on: ${{ matrix.os }}
 
     steps:
       - shell: bash
-        run: "true"
+        run: git --version
 
-    outputs:
-      status: ${{ job.status }}
-
-  check:
-    runs-on: ubuntu-latest
-    if: always()
-    needs:
-      - depend
-
-    steps:
-      - shell: bash
-        env:
-          DEPEND_STATUS: ${{ needs.depend.outputs.status }}
-        run: |
-          echo "Depend status is: '${JOIN_STATUS}'"
+#  fail:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - shell: bash
+#        run: 'false'
+#
+#    outputs:
+#      status: ${{ job.status }}
+#
+#  depend:
+#    runs-on: ubuntu-latest
+#
+#    needs:
+#      - fail
+#
+#    steps:
+#      - shell: bash
+#        run: "true"
+#
+#    outputs:
+#      status: ${{ job.status }}
+#
+#  check:
+#    runs-on: ubuntu-latest
+#    if: always()
+#    needs:
+#      - depend
+#
+#    steps:
+#      - shell: bash
+#        env:
+#          DEPEND_STATUS: ${{ needs.depend.outputs.status }}
+#        run: |
+#          echo "Depend status is: '${JOIN_STATUS}'"

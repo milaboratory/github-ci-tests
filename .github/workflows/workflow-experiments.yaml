@@ -8,19 +8,43 @@ on:
   workflow_dispatch:
 
 jobs:
-  git-version:
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-
-    runs-on: ${{ matrix.os }}
+  not-started:
+    runs-on: ubuntu-latest
+    if: "'true' == 'false'"
 
     steps:
       - shell: bash
-        run: git --version
+        run: 'true'
+
+    outputs:
+      started: 'true'
+
+  check:
+    runs-on: ubuntu-latest
+
+    if: always()
+    needs:
+      - not-started
+
+    steps:
+      - shell: bash
+        run: |
+          echo "Started: '${{ needs.not-started.outputs.started }}'"
+
+
+#  git-version:
+#    strategy:
+#      matrix:
+#        os:
+#          - ubuntu-latest
+#          - macos-latest
+#          - windows-latest
+#
+#    runs-on: ${{ matrix.os }}
+#
+#    steps:
+#      - shell: bash
+#        run: git --version
 
 #  fail:
 #    runs-on: ubuntu-latest

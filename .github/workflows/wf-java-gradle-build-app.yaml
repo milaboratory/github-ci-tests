@@ -19,8 +19,7 @@ jobs:
       build-project: 'stub-app'
       build-project-dir: './gradle'
 
-      release-s3-bucket: 'milaboratory-artefacts-public-files'
-
+      release-to-s3: true
       notify-telegram: true
 
     secrets:

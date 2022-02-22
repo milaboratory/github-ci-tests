@@ -10,7 +10,7 @@ on:
 jobs:
   not-started:
     runs-on: ubuntu-latest
-    if: "'true' == 'true'"
+    if: "'true' == 'false'"
 
     steps:
       - shell: bash

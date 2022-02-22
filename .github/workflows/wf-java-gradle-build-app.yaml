@@ -18,12 +18,18 @@ jobs:
       app-name-slug: 'gradle-stub-app'
       build-project: 'stub-app'
       build-project-dir: './gradle'
+
+      release-s3-bucket: 'milaboratory-artefacts-public-files'
+
       notify-telegram: true
 
     secrets:
       GRADLE_PROPERTIES: |
         miGitHubMavenUser=${{ github.actor }}
         miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}
+
+      AWS_KEY_ID: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+      AWS_KEY_SECRET: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
 
       TELEGRAM_NOTIFICATION_TARGET: "95899978"
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}

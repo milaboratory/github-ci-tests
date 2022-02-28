@@ -4,6 +4,8 @@ on:
   push:
     tags: [ '*' ]
     branches: [ 'master' ]
+    paths:
+      - .github/workflows/act-detect-version.yaml
 
   workflow_dispatch:
 

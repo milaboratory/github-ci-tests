@@ -11,7 +11,7 @@ on:
 
 jobs:
   run:
-    uses: milaboratory/github-ci/.github/workflows/java-build-gradle-app.yaml@v1-beta
+    uses: milaboratory/github-ci/.github/workflows/java-build-gradle-app.yaml@v1
     with:
       java-version: '11'
       app-name: JAVA Gradle App

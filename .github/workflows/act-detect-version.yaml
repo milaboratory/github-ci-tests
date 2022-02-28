@@ -3,8 +3,7 @@ name: "[A] detect-version"
 on:
   push:
     tags: [ '*' ]
-    paths:
-      - .github/workflows/act-detect-version.yaml
+    branches: [ 'master' ]
 
   workflow_dispatch:
 

@@ -34,7 +34,7 @@ jobs:
         uses: milaboratory/github-ci/actions/shell@v2
         with:
           run: |
-            find ./to-rename -mindepth 1
+            find ./to-rename -mindepth 1 | sort
 
     outputs:
       renamed: ${{ steps.renamed.outputs.stdout }}
@@ -62,7 +62,7 @@ jobs:
         uses: milaboratory/github-ci/actions/shell@v2
         with:
           run: |
-            find ./to-rename -mindepth 1
+            find ./to-rename -mindepth 1 | sort
 
     outputs:
       renamed: ${{ steps.renamed.outputs.stdout }}
@@ -94,7 +94,7 @@ jobs:
         uses: milaboratory/github-ci/actions/shell@v2
         with:
           run: |
-            find ./to-rename -mindepth 1
+            find ./to-rename -mindepth 1 | sort
 
     outputs:
       renamed: ${{ steps.renamed.outputs.stdout }}
@@ -124,7 +124,7 @@ jobs:
         uses: milaboratory/github-ci/actions/shell@v2
         with:
           run: |
-            find ./to-rename -mindepth 1
+            find ./to-rename -mindepth 1 | sort
 
     outputs:
       renamed: ${{ steps.renamed.outputs.stdout }}

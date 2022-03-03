@@ -1,17 +1,25 @@
-name: "[W] java-build-gradle-app"
+name: "[W] java-gradle-app"
 
 on:
   push:
     tags: [ '*' ]
     paths:
-      - .github/workflows/wf-java-gradle-build-app.yaml
+      - .github/workflows/wf-java-gradle-app.yaml
       - gradle/stub-app/
 
   workflow_dispatch:
 
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: milaboratory/github-ci/actions/context/init@v2
+
   run:
-    uses: milaboratory/github-ci/.github/workflows/java-build-gradle-app.yaml@v1
+    needs:
+      - init
+
+    uses: milaboratory/github-ci/.github/workflows/java-gradle-app.yaml@v2
     with:
       java-version: '11'
       app-name: JAVA Gradle App

@@ -168,6 +168,6 @@ jobs:
         with:
           test: |
             test_equals "No suffix, files" "${NO_SUF_FILES_EXPECTED}" "${NO_SUF_FILES_ACTUAL}"
-            test_equals "No suffix, dir" "${NO_SUF_DIR_EXPECTED}" "${NO_SUF_DIRES_ACTUAL}"
+            test_equals "No suffix, dir" "${NO_SUF_DIR_EXPECTED}" "${NO_SUF_DIR_ACTUAL}"
             test_equals "Suffix, files" "${SUF_FILES_EXPECTED}" "${SUF_FILES_ACTUAL}"
             test_equals "Suffix, dir" "${SUF_DIR_EXPECTED}" "${SUF_DIR_ACTUAL}"

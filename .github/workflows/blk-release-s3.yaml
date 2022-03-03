@@ -20,8 +20,8 @@ jobs:
           name: release-s3-test
           path: assets/release-s3/
 
-  upload-to-s3-version:
-    name: Upload artifact to S3
+  upload-to-s3-version-sha:
+    name: Upload to S3 (+version, +sha)
     runs-on: ubuntu-latest
 
     needs:
@@ -32,6 +32,7 @@ jobs:
         with:
           artifact-name: 'release-s3-test'
           add-version: 'true'
+          add-sha: 'true'
 
           s3-region: 'eu-central-1'
           s3-bucket: 'milaboratory-artefacts-public-files'
@@ -40,8 +41,29 @@ jobs:
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
 
-  upload-to-s3-no-version:
-    name: Upload artifact to S3
+  upload-to-s3-version:
+    name: Upload to S3 (+version, -sha)
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+        with:
+          artifact-name: 'release-s3-test'
+          add-version: 'true'
+          add-sha: 'false'
+
+          s3-region: 'eu-central-1'
+          s3-bucket: 'milaboratory-artefacts-public-files'
+          s3-path: 'cdn/internal/ci/${{ github.repository }}/release-s3-test'
+
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
+
+  upload-to-s3-sha:
+    name: Upload to S3 (-version, +sha)
     runs-on: ubuntu-latest
 
     needs:
@@ -52,6 +74,49 @@ jobs:
         with:
           artifact-name: 'release-s3-test'
           add-version: 'false'
+          add-sha: 'true'
+
+          s3-region: 'eu-central-1'
+          s3-bucket: 'milaboratory-artefacts-public-files'
+          s3-path: 'cdn/internal/ci/${{ github.repository }}/release-s3-test'
+
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
+
+  upload-to-s3-sha-8:
+    name: Upload to S3 (-version, +sha 8)
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+        with:
+          artifact-name: 'release-s3-test'
+          add-version: 'false'
+          add-sha: '8'
+
+          s3-region: 'eu-central-1'
+          s3-bucket: 'milaboratory-artefacts-public-files'
+          s3-path: 'cdn/internal/ci/${{ github.repository }}/release-s3-test'
+
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
+
+  upload-to-s3-no-change:
+    name: Upload to S3 (-version, -sha)
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+        with:
+          artifact-name: 'release-s3-test'
+          add-version: 'false'
+          add-sha: 'false'
 
           s3-region: 'eu-central-1'
           s3-bucket: 'milaboratory-artefacts-public-files'

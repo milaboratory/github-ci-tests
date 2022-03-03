@@ -1,0 +1,173 @@
+name: "[A] files/add-suffix"
+
+on:
+  push:
+    branches: [ '*' ]
+    paths:
+      - .github/workflows/act-files-add-suffix.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-no-suffix-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create files
+        shell: bash
+        run: |
+          # create files
+          mkdir -p ./to-rename
+
+          true > ./to-rename/f1
+          true > ./to-rename/f2.txt
+
+      - uses: milaboratory/github-ci/actions/files/add-suffix@v2-beta
+        with:
+          paths: |
+            ./to-rename/f1
+            ./to-rename/f2.txt
+          suffix: ''
+
+      - name: Final files list
+        id: renamed
+        uses: milaboratory/github-ci/actions/shell@v2
+        with:
+          run: |
+            find ./to-rename -mindepth 1
+
+    outputs:
+      renamed: ${{ steps.renamed.outputs.stdout }}
+
+  test-no-suffix-dir:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create files
+        shell: bash
+        run: |
+          # create files
+          mkdir -p ./to-rename
+
+          true > ./to-rename/f1
+          true > ./to-rename/f2.txt
+
+      - uses: milaboratory/github-ci/actions/files/add-suffix@v2-beta
+        with:
+          paths: ./to-rename/
+          suffix: ''
+
+      - name: Final files list
+        id: renamed
+        uses: milaboratory/github-ci/actions/shell@v2
+        with:
+          run: |
+            find ./to-rename -mindepth 1
+
+    outputs:
+      renamed: ${{ steps.renamed.outputs.stdout }}
+
+  test-suffix-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create files
+        shell: bash
+        run: |
+          # create files
+          mkdir -p ./to-rename/sub
+
+          true > ./to-rename/f1
+          true > ./to-rename/f2.txt
+          true > ./to-rename/f3
+          true > ./to-rename/f4.txt
+
+      - uses: milaboratory/github-ci/actions/files/add-suffix@v2-beta
+        with:
+          paths: |
+            ./to-rename/f1
+            ./to-rename/f2.txt
+          suffix: '-qwe'
+
+      - name: Final files list
+        id: renamed
+        uses: milaboratory/github-ci/actions/shell@v2
+        with:
+          run: |
+            find ./to-rename -mindepth 1
+
+    outputs:
+      renamed: ${{ steps.renamed.outputs.stdout }}
+
+  test-suffix-dir:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create files
+        shell: bash
+        run: |
+          # create files
+          mkdir -p ./to-rename/sub
+
+          true > ./to-rename/f1
+          true > ./to-rename/f2.txt
+          true > ./to-rename/sub/f3
+          true > ./to-rename/sub/f4.zip
+
+      - uses: milaboratory/github-ci/actions/files/add-suffix@v2-beta
+        with:
+          paths: ./to-rename/
+          suffix: '-abc'
+
+      - name: Final files list
+        id: renamed
+        uses: milaboratory/github-ci/actions/shell@v2
+        with:
+          run: |
+            find ./to-rename -mindepth 1
+
+    outputs:
+      renamed: ${{ steps.renamed.outputs.stdout }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-no-suffix-files
+      - test-no-suffix-dir
+      - test-suffix-files
+      - test-suffix-dir
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          NO_SUF_FILES_EXPECTED: |-
+            ./to-rename/f1
+            ./to-rename/f2.txt
+          NO_SUF_FILES_ACTUAL: ${{ needs.test-no-suffix-files.outputs.renamed }}
+
+          NO_SUF_DIR_EXPECTED: |-
+            ./to-rename/f1
+            ./to-rename/f2.txt
+          NO_SUF_DIR_ACTUAL: ${{ needs.test-no-suffix-dir.outputs.renamed }}
+
+          SUF_FILES_EXPECTED: |-
+            ./to-rename/f1-qwe
+            ./to-rename/f2-qwe.txt
+            ./to-rename/f3
+            ./to-rename/f4.txt
+          SUF_FILES_ACTUAL: ${{ needs.test-suffix-files.outputs.renamed }}
+
+          SUF_DIR_EXPECTED: |-
+            ./to-rename/f1-abc
+            ./to-rename/f2-abc.txt
+            ./to-rename/sub/f3-abc
+            ./to-rename/sub/f4-abc.txt
+          SUF_DIR_ACTUAL: ${{ needs.test-suffix-dir.outputs.renamed }}
+
+        with:
+          test: |
+            test_equals "No suffix, files" "${NO_SUF_FILES_EXPECTED}" "${NO_SUF_FILES_ACTUAL}"
+            test_equals "No suffix, dir" "${NO_SUF_DIR_EXPECTED}" "${NO_SUF_DIRES_ACTUAL}"
+            test_equals "Suffix, files" "${SUF_FILES_EXPECTED}" "${SUF_FILES_ACTUAL}"
+            test_equals "Suffix, dir" "${SUF_DIR_EXPECTED}" "${SUF_DIR_ACTUAL}"

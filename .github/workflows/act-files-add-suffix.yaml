@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           # create files
-          mkdir -p ./to-rename/sub
+          mkdir -p ./to-rename
 
           true > ./to-rename/f1
           true > ./to-rename/f2.txt
@@ -162,7 +162,7 @@ jobs:
             ./to-rename/f1-abc
             ./to-rename/f2-abc.txt
             ./to-rename/sub/f3-abc
-            ./to-rename/sub/f4-abc.txt
+            ./to-rename/sub/f4-abc.zip
           SUF_DIR_ACTUAL: ${{ needs.test-suffix-dir.outputs.renamed }}
 
         with:

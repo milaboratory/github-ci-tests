@@ -19,7 +19,7 @@ jobs:
     needs:
       - init
 
-    uses: milaboratory/github-ci/.github/workflows/java-gradle-app.yaml@v2
+    uses: milaboratory/github-ci/.github/workflows/java-gradle-app.yaml@v2-beta
     with:
       java-version: '11'
       app-name: JAVA Gradle App

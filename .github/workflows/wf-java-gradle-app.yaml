@@ -34,7 +34,7 @@ jobs:
 
       release-to-s3: true
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) && 'true' || 'false' }}
-      release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '8' }}
+      release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}
       notify-telegram: true
 
     secrets:

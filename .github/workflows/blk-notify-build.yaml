@@ -14,14 +14,9 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v1
 
-    outputs:
-      status: ${{ job.status }}
-
   notify-success:
     name: Notify build ready
     runs-on: ubuntu-latest
-
-    if: always()
 
     needs:
       - init
@@ -32,29 +27,15 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
-          build-status: ${{ needs.init.outputs.status }}
-          product-name: "'notify/build' block test"
-
-  fail:
-    runs-on: ubuntu-latest
-    needs:
-      - init
-
-    steps:
-      - shell: bash
-        run: exit 1
-
-    outputs:
-      status: ${{ job.status }}
+          build-status: 'success'
+          product-name: "'blocks/notify/build' success"
 
   notify-failure:
     name: Notify build failed
     runs-on: ubuntu-latest
 
-    if: always()
-
     needs:
-      - fail
+      - init
 
     steps:
       - uses: milaboratory/github-ci/blocks/notify/build@v1-beta
@@ -62,5 +43,21 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
-          build-status: ${{ needs.fail.outputs.status }}
-          product-name: "'notify/build' block test"
+          build-status: 'failure'
+          product-name: "'blocks/notify/build' failure"
+
+  notify-cancelled:
+    name: Notify build failed
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - uses: milaboratory/github-ci/blocks/notify/build@v1-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          build-status: 'cancelled'
+          product-name: "'blocks/notify/build' cancelled"

@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: milaboratory/github-ci/actions/context/init@v2
+      - id: context
+        uses: milaboratory/github-ci/actions/context@v2
+
+    outputs:
+      is-release: ${{ steps.context.outputs.is-release }}
 
   run:
     needs:
@@ -28,6 +33,8 @@ jobs:
       build-project-dir: './gradle'
 
       release-to-s3: true
+      release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) && 'true' || 'false' }}
+      release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '8' }}
       notify-telegram: true
 
     secrets:

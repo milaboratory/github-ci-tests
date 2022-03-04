@@ -32,6 +32,9 @@ jobs:
       build-project: 'stub-app'
       build-project-dir: './gradle'
 
+      dist-docker: true
+      dist-archive: true
+
       release-to-s3: true
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) }}
       release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}

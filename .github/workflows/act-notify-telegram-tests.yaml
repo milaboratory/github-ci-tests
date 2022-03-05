@@ -14,7 +14,7 @@ jobs:
     name: "'Tests failed'"
 
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/tests@v1-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/tests@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -22,6 +22,7 @@ jobs:
           product-name: 'TG Notify Test'
           build-version: '0.11.1-2-tests'
           tests-status: 'failure'
+          tests-type: 'Unit'
           report-url: "https://example.com/"
 
   send-tests-ready:
@@ -29,7 +30,7 @@ jobs:
     name: "'Tests ready'"
 
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/tests@v1-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/tests@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -37,3 +38,4 @@ jobs:
           product-name: 'TG Notify Test'
           build-version: '0.11.1-2-tests'
           tests-status: 'success'
+          tests-type: 'Integration'

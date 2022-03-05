@@ -3,6 +3,7 @@ name: "[W] java-gradle-app"
 on:
   push:
     tags: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/wf-java-gradle-app.yaml
       - gradle/stub-app/
@@ -31,6 +32,9 @@ jobs:
       app-name-slug: 'gradle-stub-app'
       build-project: 'stub-app'
       build-project-dir: './gradle'
+
+      test-unit: true
+      test-integration: true
 
       dist-docker: true
       dist-archive: true

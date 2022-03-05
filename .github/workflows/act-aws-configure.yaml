@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: milaboratory/github-ci/actions/aws/configure@v1-beta
+      - uses: milaboratory/github-ci/actions/aws/configure@v2-beta
         with:
           key-id: aws-key-id-string
           key-secret: aws-key-secret-string

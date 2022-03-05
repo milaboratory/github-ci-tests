@@ -19,7 +19,7 @@ jobs:
           key-secret: awskeysecret
           region: eu-central-1
 
-      - uses: milaboratory/github-ci/actions/aws@v1-beta
+      - uses: milaboratory/github-ci/actions/aws@v2-beta
         with:
           args: |
             s3

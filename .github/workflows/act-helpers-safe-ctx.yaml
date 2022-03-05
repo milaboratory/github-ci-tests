@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - id: ctx
-        uses: milaboratory/github-ci/actions/helpers/safe-ctx@v1-beta
+        uses: milaboratory/github-ci/actions/helpers/safe-ctx@v2-beta
 
     outputs:
       github: ${{ steps.ctx.outputs.github }}

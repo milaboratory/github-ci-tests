@@ -31,7 +31,7 @@ jobs:
           java-version: 11
 
       - id: cache
-        uses: milaboratory/github-ci/actions/java/gradle/cache@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/cache@v2-beta
         with:
           job-id: jdk11
           build-root-directory: ./gradle

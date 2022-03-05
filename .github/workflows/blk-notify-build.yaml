@@ -22,7 +22,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/notify/build@v1-beta
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -38,7 +38,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/notify/build@v1-beta
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/notify/build@v1-beta
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}

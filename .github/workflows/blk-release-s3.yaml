@@ -28,7 +28,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+      - uses: milaboratory/github-ci/blocks/release/s3@v2-beta
         with:
           artifact-name: 'release-s3-test'
           add-version: 'true'
@@ -49,7 +49,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+      - uses: milaboratory/github-ci/blocks/release/s3@v2-beta
         with:
           artifact-name: 'release-s3-test'
           add-version: 'true'
@@ -70,7 +70,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+      - uses: milaboratory/github-ci/blocks/release/s3@v2-beta
         with:
           artifact-name: 'release-s3-test'
           add-version: 'false'
@@ -91,7 +91,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+      - uses: milaboratory/github-ci/blocks/release/s3@v2-beta
         with:
           artifact-name: 'release-s3-test'
           add-version: 'false'
@@ -112,7 +112,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/blocks/release/s3@v1-beta
+      - uses: milaboratory/github-ci/blocks/release/s3@v2-beta
         with:
           artifact-name: 'release-s3-test'
           add-version: 'false'

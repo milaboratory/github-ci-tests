@@ -33,7 +33,7 @@ jobs:
         run: |
           docker build --tag "stub-docker:${CURRENT_VERSION}" ./docker
 
-      - uses: milaboratory/github-ci/blocks/java/publish/docker@v1-beta
+      - uses: milaboratory/github-ci/blocks/java/publish/docker@v2-beta
         with:
           project: stub-docker
           github-token: ${{ secrets.GITHUB_TOKEN }}

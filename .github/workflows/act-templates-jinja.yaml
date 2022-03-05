@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - id: test1
-        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        uses: milaboratory/github-ci/actions/templates/jinja@v2-beta
         with:
           template: |
             var1: '{{ var1 }}', var2: '{{ var2 }}'
@@ -29,7 +29,7 @@ jobs:
           env substitution: '{{ env.get('SOME_TPL_VAR', '') }}'
           EndOfTemplate
       - id: test2
-        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        uses: milaboratory/github-ci/actions/templates/jinja@v2-beta
         env:
           SOME_TPL_VAR: 'value from test 2'
         with:
@@ -46,13 +46,13 @@ jobs:
           somevar: value from test 3
           EndOfTemplate
       - id: test3
-        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        uses: milaboratory/github-ci/actions/templates/jinja@v2-beta
         with:
           template-file: test3-template.j2
           data-file: test3-data.yaml
 
       - id: test4
-        uses: milaboratory/github-ci/actions/templates/jinja@v1-beta
+        uses: milaboratory/github-ci/actions/templates/jinja@v2-beta
         with:
           template: static text with no vars
           out-file: template-output.txt

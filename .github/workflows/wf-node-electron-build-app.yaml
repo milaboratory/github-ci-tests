@@ -10,7 +10,7 @@ on:
 
 jobs:
   run:
-    uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v1-beta
+    uses: milaboratory/github-ci/.github/workflows/node-build-electron-app.yaml@v2-beta
     with:
       node-version: '14.x'
       os: |

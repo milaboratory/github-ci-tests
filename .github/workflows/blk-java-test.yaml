@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: milaboratory/github-ci/blocks/java/test@v1-beta
+      - uses: milaboratory/github-ci/blocks/java/test@v2-beta
         id: test
         with:
           project: 'stub-lib'
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: milaboratory/github-ci/blocks/java/test@v1-beta
+      - uses: milaboratory/github-ci/blocks/java/test@v2-beta
         id: test
         with:
           project: 'stub-lib'

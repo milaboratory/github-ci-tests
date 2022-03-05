@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - id: sh
-        uses: milaboratory/github-ci/actions/shell@v1-beta
+        uses: milaboratory/github-ci/actions/shell@v2-beta
         with:
           dump-stdout: true
 
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - id: sh
-        uses: milaboratory/github-ci/actions/shell@v1-beta
+        uses: milaboratory/github-ci/actions/shell@v2-beta
         with:
           dump-stdout: true
 

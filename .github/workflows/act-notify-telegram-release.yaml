@@ -13,7 +13,7 @@ jobs:
     name: "'New release'"
     runs-on: ubuntu-latest
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/release@v1-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/release@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}

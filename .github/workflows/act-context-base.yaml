@@ -12,7 +12,7 @@ jobs:
   init:
     runs-on: ubuntu-latest
     steps:
-      - uses: milaboratory/github-ci/actions/context/create@v1-beta
+      - uses: milaboratory/github-ci/actions/context/create@v2-beta
 
   test-put-1:
     runs-on: ubuntu-latest
@@ -21,7 +21,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+      - uses: milaboratory/github-ci/actions/context/put@v2-beta
         with:
           key: ctx1
           value: ctx-value-1
@@ -33,7 +33,7 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+      - uses: milaboratory/github-ci/actions/context/put@v2-beta
         with:
           key: ctx2
           value: ctx-value-2
@@ -46,7 +46,7 @@ jobs:
       - test-put-2
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+      - uses: milaboratory/github-ci/actions/context/put@v2-beta
         with:
           key: ctx3
           value: ctx-value-3
@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - id: data
-        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        uses: milaboratory/github-ci/actions/context/get@v2-beta
         with:
           key: ctx1
 
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - id: data
-        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        uses: milaboratory/github-ci/actions/context/get@v2-beta
         with:
           key: ctx2
 
@@ -89,7 +89,7 @@ jobs:
 
     steps:
       - id: data
-        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        uses: milaboratory/github-ci/actions/context/get@v2-beta
         with:
           key: ctx3
 
@@ -104,7 +104,7 @@ jobs:
 
     steps:
       - id: data
-        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        uses: milaboratory/github-ci/actions/context/get@v2-beta
         with:
           key: ctx-default
           ignore-missing: true
@@ -120,12 +120,12 @@ jobs:
       - init
 
     steps:
-      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+      - uses: milaboratory/github-ci/actions/context/put@v2-beta
         with:
           key: ctx4
           value: ctx-value-old
 
-      - uses: milaboratory/github-ci/actions/context/put@v1-beta
+      - uses: milaboratory/github-ci/actions/context/put@v2-beta
         continue-on-error: true
         with:
           key: ctx4
@@ -139,7 +139,7 @@ jobs:
 
     steps:
       - id: data
-        uses: milaboratory/github-ci/actions/context/get@v1-beta
+        uses: milaboratory/github-ci/actions/context/get@v2-beta
         with:
           key: ctx4
           default-value: race-default-value

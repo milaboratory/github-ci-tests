@@ -27,7 +27,7 @@ jobs:
           printf "%s" "${GRADLE_PROPS}" >> ~/.gradle/gradle.properties
 
       - id: gradlew
-        uses: milaboratory/github-ci/actions/java/gradle/gradlew@v1-beta
+        uses: milaboratory/github-ci/actions/java/gradle/gradlew@v2-beta
         with:
           working-directory: ./gradle
           arguments: |-

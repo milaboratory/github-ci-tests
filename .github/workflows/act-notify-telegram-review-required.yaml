@@ -14,7 +14,7 @@ jobs:
     name: "With reviewers"
 
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/review-required@v1-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/review-required@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -30,7 +30,7 @@ jobs:
     name: "No reviewers"
 
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/review-required@v1-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/review-required@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}

@@ -13,7 +13,7 @@ jobs:
   test-context-init:
     runs-on: ubuntu-latest
     steps:
-      - uses: milaboratory/github-ci/actions/context/init@v1-beta
+      - uses: milaboratory/github-ci/actions/context/init@v2-beta
 
   test-after-init:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - id: context
-        uses: milaboratory/github-ci/actions/context@v1-beta
+        uses: milaboratory/github-ci/actions/context@v2-beta
 
 
     outputs:

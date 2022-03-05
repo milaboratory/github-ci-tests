@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build stub docker image
-        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        uses: milaboratory/github-ci/actions/docker/build@v2-beta
         with:
           dockerfile: ./docker/Dockerfile
           tags: |
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build stub docker image
-        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        uses: milaboratory/github-ci/actions/docker/build@v2-beta
         with:
           dockerfile: ./docker/Dockerfile
           tags: ''
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build stub docker image
-        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        uses: milaboratory/github-ci/actions/docker/build@v2-beta
         with:
           dockerfile: ./docker/Dockerfile
           tags: test:0.0.1
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build stub docker image
-        uses: milaboratory/github-ci/actions/docker/build@v1-beta
+        uses: milaboratory/github-ci/actions/docker/build@v2-beta
         with:
           dockerfile: ./docker/Dockerfile
           tags: |

@@ -27,7 +27,7 @@ jobs:
         with:
           name: context
 
-      - uses: milaboratory/github-ci/actions/release/create@v1-beta
+      - uses: milaboratory/github-ci/actions/release/create@v2-beta
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 

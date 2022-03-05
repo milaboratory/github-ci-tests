@@ -29,7 +29,7 @@ jobs:
             envsubst < "${TEMPLATE}" > "${OUT_FILE}"
 
 
-      - uses: milaboratory/github-ci/actions/github-pages@v1-beta
+      - uses: milaboratory/github-ci/actions/github-pages@v2-beta
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           publish-branch: gh-pages

@@ -1,4 +1,4 @@
-name: "[A] templates/jinja"
+name: "[A] templates/jinja/wrapper"
 
 on:
   push:

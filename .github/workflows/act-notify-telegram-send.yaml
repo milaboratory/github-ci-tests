@@ -1,0 +1,22 @@
+name: "[A] notify/telegram/send"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/act-notify-telegram-send.yaml
+
+  workflow_dispatch:
+
+jobs:
+  notify-release:
+    name: "'New release'"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/send@v2-beta
+        with:
+          to: 95899978
+          token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          message: 'Custom test message for telegram send action'

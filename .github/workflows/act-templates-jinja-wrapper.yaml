@@ -41,7 +41,7 @@ jobs:
       - name: Test output
         uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          RENDER_RESULT_EXPECTED: |
+          RENDER_RESULT_EXPECTED: |-
             Variable 1: value of var1
             Variable 2: value of var2
           RENDER_RESULT_ACTUAL: ${{ needs.tests.outputs.render-result }}

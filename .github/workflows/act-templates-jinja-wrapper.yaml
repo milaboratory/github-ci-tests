@@ -24,6 +24,9 @@ jobs:
             variable2=value of var2
           output_file: ./assets/jinja-template/data.txt
 
+      - shell: bash
+        run: ls -la ./assets/jinja-template/
+
       - id: render-result
         uses: milaboratory/github-ci/actions/shell@v2
         with:

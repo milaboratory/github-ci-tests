@@ -24,13 +24,10 @@ jobs:
             variable2=value of var2
           output_file: ./assets/jinja-template/data.txt
 
-      - shell: bash
-        run: ls -la ./assets/jinja-template/
-
       - id: render-result
         uses: milaboratory/github-ci/actions/shell@v2
         with:
-          run: cat ./assets/jinja2-template/data.txt
+          run: cat ./assets/jinja-template/data.txt
 
     outputs:
       render-result: ${{ steps.render-result.outputs.stdout }}

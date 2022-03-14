@@ -44,7 +44,7 @@ jobs:
           RENDER_RESULT_EXPECTED: |
             Variable 1: value of var1
             Variable 2: value of var2
-          RENDER_RESULT_ACTUAL: ${{ needs.render-result.outputs.test1 }}
+          RENDER_RESULT_ACTUAL: ${{ needs.tests.outputs.render-result }}
 
         with:
           test: |

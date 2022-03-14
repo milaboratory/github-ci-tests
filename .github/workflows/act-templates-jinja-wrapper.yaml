@@ -18,16 +18,16 @@ jobs:
 
       - uses: milaboratory/github-ci/actions/templates/jinja/wrapper@v2-beta
         with:
-          template: assets/jinja-template/data.txt.j2
+          template: ./assets/jinja-template/data.txt.j2
           variables: |
             variable1=value of var1
             variable2=value of var2
-          output_file: assets/jinja2-template/data.txt
+          output_file: ./assets/jinja-template/data.txt
 
       - id: render-result
         uses: milaboratory/github-ci/actions/shell@v2
         with:
-          run: cat assets/jinja2-template/data.txt
+          run: cat ./assets/jinja2-template/data.txt
 
     outputs:
       render-result: ${{ steps.render-result.outputs.stdout }}

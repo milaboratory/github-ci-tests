@@ -1,0 +1,22 @@
+name: "[A] helpers/safe-run"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    paths:
+      - .github/workflows/act-helpers-safe-run.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/helpers/safe-run@v2-beta
+        with:
+          script-path: ./non-existent-file
+
+      - uses: milaboratory/github-ci/actions/helpers/safe-run@v2-beta
+        with:
+          script-path: ./assets/safe-run/script.sh

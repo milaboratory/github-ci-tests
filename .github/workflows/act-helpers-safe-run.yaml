@@ -15,8 +15,12 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/helpers/safe-run@v2-beta
         with:
-          script-path: ./non-existent-file
+          script-path: ./assets/safe-run/absent.sh
 
+      - uses: actions/checkout@v2
       - uses: milaboratory/github-ci/actions/helpers/safe-run@v2-beta
         with:
-          script-path: ./assets/safe-run/script.sh
+          script-path: ./assets/safe-run/not-executable.sh
+      - uses: milaboratory/github-ci/actions/helpers/safe-run@v2-beta
+        with:
+          script-path: ./assets/safe-run/executable.sh

@@ -34,6 +34,9 @@ jobs:
           java-version: '11'
           cache-key: temurin-11-v1
 
+          hook-before: .mi-ci/hooks/test-unit-before.sh
+          hook-after: .mi-ci/hooks/test-unit-after.sh
+
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
           s3-bucket: 'milaboratory-artefacts-public-files'
@@ -60,6 +63,9 @@ jobs:
 
           java-version: '11'
           cache-key: temurin-11-v1
+
+          hook-before: .mi-ci/hooks/test-unit-before.sh
+          hook-after: .mi-ci/hooks/test-unit-after.sh
 
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}

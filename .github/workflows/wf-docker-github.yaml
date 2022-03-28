@@ -3,6 +3,7 @@ name: "[W] docker-github"
 on:
   push:
     tags: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/wf-docker-github.yaml
       - docker/

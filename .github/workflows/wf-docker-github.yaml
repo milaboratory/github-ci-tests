@@ -10,7 +10,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: milaboratory/github-ci/actions/context/init@v2
+
   run:
+    needs:
+      - init
+
     uses: milaboratory/github-ci/.github/workflows/docker-github.yaml@v2-beta
     with:
       product-name: 'Docker'
@@ -19,6 +27,7 @@ jobs:
       push-dev-versions: true
       push-branch-latest: true
       push-release-latest: true
+      push-release-latest-major: true
       notify-telegram: true
 
     secrets:

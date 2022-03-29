@@ -1,0 +1,64 @@
+name: "[A] git/crypt"
+
+on:
+  push:
+    branches: [ '*' ]
+    paths:
+      - .github/workflows/act-git-crypt.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-encrypted:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: get file contents
+        id: content
+        uses: milaboratory/github-ci/actions/files/content@v2-beta
+        with:
+          path: ./assets/encrypted.txt
+
+    outputs:
+      content: ${{ steps.content.outputs.content }}
+
+  test-decrypted:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: milaboratory/github-ci/actions/git/crypt@v2-beta
+        with:
+          gpg-key: ${{ secrets.GIT_CRYPT_GPG_KEY }}
+          gpg-key-password: ${{ secrets.GIT_CRYPT_GPG_KEY_PASSWORD }}
+
+      - name: get file contents
+        id: content
+        uses: milaboratory/github-ci/actions/files/content@v2-beta
+        with:
+          path: ./assets/encrypted.txt
+
+    outputs:
+      content: ${{ steps.content.outputs.content }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-encrypted
+      - test-decrypted
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          EXPECTED_CONTENT: |-
+            The very sensitive encrypted content
+
+          ENCRYPTED_ACTUAL: ${{ needs.test-encrypted.outputs.content }}
+          DECRYPTED_ACTUAL: ${{ needs.test-decrypted.outputs.content }}
+
+        with:
+          test: |
+            test_not_equals "Encrypted" "${EXPECTED_CONTENT}" "${ENCRYPTED_ACTUAL}"
+            test_equals "Decrypted" "${EXPECTED_CONTENT}" "${DECRYPTED_ACTUAL}"

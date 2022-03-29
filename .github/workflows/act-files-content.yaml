@@ -1,0 +1,42 @@
+name: "[A] files/content"
+
+on:
+  push:
+    branches: [ '*' ]
+    paths:
+      - .github/workflows/act-files-content.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-cat-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - shell: bash
+        run: |
+          echo "my custom file contents" > ./test-file.txt
+
+      - id: content
+        uses: milaboratory/github-ci/actions/files/content@v2-beta
+        with:
+          path: ./test-file.txt
+
+    outputs:
+      content: ${{ steps.content.outputs.content }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-cat-file
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v1
+        env:
+          CAT_FILE_EXPECTED: my custom file contents
+          CAT_FILE_ACTUAL: ${{ needs.test-cat-file.outputs.content }}
+
+        with:
+          test: |
+            test_equals "Cat file" "${CAT_FILE_EXPECTED}" "${CAT_FILE_ACTUAL}"

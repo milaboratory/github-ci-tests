@@ -11,7 +11,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: milaboratory/github-ci/actions/context/init@v2
+      - id: context
+        uses: milaboratory/github-ci/actions/context@v2
+
+    outputs:
+      is-release: ${{ steps.context.outputs.is-release }}
+
   run:
+    needs:
+      - init
+
     uses: milaboratory/github-ci/.github/workflows/java-gradle-lib.yaml@v2-beta
     with:
       java-version: '11'

@@ -16,7 +16,10 @@ jobs:
       java-version: '11'
       lib-name: JAVA Gradle Lib
       lib-name-slug: 'gradle-stub-lib'
+
+      git-crypt-unlock: true
       checkout-submodules: 'recursive'
+
       build-project: 'stub-lib'
       build-project-dir: './gradle'
       notify-telegram: true
@@ -34,3 +37,6 @@ jobs:
 
       TELEGRAM_NOTIFICATION_TARGET: "95899978"
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+      GIT_CRYPT_GPG_KEY: ${{ secrets.GIT_CRYPT_GPG_KEY }}
+      GIT_CRYPT_GPG_KEY_PASSWORD: ${{ secrets.GIT_CRYPT_GPG_KEY_PASSWORD }}

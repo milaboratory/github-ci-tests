@@ -3,6 +3,7 @@ name: "[W] node-build-electron-app"
 on:
   push:
     tags: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/wf-node-electron-app.yaml
 

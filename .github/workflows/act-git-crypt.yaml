@@ -23,7 +23,7 @@ jobs:
     outputs:
       content: ${{ steps.content.outputs.content }}
 
-  test-decrypted:
+  test-decrypted-password:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,12 +42,31 @@ jobs:
     outputs:
       content: ${{ steps.content.outputs.content }}
 
+  test-decrypted-nopassword:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: milaboratory/github-ci/actions/git/crypt@v2-beta
+        with:
+          gpg-key: ${{ secrets.GIT_CRYPT_GPG_KEY_NOPASSWORD }}
+
+      - name: get file contents
+        id: content
+        uses: milaboratory/github-ci/actions/files/content@v2-beta
+        with:
+          path: ./assets/encrypted.txt
+
+    outputs:
+      content: ${{ steps.content.outputs.content }}
+
   check:
     runs-on: ubuntu-latest
 
     needs:
       - test-encrypted
-      - test-decrypted
+      - test-decrypted-password
+      - test-decrypted-nopassword
 
     steps:
       - uses: milaboratory/github-ci/actions/action-test@v2
@@ -56,9 +75,11 @@ jobs:
             The very sensitive encrypted content
 
           ENCRYPTED_ACTUAL: ${{ needs.test-encrypted.outputs.content }}
-          DECRYPTED_ACTUAL: ${{ needs.test-decrypted.outputs.content }}
+          DECRYPTED_ACTUAL_PASSWORD: ${{ needs.test-decrypted-password.outputs.content }}
+          DECRYPTED_ACTUAL_NOPASSWORD: ${{ needs.test-decrypted-nopassword.outputs.content }}
 
         with:
           test: |
             test_not_equals "Encrypted" "${EXPECTED_CONTENT}" "${ENCRYPTED_ACTUAL}"
-            test_equals "Decrypted" "${EXPECTED_CONTENT}" "${DECRYPTED_ACTUAL}"
+            test_equals "Decrypted password" "${EXPECTED_CONTENT}" "${DECRYPTED_ACTUAL_PASSWORD}"
+            test_equals "Decrypted no password" "${EXPECTED_CONTENT}" "${DECRYPTED_ACTUAL_NOPASSWORD}"

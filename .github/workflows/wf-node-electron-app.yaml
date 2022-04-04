@@ -4,7 +4,7 @@ on:
   push:
     tags: [ '*' ]
     paths:
-      - .github/workflows/wf-node-electron-build-app.yaml
+      - .github/workflows/wf-node-electron-app.yaml
 
   workflow_dispatch:
 

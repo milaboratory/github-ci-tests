@@ -1,15 +1,11 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
-    id("com.bmuschko.docker-java-application")
-    id("com.palantir.git-version")
+    `java-library`
+    `maven-publish`
+    id("com.bmuschko.docker-java-application") version "7.3.0"
 }
 
 val miGitHubMavenUser: String? by project
 val miGitHubMavenToken: String? by project
-
-val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
-val gitDetails = versionDetails()
 
 fun boolProperty(name: String): Boolean {
     return ((properties[name] as String?) ?: "false").toBoolean()
@@ -18,14 +14,8 @@ fun boolProperty(name: String): Boolean {
 val isMiCi: Boolean = boolProperty("mi-ci")
 val isRelease: Boolean = boolProperty("mi-release")
 
-val group: String = "com.milaboratory.stub"
-version = if (version != "unspecified") {
-    version
-} else if (gitDetails.commitDistance == 0) {
-    gitDetails.lastTag
-} else {
-    "${gitDetails.lastTag}-${gitDetails.commitDistance}-${gitDetails.gitHash}"
-}
+group = "com.milaboratory.stub"
+version = if (version != "unspecified") version else ""
 
 repositories {
     mavenCentral()
@@ -34,8 +24,6 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    testImplementation("junit:junit:4.12")
-    implementation("junit:junit:4.12")
 }
 
 publishing {
@@ -52,10 +40,6 @@ publishing {
     }
     publications {
         create<MavenPublication>("maven") {
-            groupId = group
-            artifactId = "lib"
-            version = version
-
             from(components["java"])
         }
     }

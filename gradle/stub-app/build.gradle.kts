@@ -1,21 +1,11 @@
 plugins {
     java
     application
-    id("com.bmuschko.docker-java-application")
-    id("com.palantir.git-version")
+    id("com.bmuschko.docker-java-application") version "7.3.0"
 }
 
-val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
-val gitDetails = versionDetails()
-
-val group: String = "com.milaboratory.stub"
-version = if (version != "unspecified") {
-    version
-} else if (gitDetails.commitDistance == 0) {
-    gitDetails.lastTag
-} else {
-    "${gitDetails.lastTag}-${gitDetails.commitDistance}-${gitDetails.gitHash}"
-}
+group = "com.milaboratory.stub"
+version = if (version != "unspecified") version else ""
 
 repositories {
     mavenCentral()

@@ -14,4 +14,9 @@ public class StubLibTest {
     public void testStubFailure() {
         assertEquals(10, 8);
     }
+
+    @Test
+    public void testExit1() {
+        System.exit(1);
+    }
 }

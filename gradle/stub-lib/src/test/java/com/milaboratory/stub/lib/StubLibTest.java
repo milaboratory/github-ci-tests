@@ -3,7 +3,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LibraryTest {
+public class StubLibTest {
     @Test
     public void testStubSuccess() {
         assertEquals(10, 10);

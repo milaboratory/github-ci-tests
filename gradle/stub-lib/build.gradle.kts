@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("com.bmuschko.docker-java-application") version "7.3.0"
+    id("com.bmuschko.docker-java-application")
 }
 
 val miGitHubMavenUser: String? by project
@@ -16,10 +16,6 @@ val isRelease: Boolean = boolProperty("mi-release")
 
 group = "com.milaboratory.stub"
 version = if (version != "unspecified") version else ""
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")

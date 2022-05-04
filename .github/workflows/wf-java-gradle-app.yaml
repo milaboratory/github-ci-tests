@@ -15,6 +15,18 @@ on:
         required: false
         default: true
 
+      test-unit:
+        type: boolean
+        description: "Run unit tests"
+        required: false
+        default: true
+
+      test-integration:
+        type: boolean
+        description: "Run integration tests"
+        required: false
+        default: true
+
       release-to-s3:
         type: boolean
         description: "Upload release to S3"
@@ -44,8 +56,8 @@ jobs:
       build-project: 'stub-app'
       build-project-dir: './gradle'
 
-      test-unit: true
-      test-integration: true
+      test-unit: ${{ fromJSON(github.event.inputs.test-unit) }}
+      test-integration: ${{ fromJSON(github.event.inputs.test-integration) }}
 
       dist-docker: ${{ fromJSON(github.event.inputs.build-docker) }}
       dist-archive: ${{ fromJSON(github.event.inputs.build-archive) }}

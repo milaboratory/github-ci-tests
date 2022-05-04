@@ -1,13 +1,6 @@
 name: "[W] java-gradle-app"
 
 on:
-  push:
-    tags: [ '*' ]
-    branches: [ 'master' ]
-    paths:
-      - .github/workflows/wf-java-gradle-app.yaml
-      - gradle/stub-app/
-
   workflow_dispatch:
     inputs:
       build-docker:

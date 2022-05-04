@@ -17,7 +17,7 @@ on:
 
       release-to-s3:
         type: boolean
-        description: "Upload release archive to S3"
+        description: "Upload release to S3"
         required: false
         default: true
 

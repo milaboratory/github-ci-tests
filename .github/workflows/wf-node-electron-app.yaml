@@ -1,12 +1,6 @@
-name: "[W] node-build-electron-app"
+name: "[W] node-electron-app"
 
 on:
-  push:
-    tags: [ '*' ]
-    branches: [ 'master' ]
-    paths:
-      - .github/workflows/wf-node-electron-app.yaml
-
   workflow_dispatch:
 
 jobs:

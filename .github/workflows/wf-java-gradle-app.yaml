@@ -47,10 +47,10 @@ jobs:
       test-unit: true
       test-integration: true
 
-      dist-docker: ${{ github.event.inputs.build-docker }}
-      dist-archive: ${{ github.event.inputs.build-archive }}
+      dist-docker: ${{ fromJSON(github.event.inputs.build-docker) }}
+      dist-archive: ${{ fromJSON(github.event.inputs.build-archive) }}
 
-      release-to-s3: ${{ github.event.inputs.release-to-s3 }}
+      release-to-s3: ${{ fromJSON(github.event.inputs.release-to-s3) }}
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) }}
       release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}
       notify-telegram: true

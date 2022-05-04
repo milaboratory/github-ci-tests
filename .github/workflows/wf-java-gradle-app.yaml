@@ -9,6 +9,24 @@ on:
       - gradle/stub-app/
 
   workflow_dispatch:
+    inputs:
+      build-docker:
+        type: boolean
+        description: "Run 'docker' job"
+        required: false
+        default: true
+
+      build-archive:
+        type: boolean
+        description: "Run 'archive' job"
+        required: false
+        default: true
+
+      release-to-s3:
+        type: boolean
+        description: "Upload release archive to S3"
+        required: false
+        default: true
 
 jobs:
   init:
@@ -36,10 +54,10 @@ jobs:
       test-unit: true
       test-integration: true
 
-      dist-docker: true
-      dist-archive: true
+      dist-docker: ${{ github.event.inputs.build-docker }}
+      dist-archive: ${{ github.event.inputs.build-archive }}
 
-      release-to-s3: true
+      release-to-s3: ${{ github.event.inputs.release-to-s3 }}
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) }}
       release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}
       notify-telegram: true

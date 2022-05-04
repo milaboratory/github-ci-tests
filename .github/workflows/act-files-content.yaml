@@ -2,7 +2,8 @@ name: "[A] files/content"
 
 on:
   push:
-    branches: [ '*' ]
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/act-files-content.yaml
 

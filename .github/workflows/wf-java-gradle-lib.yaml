@@ -1,13 +1,6 @@
 name: "[W] java-gradle-lib"
 
 on:
-  push:
-    tags: [ '*' ]
-    branches: [ 'master' ]
-    paths:
-      - .github/workflows/wf-java-gradle-lib.yaml
-      - gradle/stub-lib/
-
   workflow_dispatch:
 
 jobs:

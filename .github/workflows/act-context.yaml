@@ -2,7 +2,8 @@ name: "[A] context"
 
 on:
   push:
-    tags: [ '*' ]
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/act-context.yaml
       - .github/workflows/act-context-base.yaml

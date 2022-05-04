@@ -3,6 +3,7 @@ name: "[A] github-pages"
 on:
   push:
     tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/act-github-pages.yaml
 

@@ -3,6 +3,7 @@ name: "[A] notify/telegram/build"
 on:
   push:
     tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/act-notify-telegram-build.yaml
 

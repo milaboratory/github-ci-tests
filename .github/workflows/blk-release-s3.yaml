@@ -2,7 +2,8 @@ name: "[B] release/s3"
 
 on:
   push:
-    tags: [ '*' ]
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/blk-release-s3.yaml
 

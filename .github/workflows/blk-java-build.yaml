@@ -2,7 +2,8 @@ name: "[B] java/build"
 
 on:
   push:
-    tags: [ '*' ]
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/blk-java-build.yaml
 

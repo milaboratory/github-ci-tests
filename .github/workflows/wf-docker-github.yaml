@@ -1,14 +1,31 @@
 name: "[W] docker-github"
 
 on:
-  push:
-    tags: [ '*' ]
-    branches: [ 'master' ]
-    paths:
-      - .github/workflows/wf-docker-github.yaml
-      - docker/
-
   workflow_dispatch:
+    inputs:
+      push-dev-versions:
+        type: boolean
+        description: "Push 'dev' versions"
+        required: false
+        default: true
+
+      push-branch-latest:
+        type: boolean
+        description: "Push :<branch>-latest tag"
+        required: false
+        default: true
+
+      push-release-latest:
+        type: boolean
+        description: "Push :latest for releases"
+        required: false
+        default: true
+
+      push-release-latest-major:
+        type: boolean
+        description: "Push :v<major> for releases"
+        required: false
+        default: true
 
 jobs:
   init:
@@ -25,10 +42,10 @@ jobs:
       product-name: 'Docker'
       dockerfile: 'docker/Dockerfile'
       push-dev-targets: ${{ github.repository }}/hello-world
-      push-dev-versions: true
-      push-branch-latest: true
-      push-release-latest: true
-      push-release-latest-major: true
+      push-dev-versions: ${{ fromJSON(github.event.inputs.push-dev-versions) }}
+      push-branch-latest: ${{ fromJSON(github.event.inputs.push-branch-latest) }}
+      push-release-latest: ${{ fromJSON(github.event.inputs.push-release-latest) }}
+      push-release-latest-major: ${{ fromJSON(github.event.inputs.push-release-latest-major) }}
       notify-telegram: true
 
     secrets:

@@ -2,7 +2,8 @@ name: "[A] release/create"
 
 on:
   push:
-    tags: [ '*' ]
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
 
 jobs:
   init:

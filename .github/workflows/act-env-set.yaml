@@ -31,5 +31,5 @@ jobs:
             test_equals "MY_VAR_1" "awesome-value-1" "${MY_VAR_1}"
             test_equals "NEW_VAR" "multiline
             value" "${NEW_VAR}"
-            test_equals "OTHER_VAR" "value with spaces" "${MY_VAR_1}"
+            test_equals "OTHER_VAR" "value with spaces" "${OTHER_VAR}"
             test_equals "low_case_var" "12345" "${low_case_var}"

@@ -1,0 +1,49 @@
+name: "[A] patch-env"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/act-patch-env.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-env-patch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/patch-env@v2-beta
+        with:
+          env: |
+            { "MY_VAR_1": "awesome value 1",
+              "NEW_VAR": "new value for new var" }
+
+      - uses: milaboratory/github-ci/actions/shell@v2
+        id: env-dump
+        with:
+          run: |
+            env | grep -E '(MY_VAR_1|NEW_VAR)='
+
+    outputs:
+      stdout: ${{ steps.env-dump.outputs.stdout }}
+
+  check:
+    runs-on: ubuntu-latest
+    needs:
+      - test-env-patch
+
+    steps:
+      - name: Test output
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          OUTPUT_EXPECTED: |-
+            MY_VAR_1=awesome value 1
+            NEW_VAR=new value for new var
+          OUTPUT_ACTUAL: ${{ needs.test-env-patch.outputs.stdout }}
+        with:
+          test: |
+            test_equals "Stdout dump check" \
+              "${OUTPUT_EXPECTED}" \
+              "${OUTPUT_ACTUAL}"

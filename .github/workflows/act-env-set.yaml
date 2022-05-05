@@ -10,46 +10,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-env-set:
+  test-and-check:
     runs-on: ubuntu-latest
 
     steps:
       - uses: milaboratory/github-ci/actions/env/set@v2-beta
         with:
           json: |
-            { "MY_VAR_1": "awesome value 1",
-              "NEW_VAR": "new value for new var" }
+            { "MY_VAR_1": "awesome-value-1",
+              "NEW_VAR": "multiline\nvalue" }
           list: |
-            OTHER_VAR=other value with spaces
+            OTHER_VAR=value with spaces
 
             low_case_var=12345
 
-      - uses: milaboratory/github-ci/actions/shell@v2
-        id: env-dump
-        with:
-          run: |
-            env | grep -E '(MY_VAR_1|NEW_VAR|OTHER_VAR|low_case_var)='
-
-    outputs:
-      stdout: ${{ steps.env-dump.outputs.stdout }}
-
-  check:
-    runs-on: ubuntu-latest
-    needs:
-      - test-env-set
-
-    steps:
-      - name: Test output
+      - name: Test
         uses: milaboratory/github-ci/actions/action-test@v2
-        env:
-          OUTPUT_EXPECTED: |-
-            MY_VAR_1=awesome value 1
-            NEW_VAR=new value for new var
-            OTHER_VAR=other value with spaces
-            low_case_var=12345
-          OUTPUT_ACTUAL: ${{ needs.test-env-set.outputs.stdout }}
         with:
           test: |
-            test_equals "Stdout dump check" \
-              "${OUTPUT_EXPECTED}" \
-              "${OUTPUT_ACTUAL}"
+            test_equals "MY_VAR_1" "awesome-value-1" "${MY_VAR_1}"
+            test_equals "NEW_VAR" "multiline
+            value" "${NEW_VAR}"
+            test_equals "OTHER_VAR" "value with spaces" "${MY_VAR_1}"
+            test_equals "low_case_var" "12345" "${low_case_var}"

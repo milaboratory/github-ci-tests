@@ -50,8 +50,6 @@ jobs:
 
     uses: milaboratory/github-ci/.github/workflows/java-gradle-app.yaml@v2-beta
     with:
-      env: |
-        { "MY_VAR_1": "some value" }
       java-version: '11'
       app-name: JAVA Gradle App
       app-name-slug: 'gradle-stub-app'
@@ -70,6 +68,9 @@ jobs:
       notify-telegram: true
 
     secrets:
+      env: |
+        { "MY_VAR_1": "some value" }
+
       GRADLE_PROPERTIES: |
         miGitHubMavenUser=${{ github.actor }}
         miGitHubMavenToken=${{ secrets.GITHUB_TOKEN }}

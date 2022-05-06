@@ -42,5 +42,5 @@ jobs:
             test_equals "OTHER_VAR" "value with spaces" "${OTHER_VAR}"
             test_equals "low_case_var" "12345" "${low_case_var}"
 
-            ghwa_notice "The value '${MASKED_JSON}' should be masked with '***'"
-            ghwa_notice "The value '${MASKED_LIST}' should be masked with '***'"
+            ghwa_notice "The value '${MASKED_JSON}' should be masked with '***' string instead of original content. If you see reasonable text - the action is broken."
+            ghwa_notice "The value '${MASKED_LIST}' should be masked with '***' string instead of original content. If you see reasonable text - the action is broken."

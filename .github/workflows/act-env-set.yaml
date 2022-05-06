@@ -30,7 +30,7 @@ jobs:
             { "MASKED_JSON": "the masked value set from JSON" }
           list: |
             MASKED_LIST=the masked value set from list
-          mask: true
+          mask-values: true
 
       - name: Test
         uses: milaboratory/github-ci/actions/action-test@v2

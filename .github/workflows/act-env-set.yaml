@@ -24,6 +24,14 @@ jobs:
 
             low_case_var=12345
 
+      - uses: milaboratory/github-ci/actions/env/set@v2-beta
+        with:
+          json: |
+            { "MASKED_JSON": "the masked value set from JSON" }
+          list: |
+            MASKED_LIST=the masked value set from list
+          mask: true
+
       - name: Test
         uses: milaboratory/github-ci/actions/action-test@v2
         with:
@@ -33,3 +41,8 @@ jobs:
             value" "${NEW_VAR}"
             test_equals "OTHER_VAR" "value with spaces" "${OTHER_VAR}"
             test_equals "low_case_var" "12345" "${low_case_var}"
+
+            echo "Masked JSON: '${MASKED_JSON}'"
+            echo "Masked list: '${MASKED_LIST}'"
+            ghwa_notice "Check the value '${MASKED_JSON}' is masked in logs"
+            ghwa_notice "Check the value '${MASKED_LIST}' is masked in logs"

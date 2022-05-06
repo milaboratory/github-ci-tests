@@ -1,9 +1,7 @@
 name: "[A] release/create"
 
 on:
-  push:
-    tags-ignore: [ '*' ]
-    branches: [ 'master' ]
+  workflow_dispatch:
 
 jobs:
   init:

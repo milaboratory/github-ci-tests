@@ -1,0 +1,193 @@
+name: "[A] helpers/merge-status"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/act-helpers-merge-status.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-success-single:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            success
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "Single success, status" "success" "${STATUS}"
+            test_equals "Single success, has-success" "success" "${HAS_SUCCESS}"
+            test_equals "Single success, has-cancelled" "success" "${HAS_CANCELLED}"
+
+  test-success-several:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            success
+            success
+
+            success
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "Several success, status" "success" "${STATUS}"
+            test_equals "Several success, has-success" "success" "${HAS_SUCCESS}"
+            test_equals "Several success, has-cancelled" "success" "${HAS_CANCELLED}"
+
+  test-only-unknown:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            unknown1
+            unknown2
+
+            unknown3
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "Only unknown, status" "" "${STATUS}"
+            test_equals "Only unknown, has-success" "" "${HAS_SUCCESS}"
+            test_equals "Only unknown, has-cancelled" "" "${HAS_CANCELLED}"
+
+  test-single-failure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            failure
+            cancelled
+            cancelled
+            success
+            success
+            success
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "Single failure, status" "failure" "${STATUS}"
+            test_equals "Single failure, has-success" "success" "${HAS_SUCCESS}"
+            test_equals "Single failure, has-cancelled" "cancelled" "${HAS_CANCELLED}"
+
+  test-all-failed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            failure
+            failure
+            failure
+            failure
+            failure
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "All failed, status" "failure" "${STATUS}"
+            test_equals "All failed, has-success" "failure" "${HAS_SUCCESS}"
+            test_equals "All failed, has-cancelled" "failure" "${HAS_CANCELLED}"
+
+  test-only-cancelled:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            cancelled
+            cancelled
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            test_equals "Only cancelled, status" "cancelled" "${STATUS}"
+            test_equals "Only cancelled, has-success" "cancelled" "${HAS_SUCCESS}"
+            test_equals "Only cancelled, has-cancelled" "cancelled" "${HAS_CANCELLED}"
+
+  test-status-mess:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            failure
+            cancelled
+            fffffffff
+            asdkjhafg
+
+            aqwe
+            _asd-2-as-c
+
+            success
+            12345
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+        with:
+          test: |
+            # We expect merged result to be 'failure' just because we have one 'failure' in list
+            # not because we have plenty of unknown statuses.
+            test_equals "Status mess, status" "failure" "${STATUS}"
+
+            test_equals "Status mess, has-success" "success" "${HAS_SUCCESS}"
+            test_equals "Status mess, has-cancelled" "cancelled" "${HAS_CANCELLED}"

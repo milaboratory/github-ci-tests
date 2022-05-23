@@ -59,7 +59,7 @@ jobs:
     needs:
       - init
 
-    uses: milaboratory/github-ci/.github/workflows/java-gradle-app.yaml@v2-beta
+    uses: milaboratory/github-ci/.github/workflows/java-gradle.yaml@v2-beta
     with:
       product-name: JAVA Gradle App
       product-name-slug: 'gradle-stub-app'

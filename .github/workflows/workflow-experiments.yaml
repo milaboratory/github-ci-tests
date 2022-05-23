@@ -17,6 +17,8 @@ jobs:
         run: 'true'
 
     outputs:
+      # Even constant outputs become initialized only after job start.
+      # All outputs of skipped jobs are always empty.
       started: 'true'
 
   check:

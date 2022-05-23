@@ -10,11 +10,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  notify-release:
-    name: "'New release'"
+  notify-release-failed:
+    name: "'Release failed'"
     runs-on: ubuntu-latest
     steps:
-      - uses: milaboratory/github-ci/actions/notify/telegram/release@v2-beta
+      - uses: milaboratory/github-ci/actions/notify/telegram/release-failed@v2-beta
         with:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
@@ -22,3 +22,23 @@ jobs:
           product-name: 'TG Notify Test'
           version: '111'
           tag: 'v111'
+
+          additional-info: "Additional text at the end of release failure notification"
+
+  notify-new-release:
+    name: "'New release'"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: milaboratory/github-ci/actions/notify/telegram/release-ready@v2-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          product-name: 'TG Notify Test'
+          version: '111'
+          tag: 'v111'
+
+          docker-images: ''
+          maven-packages: ''
+
+          additional-info: "Additional text at the end of new release notification"

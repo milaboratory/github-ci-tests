@@ -21,12 +21,51 @@ jobs:
       # All outputs of skipped jobs are always empty.
       started: 'true'
 
+  failure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - shell: bash
+        run: 'false'
+
+    outputs:
+      # Even constant outputs become initialized only after job start.
+      # All outputs of skipped jobs are always empty.
+      started: 'true'
+
+  success:
+    runs-on: ubuntu-latest
+
+    steps:
+      - shell: bash
+        run: 'true'
+
+    outputs:
+      # Even constant outputs become initialized only after job start.
+      # All outputs of skipped jobs are always empty.
+      started: 'true'
+
+  cancelled:
+    runs-on: ubuntu-latest
+
+    steps:
+      - shell: bash
+        run: 'sleep 60'
+
+    outputs:
+      # Even constant outputs become initialized only after job start.
+      # All outputs of skipped jobs are always empty.
+      started: 'true'
+
   check:
     runs-on: ubuntu-latest
 
     if: always()
     needs:
       - not-started
+      - failure
+      - success
+      - cancelled
 
     steps:
       - shell: bash

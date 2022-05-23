@@ -33,6 +33,8 @@ jobs:
         run: |
           echo "Started: '${{ needs.not-started.outputs.started }}'"
 
+          echo "Needs content: ${{ toJSON(needs.not-started) }}"
+
 
 #  git-version:
 #    strategy:

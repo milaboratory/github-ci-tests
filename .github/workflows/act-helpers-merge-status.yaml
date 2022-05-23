@@ -28,9 +28,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "Single success, status" "success" "${STATUS}"
-            test_equals "Single success, has-success" "success" "${HAS_SUCCESS}"
-            test_equals "Single success, has-cancelled" "success" "${HAS_CANCELLED}"
+            test_equals "status" "success" "${STATUS}"
+            test_equals "has-success" "success" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "success" "${HAS_CANCELLED}"
 
   test-success-several:
     runs-on: ubuntu-latest
@@ -53,9 +53,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "Several success, status" "success" "${STATUS}"
-            test_equals "Several success, has-success" "success" "${HAS_SUCCESS}"
-            test_equals "Several success, has-cancelled" "success" "${HAS_CANCELLED}"
+            test_equals "status" "success" "${STATUS}"
+            test_equals "has-success" "success" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "success" "${HAS_CANCELLED}"
 
   test-only-unknown:
     runs-on: ubuntu-latest
@@ -78,9 +78,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "Only unknown, status" "" "${STATUS}"
-            test_equals "Only unknown, has-success" "" "${HAS_SUCCESS}"
-            test_equals "Only unknown, has-cancelled" "" "${HAS_CANCELLED}"
+            test_equals "status" "" "${STATUS}"
+            test_equals "has-success" "" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "" "${HAS_CANCELLED}"
 
   test-single-failure:
     runs-on: ubuntu-latest
@@ -105,9 +105,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "Single failure, status" "failure" "${STATUS}"
-            test_equals "Single failure, has-success" "success" "${HAS_SUCCESS}"
-            test_equals "Single failure, has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "status" "failure" "${STATUS}"
+            test_equals "has-success" "success" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"
 
   test-all-failed:
     runs-on: ubuntu-latest
@@ -131,9 +131,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "All failed, status" "failure" "${STATUS}"
-            test_equals "All failed, has-success" "failure" "${HAS_SUCCESS}"
-            test_equals "All failed, has-cancelled" "failure" "${HAS_CANCELLED}"
+            test_equals "status" "failure" "${STATUS}"
+            test_equals "has-success" "failure" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "failure" "${HAS_CANCELLED}"
 
   test-only-cancelled:
     runs-on: ubuntu-latest
@@ -154,9 +154,9 @@ jobs:
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
         with:
           test: |
-            test_equals "Only cancelled, status" "cancelled" "${STATUS}"
-            test_equals "Only cancelled, has-success" "cancelled" "${HAS_SUCCESS}"
-            test_equals "Only cancelled, has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "status" "cancelled" "${STATUS}"
+            test_equals "has-success" "cancelled" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"
 
   test-status-mess:
     runs-on: ubuntu-latest
@@ -187,7 +187,7 @@ jobs:
           test: |
             # We expect merged result to be 'failure' just because we have one 'failure' in list
             # not because we have plenty of unknown statuses.
-            test_equals "Status mess, status" "failure" "${STATUS}"
+            test_equals "status" "failure" "${STATUS}"
 
-            test_equals "Status mess, has-success" "success" "${HAS_SUCCESS}"
-            test_equals "Status mess, has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "has-success" "success" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"

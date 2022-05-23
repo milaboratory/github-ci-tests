@@ -2,6 +2,8 @@ name: "_ [Experiments]"
 
 on:
   push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
     paths:
       - .github/workflows/workflow-experiments.yaml
 

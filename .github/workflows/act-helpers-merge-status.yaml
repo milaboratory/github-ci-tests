@@ -26,11 +26,13 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "success" "${STATUS}"
             test_equals "has-success" "success" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "success" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "success" "${HAS_SKIPPED}"
 
   test-success-several:
     runs-on: ubuntu-latest
@@ -51,11 +53,13 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "success" "${STATUS}"
             test_equals "has-success" "success" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "success" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "success" "${HAS_SKIPPED}"
 
   test-only-unknown:
     runs-on: ubuntu-latest
@@ -76,11 +80,13 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "" "${STATUS}"
             test_equals "has-success" "" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "" "${HAS_SKIPPED}"
 
   test-single-failure:
     runs-on: ubuntu-latest
@@ -93,6 +99,7 @@ jobs:
             failure
             cancelled
             cancelled
+            skipped
             success
             success
             success
@@ -103,11 +110,13 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "failure" "${STATUS}"
             test_equals "has-success" "success" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "skipped" "${HAS_SKIPPED}"
 
   test-all-failed:
     runs-on: ubuntu-latest
@@ -129,13 +138,15 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "failure" "${STATUS}"
             test_equals "has-success" "failure" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "failure" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "failure" "${HAS_SKIPPED}"
 
-  test-only-cancelled:
+  test-all-cancelled:
     runs-on: ubuntu-latest
 
     steps:
@@ -152,11 +163,38 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             test_equals "status" "cancelled" "${STATUS}"
             test_equals "has-success" "cancelled" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "cancelled" "${HAS_SKIPPED}"
+
+  test-all-skipped:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: status
+        uses: milaboratory/github-ci/actions/helpers/merge-status@v2-beta
+        with:
+          statuses: |-
+            skipped
+            skipped
+
+      - id: check
+        uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          STATUS: ${{ steps.status.outputs.status }}
+          HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
+          HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
+        with:
+          test: |
+            test_equals "status" "skipped" "${STATUS}"
+            test_equals "has-success" "skipped" "${HAS_SUCCESS}"
+            test_equals "has-cancelled" "skipped" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "skipped" "${HAS_SKIPPED}"
 
   test-status-mess:
     runs-on: ubuntu-latest
@@ -167,14 +205,16 @@ jobs:
         with:
           statuses: |-
             failure
+            success
             cancelled
+            skipped
+
             fffffffff
             asdkjhafg
 
             aqwe
             _asd-2-as-c
 
-            success
             12345
 
       - id: check
@@ -183,6 +223,7 @@ jobs:
           STATUS: ${{ steps.status.outputs.status }}
           HAS_SUCCESS: ${{ steps.status.outputs.has-success }}
           HAS_CANCELLED: ${{ steps.status.outputs.has-cancelled }}
+          HAS_SKIPPED: ${{ steps.status.outputs.has-skipped }}
         with:
           test: |
             # We expect merged result to be 'failure' just because we have one 'failure' in list
@@ -191,3 +232,4 @@ jobs:
 
             test_equals "has-success" "success" "${HAS_SUCCESS}"
             test_equals "has-cancelled" "cancelled" "${HAS_CANCELLED}"
+            test_equals "has-skipped" "skipped" "${HAS_SKIPPED}"

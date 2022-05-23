@@ -30,10 +30,13 @@ jobs:
 
     steps:
       - shell: bash
+        env:
+          NEEDS: ${{ toJSON(needs) }}
         run: |
           echo "Started: '${{ needs.not-started.outputs.started }}'"
 
-          echo "Needs content: ${{ toJSON(needs.not-started) }}"
+          echo "Needs content: "
+          jq . <<<"${NEEDS}"
 
 
 #  git-version:

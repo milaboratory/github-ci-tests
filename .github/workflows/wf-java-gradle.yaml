@@ -90,7 +90,7 @@ jobs:
         ./libs/*.jar
 
       dist-archive-s3: ${{ fromJSON(github.event.inputs.dev-to-s3) }}
-      dist-archive-s3-add-version: true
+      dist-archive-s3-add-version: false
       dist-archive-s3-add-sha: 'false'
 
       release-to-s3: ${{ fromJSON(github.event.inputs.release-to-s3) }}

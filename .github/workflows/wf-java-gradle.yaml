@@ -38,9 +38,15 @@ on:
         required: false
         default: true
 
+      dev-to-s3:
+        type: boolean
+        description: "Upload devs to S3"
+        required: false
+        default: false
+
       release-to-s3:
         type: boolean
-        description: "Upload release to S3"
+        description: "Upload releases to S3"
         required: false
         default: true
 
@@ -82,6 +88,10 @@ jobs:
       dist-archive-paths: |-
         ./distributions/*.tar
         ./libs/*.jar
+
+      dist-archive-s3: ${{ fromJSON(github.event.inputs.dev-to-s3) }}
+      dist-archive-s3-add-version: true
+      dist-archive-s3-add-sha: 'false'
 
       release-to-s3: ${{ fromJSON(github.event.inputs.release-to-s3) }}
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) }}

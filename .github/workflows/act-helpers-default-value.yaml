@@ -46,6 +46,9 @@ jobs:
           value: ""
           default: "non-empty-default"
 
+    outputs:
+      value: ${{ steps.value.outputs.value }}
+
   test-all-empty:
     runs-on: ubuntu-latest
 

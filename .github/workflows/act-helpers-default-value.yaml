@@ -1,0 +1,93 @@
+name: "[A] helpers/default-value"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/act-helpers-default-value.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test-normal-value:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/helpers/default-value@v2-beta
+        id: value
+        with:
+          value: "non-empty-value"
+          default: "non-empty-default"
+
+    outputs:
+      value: ${{ steps.value.outputs.value }}
+
+  test-empty-default:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/helpers/default-value@v2-beta
+        id: value
+        with:
+          value: "non-empty-value"
+          default: ""
+
+    outputs:
+      value: ${{ steps.value.outputs.value }}
+
+  test-default-value:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/helpers/default-value@v2-beta
+        id: value
+        with:
+          value: ""
+          default: "non-empty-default"
+
+  test-all-empty:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: milaboratory/github-ci/actions/helpers/default-value@v2-beta
+        id: value
+        with:
+          value: ""
+          default: ""
+
+    outputs:
+      value: ${{ steps.value.outputs.value }}
+
+  check:
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-normal-value
+      - test-empty-default
+      - test-default-value
+      - test-all-empty
+
+    steps:
+      - uses: milaboratory/github-ci/actions/action-test@v2
+        env:
+          NORMAL_1_ACTUAL: ${{ needs.test-normal-value.outputs.value }}
+          NORMAL_1_EXPECTED: "non-empty-value"
+
+          NORMAL_2_ACTUAL: ${{ needs.test-empty-default.outputs.value }}
+          NORMAL_2_EXPECTED: "non-empty-value"
+
+          DEFAULT_ACTUAL: ${{ needs.test-default-value.outputs.value }}
+          DEFAULT_EXPECTED: "non-empty-default"
+
+          ALL_EMPTY_ACTUAL: ${{ needs.test-all-empty.outputs.value }}
+          ALL_EMPTY_EXPECTED: ""
+
+        with:
+          test: |
+            test_equals "Normal 1" "${NORMAL_1_EXPECTED}" "${NORMAL_1_ACTUAL}"
+            test_equals "Normal 2" "${NORMAL_2_EXPECTED}" "${NORMAL_2_ACTUAL}"
+
+            test_equals "Default" "${DEFAULT_EXPECTED}" "${DEFAULT_ACTUAL}"
+
+            test_equals "All empty" "${ALL_EMPTY_EXPECTED}" "${ALL_EMPTY_ACTUAL}"

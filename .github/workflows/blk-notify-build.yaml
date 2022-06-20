@@ -28,8 +28,33 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
+          notification-mode: 'true'
           build-status: 'success'
-          product-name: "'blocks/notify/build' success"
+
+          product-name: "block/notify/build"
+          additional-info: 'mode: true, status: success'
+
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          notification-mode: 'success-only'
+          build-status: 'success'
+
+          product-name: "block/notify/build"
+          additional-info: 'mode: success-only, status: success'
+
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          notification-mode: 'failure-only'
+          build-status: 'success'
+
+          product-name: "block/notify/build"
+          additional-info: 'mode: failure-only, status: success'
 
   notify-failure:
     name: Notify build failed
@@ -44,8 +69,33 @@ jobs:
           telegram-target: 95899978
           telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
 
+          notification-mode: 'true'
           build-status: 'failure'
-          product-name: "'blocks/notify/build' failure"
+
+          product-name: "blocks/notify/build"
+          additional-info: "mode: true, status: failure"
+
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          notification-mode: 'success-only'
+          build-status: 'failure'
+
+          product-name: "blocks/notify/build"
+          additional-info: "mode: success-only, status: failure"
+
+      - uses: milaboratory/github-ci/blocks/notify/build@v2-beta
+        with:
+          telegram-target: 95899978
+          telegram-token: ${{ secrets.TG_CI_BOT_TOKEN }}
+
+          notification-mode: 'failure-only'
+          build-status: 'failure'
+
+          product-name: "blocks/notify/build"
+          additional-info: "mode: failure-only, status: failure"
 
   notify-cancelled:
     name: Notify build failed

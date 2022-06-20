@@ -61,6 +61,17 @@ on:
           - 'false'
         default: 'true'
 
+      notify-test:
+        type: choice
+        description: "Notify 'test-*' steps"
+        required: true
+        options:
+          - 'true'
+          - 'success-only'
+          - 'failure-only'
+          - 'false'
+        default: 'true'
+
 jobs:
   init:
     runs-on: ubuntu-latest

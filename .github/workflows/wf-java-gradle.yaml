@@ -61,7 +61,7 @@ on:
           - 'false'
         default: 'true'
 
-      notify-test:
+      notify-tests:
         type: choice
         description: "Notify 'test-*' steps"
         required: true
@@ -121,6 +121,7 @@ jobs:
 
       notify-telegram: true
       notify-build: ${{ github.event.inputs.notify-build }}
+      notify-tests: ${{ github.event.inputs.notify-tests }}
 
     secrets:
       env: |

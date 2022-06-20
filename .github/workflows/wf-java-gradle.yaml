@@ -50,6 +50,17 @@ on:
         required: false
         default: true
 
+      notify-build:
+        type: choice
+        description: "Notify 'build' step"
+        required: true
+        options:
+          - 'false'
+          - 'success-only'
+          - 'failure-only'
+          - 'true'
+        default: 'true'
+
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -98,6 +109,7 @@ jobs:
       release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}
 
       notify-telegram: true
+      notify-build: ${{ github.event.inputs.notify-build }}
 
     secrets:
       env: |

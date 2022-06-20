@@ -55,10 +55,10 @@ on:
         description: "Notify 'build' step"
         required: true
         options:
-          - 'false'
+          - 'true'
           - 'success-only'
           - 'failure-only'
-          - 'true'
+          - 'false'
         default: 'true'
 
 jobs:

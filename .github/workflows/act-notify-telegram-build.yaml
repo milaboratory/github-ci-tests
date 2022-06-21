@@ -57,6 +57,9 @@ jobs:
           maven-packages: |
             [ "pkg1:1", "pkg2:2" ]
 
+          links: |
+            [ "https://example.com/awesome" ]
+
           additional-info: |
             some additional info at the end of the message
 

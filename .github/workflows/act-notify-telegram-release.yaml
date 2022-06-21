@@ -23,9 +23,6 @@ jobs:
           version: '111'
           tag: 'v111'
 
-          links: |
-            [ "https://awesome.me/" ]
-
           additional-info: "Additional text at the end of release failure notification"
 
   notify-new-release:
@@ -43,6 +40,7 @@ jobs:
 
           docker-images: ''
           maven-packages: ''
-          links: ''
+          links: |
+            [ "https://awesome.me/" ]
 
           additional-info: "Additional text at the end of new release notification"

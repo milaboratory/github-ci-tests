@@ -44,12 +44,6 @@ on:
         required: false
         default: false
 
-      release-github-draft:
-        type: boolean
-        description: "Create GitHub release draft"
-        required: false
-        default: false
-
       release-to-s3:
         type: boolean
         description: "Upload releases to S3"
@@ -121,7 +115,7 @@ jobs:
       dist-archive-s3-add-version: false
       dist-archive-s3-add-sha: 'false'
 
-      release-github-draft: ${{ fromJSON(github.event.inputs.release-github-draft) }}
+      release-github-draft: true
       release-to-s3: ${{ fromJSON(github.event.inputs.release-to-s3) }}
       release-s3-add-version: ${{ fromJSON(needs.init.outputs.is-release) }}
       release-s3-add-sha: ${{ fromJSON(needs.init.outputs.is-release) && 'false' || '16' }}

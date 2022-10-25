@@ -30,10 +30,18 @@ jobs:
       - init
 
     steps:
+      - id: cdn-string
+        uses: milaboratory/github-ci/actions/shell@v2
+        with:
+          dump-stdout: false
+          run: |
+            CDN_URL=$(echo '["https://cdn.milaboratory.com/software/mixcr/mixcr-4.1.0-20-develop-a1cf9a3bcafe0055121eec1f855cdb91e12e0ea9.zip"]' | jq -r  -c '.[]')
+            ghwa_set_output "converted_cdn_url" "${CDN_URL}"
+
       - id: cdn
         uses: milaboratory/github-ci/blocks/update-cdn-link@v2-beta
         with:
-          cdn-redirect-link: 'https://cdn.milaboratory.com/software/mixcr/mixcr-4.1.0-20-develop-a1cf9a3bcafe0055121eec1f855cdb91e12e0ea9.zip'
+          cdn-redirect-link: ${{ fromJSON( steps.cdn-string.outputs.data ).converted_cdn_url }}
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
 

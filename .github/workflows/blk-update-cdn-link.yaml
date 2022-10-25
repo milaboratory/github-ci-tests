@@ -33,7 +33,7 @@ jobs:
       - id: cdn
         uses: milaboratory/github-ci/blocks/update-cdn-link@v2-beta
         with:
-          cdn-redirect-link: ${{ fromJSON(['https://cdn.milaboratory.com/software/mixcr/mixcr-4.1.0-20-develop-a1cf9a3bcafe0055121eec1f855cdb91e12e0ea9.zip']) }}
+          cdn-redirect-link: 'https://cdn.milaboratory.com/software/mixcr/mixcr-4.1.0-20-develop-a1cf9a3bcafe0055121eec1f855cdb91e12e0ea9.zip'
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
           s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
 

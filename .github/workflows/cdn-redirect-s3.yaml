@@ -1,0 +1,42 @@
+name: "[B] cdn-redirect/s3"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/cdn-redirect-s3.yaml
+
+  workflow_dispatch:
+
+
+jobs:
+  init:
+    name: Init
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: context
+        uses: milaboratory/github-ci/actions/context@v2
+
+  update-cdn-link:
+    name: Update the latest build link on the CDN
+    runs-on: ubuntu-latest
+
+    needs:
+      - init
+
+    steps:
+      - id: cdn
+        uses: milaboratory/github-ci/blocks/update-cdn-link@v2
+        with:
+          cdn-redirect-link: 'https://cdn.milaboratory.com/software/mixcr/mixcr-4.1.0-20-develop-a1cf9a3bcafe0055121eec1f855cdb91e12e0ea9.zip'
+          s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}
+          s3-key-secret: ${{ secrets.AWS_CI_SECRET_ACCESS_KEY }}
+
+          s3-region: 'eu-central-1'
+          s3-bucket: 'milaboratory-artefacts-public-files'
+
+          s3-bucket-path: 'link/software/mixcr'
+          s3-bucket-key: 'mixcr-develop.zip'
+

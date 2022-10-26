@@ -14,9 +14,9 @@ jobs:
   init:
     runs-on: ubuntu-latest
     steps:
-      - uses: milaboratory/github-ci/actions/context/init@v2
+      - uses: milaboratory/github-ci/actions/context/init@v3
       - id: context
-        uses: milaboratory/github-ci/actions/context@v2
+        uses: milaboratory/github-ci/actions/context@v3
 
     outputs:
       is-release: ${{ steps.context.outputs.is-release }}
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - id: cdn-string
-        uses: milaboratory/github-ci/actions/shell@v2
+        uses: milaboratory/github-ci/actions/shell@v3
         with:
           dump-stdout: false
           run: |
@@ -39,7 +39,7 @@ jobs:
             ghwa_set_output "converted_cdn_url" "${CDN_URL}"
 
       - id: cdn
-        uses: milaboratory/github-ci/blocks/update-cdn-link@v2-beta
+        uses: milaboratory/github-ci/blocks/update-cdn-link@v3-beta
         with:
           cdn-redirect-link: ${{ fromJSON( steps.cdn-string.outputs.data ).converted_cdn_url }}
           s3-key-id: ${{ secrets.AWS_CI_ACCESS_KEY_ID }}

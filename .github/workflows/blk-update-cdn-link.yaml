@@ -49,5 +49,5 @@ jobs:
           s3-bucket: 'milaboratory-artefacts-public-files'
 
           s3-bucket-path: 'link/software/mixcr'
-          s3-bucket-key: 'mixcr-develop.zip'
+          s3-bucket-key: 'mixcr-test.zip'
 

@@ -1,8 +1,13 @@
 name: "[A] release/create"
 
 on:
-  push:
-    tags: [ '*' ]
+  workflow_dispatch:
+    inputs:
+      manual_tag:
+        type: string
+        required: false
+        #push:
+        #tags: [ '*' ]
 
 jobs:
   init:
@@ -32,7 +37,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
           name: ${{ steps.context.outputs.current-version }}
-          tag: ${{ steps.context.outputs.current-version-tag }}
+          tag: ${{ inputs.manual_tag }}
 
           assets: |
             assets/test-asset.txt

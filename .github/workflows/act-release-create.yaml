@@ -1,7 +1,8 @@
 name: "[A] release/create"
 
 on:
-  workflow_dispatch:
+  push:
+    tags: [ '*' ]
 
 jobs:
   init:

@@ -43,10 +43,14 @@ jobs:
       - test-simple
 
     steps:
-      - name: Test output
+      - name: Dump 'tagged' versioning
         env:
           V_INFO_TAGS: ${{ needs.test-tags.outputs.version-info }}
-          V_INFO_SIMPLE: ${{ needs.test-simple.outputs.version-info }}
         run: |
           jq . <<<"${V_INFO_TAGS}"
+
+      - name: Dump 'simple' versioning
+        env:
+          V_INFO_SIMPLE: ${{ needs.test-simple.outputs.version-info }}
+        run: |
           jq . <<<"${V_INFO_SIMPLE}"

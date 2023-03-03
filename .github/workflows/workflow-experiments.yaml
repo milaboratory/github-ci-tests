@@ -10,32 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  not-started:
-    runs-on: ubuntu-latest
-    if: "'true' == 'false'"
-
-    steps:
-      - shell: bash
-        run: 'true'
-
-    outputs:
-      # Even constant outputs become initialized only after job start.
-      # All outputs of skipped jobs are always empty.
-      started: 'true'
-
-  failure:
-    runs-on: ubuntu-latest
-
-    steps:
-      - shell: bash
-        run: 'false'
-
-    outputs:
-      # Even constant outputs become initialized only after job start.
-      # All outputs of skipped jobs are always empty.
-      started: 'true'
-
-  success:
+  init:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,41 +18,92 @@ jobs:
         run: 'true'
 
     outputs:
-      # Even constant outputs become initialized only after job start.
-      # All outputs of skipped jobs are always empty.
-      started: 'true'
-
-  cancelled:
-    runs-on: ubuntu-latest
-
-    steps:
-      - shell: bash
-        run: 'sleep 60'
-
-    outputs:
-      # Even constant outputs become initialized only after job start.
-      # All outputs of skipped jobs are always empty.
-      started: 'true'
+      not-empty: "something"
+      empty: ""
 
   check:
     runs-on: ubuntu-latest
 
-    if: always()
     needs:
-      - not-started
-      - failure
-      - success
-      - cancelled
+      - init
 
     steps:
       - shell: bash
         env:
-          NEEDS: ${{ toJSON(needs) }}
+          NOT_EMPTY: ${{ needs.init.outputs.not-empty && (":"+needs.init.outputs.not-empty+":") || ":" }}
+          EMPTY: ${{ needs.init.outputs.empty && (":"+needs.init.outputs.empty+":") || ":" }}
         run: |
-          echo "Started: '${{ needs.not-started.outputs.started }}'"
+          echo "Not empty: '${NOT_EMPTY}'"
+          echo "Empty: '${EMPTY}'"
 
-          echo "Needs content: "
-          jq . <<<"${NEEDS}"
+#  not-started:
+#    runs-on: ubuntu-latest
+#    if: "'true' == 'false'"
+#
+#    steps:
+#      - shell: bash
+#        run: 'true'
+#
+#    outputs:
+#      # Even constant outputs become initialized only after job start.
+#      # All outputs of skipped jobs are always empty.
+#      started: 'true'
+#
+#  failure:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - shell: bash
+#        run: 'false'
+#
+#    outputs:
+#      # Even constant outputs become initialized only after job start.
+#      # All outputs of skipped jobs are always empty.
+#      started: 'true'
+#
+#  success:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - shell: bash
+#        run: 'true'
+#
+#    outputs:
+#      # Even constant outputs become initialized only after job start.
+#      # All outputs of skipped jobs are always empty.
+#      started: 'true'
+#
+#  cancelled:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - shell: bash
+#        run: 'sleep 60'
+#
+#    outputs:
+#      # Even constant outputs become initialized only after job start.
+#      # All outputs of skipped jobs are always empty.
+#      started: 'true'
+#
+#  check:
+#    runs-on: ubuntu-latest
+#
+#    if: always()
+#    needs:
+#      - not-started
+#      - failure
+#      - success
+#      - cancelled
+#
+#    steps:
+#      - shell: bash
+#        env:
+#          NEEDS: ${{ toJSON(needs) }}
+#        run: |
+#          echo "Started: '${{ needs.not-started.outputs.started }}'"
+#
+#          echo "Needs content: "
+#          jq . <<<"${NEEDS}"
 
 
 #  git-version:

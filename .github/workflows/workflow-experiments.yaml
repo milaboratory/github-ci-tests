@@ -30,8 +30,8 @@ jobs:
     steps:
       - shell: bash
         env:
-          NOT_EMPTY: ${{ needs.init.outputs.not-empty && (":"needs.init.outputs.not-empty":") || ":" }}
-          EMPTY: ${{ needs.init.outputs.empty && (":"needs.init.outputs.empty":") || ":" }}
+          NOT_EMPTY: ${{ needs.init.outputs.not-empty && format(":{0}:", needs.init.outputs.not-empty) || ":" }}
+          EMPTY: ${{ needs.init.outputs.empty && format(":{0}:", needs.init.outputs.empty) || ":" }}
         run: |
           echo "Not empty: '${NOT_EMPTY}'"
           echo "Empty: '${EMPTY}'"

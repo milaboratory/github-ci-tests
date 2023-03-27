@@ -10,14 +10,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-tags:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - id: version
-        uses: milaboratory/github-ci/actions/detect-version@v2-beta
+        uses: milaboratory/github-ci/actions/detect-version@v3-beta
+
+    outputs:
+      version-info: ${{ toJSON(steps.version.outputs) }}
+
+  test-simple:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: version
+        uses: milaboratory/github-ci/actions/detect-version@v3-beta
+        with:
+          branch-versioning: "master"
 
     outputs:
       version-info: ${{ toJSON(steps.version.outputs) }}
@@ -25,11 +39,18 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     needs:
-      - test
+      - test-tags
+      - test-simple
 
     steps:
-      - name: Test output
+      - name: Dump 'tagged' versioning
         env:
-          V_INFO: ${{ needs.test.outputs.version-info }}
+          V_INFO_TAGS: ${{ needs.test-tags.outputs.version-info }}
         run: |
-          jq . <<<"${V_INFO}"
+          jq . <<<"${V_INFO_TAGS}"
+
+      - name: Dump 'simple' versioning
+        env:
+          V_INFO_SIMPLE: ${{ needs.test-simple.outputs.version-info }}
+        run: |
+          jq . <<<"${V_INFO_SIMPLE}"

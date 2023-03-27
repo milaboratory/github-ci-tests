@@ -54,7 +54,7 @@ jobs:
         uses: milaboratory/github-ci/actions/action-test@v4-beta
 
         env:
-          CTX_AFTER_INIT: ${{ toJSON(needs.test-context-get.outputs.data) }}
+          CTX_AFTER_INIT: ${{ needs.test-context-get.outputs.data }}
 
         with:
           test: |

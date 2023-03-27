@@ -18,6 +18,8 @@ jobs:
 
   test-context-get:
     runs-on: ubuntu-latest
+    needs:
+      - test-context-init
     steps:
       - id: raw-context
         uses: milaboratory/github-ci/actions/context/get@v4-bet

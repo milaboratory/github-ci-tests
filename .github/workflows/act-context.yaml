@@ -27,7 +27,7 @@ jobs:
           key: "versions.json"
           default-value: '{}'
     outputs:
-      data: ${{ steps.raw-context.outputs }}
+      data: ${{ toJSON(steps.raw-context.outputs) }}
 
 
   test-after-init:

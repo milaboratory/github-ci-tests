@@ -22,7 +22,7 @@ jobs:
       - test-context-init
     steps:
       - id: raw-context
-        uses: milaboratory/github-ci/actions/context/get@v4-stagging
+        uses: milaboratory/github-ci/actions/context/get@v4-beta
         with:
           key: "versions.json"
           default-value: '{}'
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - id: context
-        uses: milaboratory/github-ci/actions/context@v4-stagging
+        uses: milaboratory/github-ci/actions/context@v4-beta
 
 
     outputs:

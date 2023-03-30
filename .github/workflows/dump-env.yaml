@@ -25,4 +25,4 @@ jobs:
         run: |
           env
           echo
-          printf "PWD: %s\n" pwd
+          printf "PWD: %s\n" "${PWD}"

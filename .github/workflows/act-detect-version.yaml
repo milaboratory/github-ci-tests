@@ -1,38 +1,33 @@
 name: "[A] detect-version"
-
 on:
   push:
-    tags-ignore: [ '*' ]
-    branches: [ 'master' ]
+    pull_request:
+      types: [opened, reopened, synchronize]
+      branches:
+        - 'master'
+    tags-ignore: ['*']
+    branches: ['master']
     paths:
       - .github/workflows/act-detect-version.yaml
-
   workflow_dispatch:
-
 jobs:
   test-tags:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
       - id: version
-        uses: milaboratory/github-ci/actions/detect-version@v3-beta
-
+        uses: milaboratory/github-ci/actions/detect-version@v4-stagging
     outputs:
       version-info: ${{ toJSON(steps.version.outputs) }}
 
   test-simple:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
       - id: version
-        uses: milaboratory/github-ci/actions/detect-version@v3-beta
+        uses: milaboratory/github-ci/actions/detect-version@v4-stagging
         with:
           branch-versioning: "master"
-
     outputs:
       version-info: ${{ toJSON(steps.version.outputs) }}
 
@@ -41,14 +36,12 @@ jobs:
     needs:
       - test-tags
       - test-simple
-
     steps:
       - name: Dump 'tagged' versioning
         env:
           V_INFO_TAGS: ${{ needs.test-tags.outputs.version-info }}
         run: |
           jq . <<<"${V_INFO_TAGS}"
-
       - name: Dump 'simple' versioning
         env:
           V_INFO_SIMPLE: ${{ needs.test-simple.outputs.version-info }}

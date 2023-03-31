@@ -21,5 +21,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Dump env vars
     steps:
-      - run: env
-        shell: bash
+      - shell: bash
+        run: |
+          env
+          echo
+          printf "PWD: %s\n" "${PWD}"

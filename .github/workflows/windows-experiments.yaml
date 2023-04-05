@@ -1,0 +1,25 @@
+name: "_ [Windows experiments]"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/windows-experiments.yaml
+
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: windows-latest
+
+    steps:
+      - shell: bash
+        run: |
+          env
+          
+          printf "\n\n"
+          which gcc
+          
+          printf "\n\n"
+          gcc --version

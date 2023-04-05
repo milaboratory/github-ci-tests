@@ -26,7 +26,7 @@ jobs:
           
           printf "\n\n"
           choco list --local
-          choco uninstall --yes mingw
+          choco uninstall --yes mingw strawberryperl
           
           printf "\n\n"
           which gcc

@@ -26,7 +26,7 @@ jobs:
           
           printf "\n\n"
           choco list --local
-          choco uninstall --yes mingw-w64
+          choco uninstall --yes mingw
           
           printf "\n\n"
           which gcc

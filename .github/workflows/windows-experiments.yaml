@@ -23,3 +23,9 @@ jobs:
           
           printf "\n\n"
           gcc --version
+          
+          printf "\n\n"
+          choco uninstall --yes gcc
+          
+          printf "\n\n"
+          which gcc

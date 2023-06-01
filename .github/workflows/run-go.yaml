@@ -1,0 +1,28 @@
+name: "_ [Run GO]"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/run-go.yaml
+
+  workflow_dispatch:
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Golang ${{ inputs.golang-version }}
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
+
+      - name: Run sample GO code
+        shell: bash
+        run:
+          cd go
+          go run .

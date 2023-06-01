@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  init:
+  run:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,6 @@ jobs:
 
       - name: Run sample GO code
         shell: bash
-        run:
+        run: |
           cd go
           go run .

@@ -26,4 +26,5 @@ jobs:
         run: |
           ls -la
           cd go
+          ls -la
           go run .

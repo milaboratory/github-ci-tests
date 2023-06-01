@@ -24,5 +24,6 @@ jobs:
       - name: Run sample GO code
         shell: bash
         run: |
+          ls -la
           cd go
           go run .

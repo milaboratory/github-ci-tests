@@ -24,7 +24,10 @@ jobs:
       - name: Run sample GO code
         shell: bash
         run: |
-          ls -la
           cd go
-          ls -la
           go run ./
+          
+          echo "/dev/shm:"
+          ls -la /dev/shm
+          
+          env TMPDIR=/dev/shm go run ./

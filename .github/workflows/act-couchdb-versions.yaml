@@ -1,0 +1,31 @@
+name: "[A] CouchDB list versions"
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    paths:
+      - .github/workflows/act-couchdb-versions.yaml
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: results
+        uses: milaboratory/github-ci-internal/actions/couchdb/get-versions@v4-beta
+        with:
+          couchdb-host: ${{ secrets.COUCHDB_HOST }}
+          couchdb-user: ${{ secrets.COUCHDB_USER }}
+          couchdb-passwd: ${{ secrets.COUCHDB_PASSWORD }}
+          repo-name: "pl"
+          major-versions: "2"
+          minor-versions: "5"
+
+      - names: milaboratory/github-ci/actions/shell@v4-beta
+        env:
+          RES: ${{ steps.results.outputs.versions }}
+        with:
+          run: |
+            echo "${RES}"

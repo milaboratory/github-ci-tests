@@ -23,7 +23,7 @@ jobs:
           major-versions: "2"
           minor-versions: "5"
 
-      - names: milaboratory/github-ci/actions/shell@v4-beta
+      - uses: milaboratory/github-ci/actions/shell@v4-beta
         env:
           RES: ${{ steps.results.outputs.versions }}
         with:

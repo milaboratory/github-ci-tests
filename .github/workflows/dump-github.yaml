@@ -1,0 +1,28 @@
+name: Dump 'github' variable
+
+on:
+  push:
+    tags-ignore: [ '*' ]
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/dump-github.yaml
+
+  workflow_dispatch:
+
+jobs:
+  dump-github:
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+    name: Dump 'github' variable
+    steps:
+      - shell: bash
+        env:
+          GH_JSON: ${{ toJSON(github) }}
+        run: |
+          jq . <<<"${GH_JSON}"

@@ -1,4 +1,6 @@
 ## hello-world
+Initial steps for bulding a nodejs project.
+Some additional information to consider during build.
 
 ## Project setup
 ```

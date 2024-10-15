@@ -50,6 +50,7 @@ jobs:
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
           FILES_LIST_EXPECTED: |-
+            ./test-dir/test-file-3.json
             ./test-dir/test-file-3.txt
             ./test-file-1.txt
             ./test-file-2.json

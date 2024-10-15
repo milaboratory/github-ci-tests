@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/artifact/restore@v4-beta
         with:
-          pattern: build-.*
+          pattern: build-*
 
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:

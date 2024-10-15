@@ -44,7 +44,7 @@ jobs:
         env:
           FILE_LIST_EXPECTED: |-
             ./test-dir/test-file-3.txt
-            ./test-file.txt
+            ./test-file-1.txt
             ./test-file-2.txt
           FILE_LIST_ACTUAL: ${{ needs.test-list-files.outputs.content }}
 

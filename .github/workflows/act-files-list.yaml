@@ -16,7 +16,12 @@ jobs:
     steps:
       - shell: bash
         run: |
-          echo "my custom file contents" > ./test-file.txt
+          echo "my custom file contents" > ./test-file-1.txt
+          echo "" > ./test-file-2.txt
+          echo "{}" > ./test-file-2.json
+          mkdir "test-dir"
+          echo "" > ./test-dir/test-file-3.txt
+          echo "{}" > ./test-dir/test-file-3.json
 
       - id: list
         uses: milaboratory/github-ci/actions/files/list@v4-beta
@@ -37,9 +42,12 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          CAT_LIST_EXPECTED: test-file.txt
-          CAT_LIST_ACTUAL: ${{ needs.test-list-files.outputs.content }}
+          FILE_LIST_EXPECTED: |
+            ./test-file.txt
+            ./test-file-2.txt
+            ./test-dir/test-file-3.txt
+          FILE_LIST_ACTUAL: ${{ needs.test-list-files.outputs.content }}
 
         with:
           test: |
-            test_equals "List files" "${CAT_LIST_EXPECTED}" "${CAT_LIST_ACTUAL}"
+            test_equals "List files" "${FILE_LIST_EXPECTED}" "${FILE_LIST_ACTUAL}"

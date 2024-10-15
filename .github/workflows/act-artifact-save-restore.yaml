@@ -2,8 +2,8 @@ name: "[A] artifact/save-restore"
 
 on:
   push:
-    tags-ignore: [ '*' ]
-    branches: [ 'master' ]
+    tags-ignore: ["*"]
+    branches: ["master"]
     paths:
       - .github/workflows/act-artifact-save-restore.yaml
 
@@ -38,7 +38,8 @@ jobs:
 
     steps:
       - uses: milaboratory/github-ci/actions/artifact/restore@v4-beta
-        name: my-test-artifact
+        with:
+          name: my-test-artifact
 
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
@@ -50,5 +51,5 @@ jobs:
         with:
           test: |
             FILES_LIST_ACTUAL="$(find . -type f) | grep -E '.txt$'"
-            
+
             test_equals "Cat file" "${FILES_LIST_EXPECTED}" "${FILES_LIST_ACTUAL}"

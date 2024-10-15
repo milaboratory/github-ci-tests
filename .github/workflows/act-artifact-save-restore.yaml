@@ -57,6 +57,6 @@ jobs:
 
         with:
           test: |
-            FILES_LIST_ACTUAL="$(find . -type f | grep -E '.txt$' | sort)"
+            FILES_LIST_ACTUAL="$(find . -type f | grep -E '(.txt|.json)$' | sort)"
 
-            test_equals "Cat file" "${FILES_LIST_EXPECTED}" "${FILES_LIST_ACTUAL}"
+            test_equals "Restored artifacts" "${FILES_LIST_EXPECTED}" "${FILES_LIST_ACTUAL}"

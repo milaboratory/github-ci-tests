@@ -52,8 +52,8 @@ jobs:
           FILES_LIST_EXPECTED: |-
             ./test-dir/test-file-3.txt
             ./test-file-1.txt
-            ./test-file-2.txt
             ./test-file-2.json
+            ./test-file-2.txt
 
         with:
           test: |

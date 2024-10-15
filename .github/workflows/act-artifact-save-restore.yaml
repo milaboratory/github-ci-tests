@@ -50,6 +50,6 @@ jobs:
 
         with:
           test: |
-            FILES_LIST_ACTUAL="$(find . -type f) | grep -E '.txt$'"
+            FILES_LIST_ACTUAL="$(find . -type f | grep -E '.txt$')"
 
             test_equals "Cat file" "${FILES_LIST_EXPECTED}" "${FILES_LIST_ACTUAL}"

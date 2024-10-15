@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          FILE_LIST_EXPECTED: |
+          FILE_LIST_EXPECTED: |-
             ./test-file.txt
             ./test-file-2.txt
             ./test-dir/test-file-3.txt

@@ -21,6 +21,7 @@ jobs:
       - id: list
         uses: milaboratory/github-ci/actions/files/list@v4-beta
         with:
+          relative: true
           patterns: |
             **/*.txt
 

@@ -22,13 +22,19 @@ jobs:
           mkdir "test-dir"
           echo "" > ./test-dir/test-file-3.txt
           echo "{}" > ./test-dir/test-file-3.json
+          echo "" > ./test-file-4.bin
 
-      - id: save
-        uses: milaboratory/github-ci/actions/artifact/save@v4-beta
+      - uses: milaboratory/github-ci/actions/artifact/save@v4-beta
         with:
-          name: "my-test-artifact"
+          name: "build-txts"
           path: |
             **/*.txt
+
+      - uses: milaboratory/github-ci/actions/artifact/save@v4-beta
+        with:
+          name: "build-jsons"
+          path: |
+            **/*.json
 
   restore-files:
     runs-on: ubuntu-latest
@@ -39,7 +45,7 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/artifact/restore@v4-beta
         with:
-          name: my-test-artifact
+          pattern: build-.*
 
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
@@ -47,6 +53,7 @@ jobs:
             ./test-dir/test-file-3.txt
             ./test-file-1.txt
             ./test-file-2.txt
+            ./test-file-2.json
 
         with:
           test: |

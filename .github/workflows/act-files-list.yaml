@@ -41,7 +41,7 @@ jobs:
           match-directories: true
           implicit-descendants: false
           patterns: |
-            *
+            */
 
       - id: descendants
         uses: milaboratory/github-ci/actions/files/list@v4-beta

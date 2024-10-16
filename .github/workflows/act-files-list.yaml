@@ -2,8 +2,8 @@ name: "[A] files/list"
 
 on:
   push:
-    tags-ignore: [ '*' ]
-    branches: [ 'master' ]
+    tags-ignore: ["*"]
+    branches: ["master"]
     paths:
       - .github/workflows/act-files-list.yaml
 
@@ -47,10 +47,10 @@ jobs:
         uses: milaboratory/github-ci/actions/files/list@v4-beta
         with:
           relative: true
-          match-directories: true
+          match-directories: false
           implicit-descendants: true
           patterns: |
-            test-dir/
+            test-dir
 
     outputs:
       txt-only: ${{ steps.txt-only.outputs.paths }}
@@ -71,12 +71,10 @@ jobs:
             ./test-file-1.txt
             ./test-file-2.txt
           TXT_ACTUAL: ${{ needs.test-list-files.outputs.txt-only }}
-
           DIRS_EXPECTED: |-
             ./test-dir
             ./test-dir-2
           DIRS_ACTUAL: ${{ needs.test-list-files.outputs.dirs-only }}
-
           DESCENDANTS_EXPECTED: |-
             ./test-dir/test-file-3.json
             ./test-dir/test-file-3.txt

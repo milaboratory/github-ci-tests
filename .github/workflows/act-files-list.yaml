@@ -28,7 +28,7 @@ jobs:
         with:
           relative: true
           patterns: |
-            **/*.txt
+            */
 
     outputs:
       content: ${{ steps.list.outputs.paths }}

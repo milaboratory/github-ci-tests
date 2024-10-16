@@ -28,7 +28,7 @@ jobs:
         with:
           name: "build-txts"
           path: |
-            */
+            **/*.txt
 
       - uses: milaboratory/github-ci/actions/artifact/save@v4-beta
         with:

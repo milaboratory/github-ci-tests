@@ -27,6 +27,7 @@ jobs:
         uses: milaboratory/github-ci/actions/files/list@v4-beta
         with:
           relative: true
+          implicit-descendats: true
           patterns: |
             */
 

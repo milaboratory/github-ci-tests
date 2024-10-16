@@ -50,7 +50,7 @@ jobs:
           match-directories: false
           implicit-descendants: true
           patterns: |
-            test-dir
+            test-dir/
 
     outputs:
       txt-only: ${{ steps.txt-only.outputs.paths }}

@@ -22,17 +22,40 @@ jobs:
           mkdir "test-dir"
           echo "" > ./test-dir/test-file-3.txt
           echo "{}" > ./test-dir/test-file-3.json
+          mkdir "test-dir-2"
+          echo "" > test-dir-2/test-file-4.bin
 
-      - id: list
+      - id: txt-only
         uses: milaboratory/github-ci/actions/files/list@v4-beta
         with:
           relative: true
-          implicit-descendats: true
+          match-directories: false
+          implicit-descendants: false
           patterns: |
-            */
+            **/*.txt
+
+      - id: dirs-only
+        uses: milaboratory/github-ci/actions/files/list@v4-beta
+        with:
+          relative: true
+          match-directories: true
+          implicit-descendants: false
+          patterns: |
+            *
+
+      - id: descendants
+        uses: milaboratory/github-ci/actions/files/list@v4-beta
+        with:
+          relative: true
+          match-directories: false
+          implicit-descendants: true
+          patterns: |
+            test-dir
 
     outputs:
-      content: ${{ steps.list.outputs.paths }}
+      txt-only: ${{ steps.txt-only.outputs.paths }}
+      dirs-only: ${{ steps.dirs-only.outputs.paths }}
+      descendants: ${{ steps.descendants.outputs.paths }}
 
   check:
     runs-on: ubuntu-latest
@@ -43,12 +66,24 @@ jobs:
     steps:
       - uses: milaboratory/github-ci/actions/action-test@v1
         env:
-          FILE_LIST_EXPECTED: |-
+          TXT_EXPECTED: |-
             ./test-dir/test-file-3.txt
             ./test-file-1.txt
             ./test-file-2.txt
-          FILE_LIST_ACTUAL: ${{ needs.test-list-files.outputs.content }}
+          TXT_ACTUAL: ${{ needs.test-list-files.outputs.txt-only }}
+
+          DIRS_EXPECTED: |-
+            ./test-dir
+            ./test-dir-2
+          DIRS_ACTUAL: ${{ needs.test-list-files.outputs.dirs-only }}
+
+          DESCENDANTS_EXPECTED: |-
+            ./test-dir/test-file-3.json
+            ./test-dir/test-file-3.txt
+          DESCENDANTS_ACTUAL: ${{ needs.test-list-files.outputs.descendants }}
 
         with:
           test: |
-            test_equals "List files" "${FILE_LIST_EXPECTED}" "${FILE_LIST_ACTUAL}"
+            test_equals "txt files" "${TXT_EXPECTED}" "${TXT_ACTUAL}"
+            test_equals "dirs" "${DIRS_EXPECTED}" "${DIRS_ACTUAL}"
+            test_equals "descendants" "${DESCENDANTS_EXPECTED}" "${DESCENDANTS_ACTUAL}"
